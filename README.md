@@ -2,11 +2,9 @@
 
 Your all in one website for travel!
 
-This app makes traveling easier!
+The app that makes traveling easier, and takes the planning off your shoulders!
 
-And takes the planning part off your shoulders!
-
-Your travel calendar simplified
+Your travel calendar simplified.
 
 **Hermes** is a travel platform concept designed to simplify trip planning, accommodation booking, and exploring local landmarks. 
 
@@ -19,3 +17,4 @@ Your travel calendar simplified
 - 🏨 **Stays & Accommodations:** Easy browsing and booking options for local stays.
 - 📍 **Landmark & Attraction Discovery:** Tools to explore top sights, hidden gems, and nearby points of interest.
 - 🗺️ **Interactive Travel Tools:** Dynamic views to help travelers navigate destinations effortlessly.
+- 💭 **Built in Planner:** Calendars, weather reports, and more to ensure a smooth trip.
