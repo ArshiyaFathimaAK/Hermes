@@ -8,7 +8,7 @@ Your travel calendar simplified.
 
 **Hermes** is a travel platform concept designed to simplify trip planning, accommodation booking, and exploring local landmarks. 
 
-> ⚠️ **Note:** This project is currently in early development. All features, architecture, and tech choices listed below are subject to change as the platform evolves.
+> ⚠️ **Note:** This project is currently in early development. All features, architecture, and tech choices listed below are subject to change as the platform evolves. A full demo is projected for **December 2026**.
 
 ---
 
