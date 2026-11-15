@@ -1,0 +1,35 @@
+test_TC23_api_create_and_read (test_features.APITests.test_TC23_api_create_and_read) ... ok
+test_TC24_api_validation (test_features.APITests.test_TC24_api_validation) ... ok
+test_TC25_api_failed_save (test_features.APITests.test_TC25_api_failed_save) ... ok
+test_TC26_malformed_json (test_features.APITests.test_TC26_malformed_json) ... C:\Python314\Lib\tempfile.py:484: ResourceWarning: Implicitly cleaning up <HTTPError 400: 'Bad Request'>
+  _warnings.warn(self.warn_message, ResourceWarning)
+ok
+test_TC27_missing_trip (test_features.APITests.test_TC27_missing_trip) ... ok
+test_TC28_api_search_validation (test_features.APITests.test_TC28_api_search_validation) ... ok
+test_TC01_combined_filters (test_features.FeatureTests.test_TC01_combined_filters) ... ok
+test_TC02_case_insensitive_search (test_features.FeatureTests.test_TC02_case_insensitive_search) ... ok
+test_TC03_no_results (test_features.FeatureTests.test_TC03_no_results) ... ok
+test_TC04_clear_filters (test_features.FeatureTests.test_TC04_clear_filters) ... ok
+test_TC05_invalid_price_range (test_features.FeatureTests.test_TC05_invalid_price_range) ... ok
+test_TC06_malformed_numeric_filters (test_features.FeatureTests.test_TC06_malformed_numeric_filters) ... ok
+test_TC07_multi_destination_create (test_features.FeatureTests.test_TC07_multi_destination_create) ... ok
+test_TC08_missing_fields (test_features.FeatureTests.test_TC08_missing_fields) ... ok
+test_TC09_reversed_dates (test_features.FeatureTests.test_TC09_reversed_dates) ... ok
+test_TC10_invalid_calendar_date (test_features.FeatureTests.test_TC10_invalid_calendar_date) ... ok
+test_TC11_single_day_trip (test_features.FeatureTests.test_TC11_single_day_trip) ... ok
+test_TC12_add_destination_and_lodging (test_features.FeatureTests.test_TC12_add_destination_and_lodging) ... ok
+test_TC13_reorder_persisted (test_features.FeatureTests.test_TC13_reorder_persisted) ... ok
+test_TC14_day_outside_trip (test_features.FeatureTests.test_TC14_day_outside_trip) ... ok
+test_TC15_unknown_place (test_features.FeatureTests.test_TC15_unknown_place) ... ok
+test_TC16_duplicate_item_id (test_features.FeatureTests.test_TC16_duplicate_item_id) ... ok
+test_TC17_wrong_destination (test_features.FeatureTests.test_TC17_wrong_destination) ... ok
+test_TC18_stale_version (test_features.FeatureTests.test_TC18_stale_version) ... ok
+test_TC19_rollback_failed_save (test_features.FeatureTests.test_TC19_rollback_failed_save) ... ok
+test_TC20_owner_isolation (test_features.FeatureTests.test_TC20_owner_isolation) ... ok
+test_TC21_trip_survives_reopen (test_features.FeatureTests.test_TC21_trip_survives_reopen) ... ok
+test_TC22_sql_like_search_is_literal (test_features.FeatureTests.test_TC22_sql_like_search_is_literal) ... ok
+
+----------------------------------------------------------------------
+Ran 28 tests in 3.579s
+
+OK

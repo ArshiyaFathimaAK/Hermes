@@ -1,0 +1,5 @@
+Status: Not Run
+The browser test runner was invoked, but Chromium launch failed before any UI assertion.
+First attempt: bundled headless browser was unavailable.
+Second attempt: system Chromium launch denied a required singleton socket in this environment.
+The optional script is included for execution on the student computer. No UI pass or timing result is claimed.

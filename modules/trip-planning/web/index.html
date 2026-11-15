@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Hermes — Plan your next chapter</title><link rel="stylesheet" href="/style.css"></head>
+<body>
+<header><a class="brand" href="#explore">◆ Hermes<span>Make room for discovery.</span></a><nav aria-label="Main navigation"><button id="nav-explore" data-view="explore" class="active">Explore</button><button id="nav-create" data-view="create">Create trip</button><button id="nav-trips" data-view="trips">My trips</button></nav><span class="account">Arshiya · Demo account</span></header>
+<div class="demo-banner">Local coursework demo · Synthetic places and prices · No live booking or account sign-in</div>
+<main>
+<section id="explore" aria-labelledby="explore-title">
+<div class="heading"><p class="eyebrow">A LITTLE CURIOSITY GOES A LONG WAY</p><h1 id="explore-title">Find your next stop.</h1><p>Discover a place to stay or something worth the detour.</p></div>
+<form id="search-form" class="searchbar"><label for="query">Search places</label><input id="query" placeholder="Try Austin, Lakeside, or River Walk"><button type="submit">Search</button></form>
+<div class="search-layout"><aside><h2>Refine your search</h2><form id="filter-form">
+<label for="location">Location</label><select id="location"><option value="">All locations</option></select>
+<label for="category">Category</label><select id="category"><option value="">All places</option><option value="lodging">Lodging</option><option value="destination">Destinations</option></select>
+<div class="two"><div><label for="min-price">Min price ($)</label><input id="min-price" type="number" min="0" placeholder="0"></div><div><label for="max-price">Max price ($)</label><input id="max-price" type="number" min="0" placeholder="Any"></div></div>
+<label for="rating">Minimum rating</label><select id="rating"><option value="">Any rating</option><option value="4">4 stars</option><option value="4.5">4.5 stars</option></select>
+<fieldset><legend>Amenities</legend><label class="check"><input type="checkbox" value="wifi" name="amenity"> Wi-Fi</label><label class="check"><input type="checkbox" value="pool" name="amenity"> Pool</label><label class="check"><input type="checkbox" value="parking" name="amenity"> Parking</label></fieldset>
+<button type="submit" class="full">Apply filters</button><button id="clear-filters" type="button" class="secondary full">Clear filters</button>
+</form></aside><div><div id="active-filters" class="chips" aria-label="Active filters"></div><p id="search-status" role="status"></p><div id="results" class="results"></div></div></div>
+</section>
+<section id="create" hidden aria-labelledby="create-title"><div class="heading"><p class="eyebrow">START WITH THE ESSENTIALS</p><h1 id="create-title">A new adventure.</h1><p>One trip. Every detail, together.</p></div>
+<form id="trip-form" class="trip-form" novalidate><label for="trip-name">Trip name *</label><input id="trip-name" maxlength="80" placeholder="Austin weekend" required>
+<fieldset id="destinations"><legend>Destinations * <span>Choose one or more</span></legend></fieldset>
+<div class="two"><div><label for="start-date">Start date *</label><input id="start-date" type="date" required></div><div><label for="end-date">End date *</label><input id="end-date" type="date" required></div></div>
+<fieldset><legend>Trip privacy</legend><label class="check"><input type="radio" name="privacy" value="private" checked> Private</label><label class="check"><input type="radio" name="privacy" value="link"> Share by link (preference only)</label><small>Link generation belongs to a separate team feature.</small></fieldset>
+<p id="trip-status" role="status"></p><div id="review" hidden class="review"></div><button type="submit" id="create-button" class="full">Review trip</button><button type="button" id="confirm-trip" class="full" hidden>Confirm and save trip</button><button type="button" id="edit-trip" class="secondary full" hidden>Edit details</button></form></section>
+<section id="trips" hidden aria-labelledby="trips-title"><div class="heading"><p class="eyebrow">YOUR NEXT CHAPTERS</p><h1 id="trips-title">My trips.</h1><p>Pick up where you left off.</p></div><p id="trips-status" role="status"></p><div id="trip-list" class="results"></div></section>
+<section id="itinerary" hidden aria-labelledby="itinerary-title"><p class="eyebrow">A LITTLE STRUCTURE. PLENTY OF POSSIBILITY.</p><h1 id="itinerary-title">Your itinerary</h1><p id="trip-summary"></p><div id="day-tabs" class="day-tabs" aria-label="Trip days"></div><div class="itinerary-layout"><div><h2 id="day-title"></h2><p class="muted">Drag to reorder, or use the Up and Down buttons.</p><ol id="itinerary-items"></ol><p id="empty-day" class="empty">No stops yet. Add your first destination or lodging.</p></div><aside><h2>Add a stop</h2><form id="add-form"><label for="place-picker">Destination or lodging</label><select id="place-picker"></select><button class="full" type="submit">Add to day</button></form><hr><p id="dirty-status">All changes saved.</p><button id="save-itinerary" class="full">Save itinerary</button><button id="reload-trip" class="secondary full">Reload saved trip</button><p id="itinerary-status" role="status"></p></aside></div></section>
+</main><footer>Hermes · Arshiya Fathima · UC-05 / UC-08 / UC-10</footer><script type="module" src="/app.js"></script></body></html>
