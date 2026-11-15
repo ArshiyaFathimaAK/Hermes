@@ -1,0 +1,19 @@
+digraph Hermes {
+graph [rankdir=TB,bgcolor="white",nodesep=0.65,ranksep=1.1,pad=0.3];
+node [shape=plain,fontname="DejaVu Sans",fontsize=12];
+edge [fontname="DejaVu Sans",fontsize=10,color="#536477"];
+CatalogService [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="9" COLOR="#196773"><TR><TD BGCOLOR="#dfeeed"><B>CatalogService</B></TD></TR><TR><TD ALIGN="LEFT">+ search(params)</TD></TR></TABLE>>];
+TripService [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="9" COLOR="#196773"><TR><TD BGCOLOR="#dfeeed"><B>TripService</B></TD></TR><TR><TD ALIGN="LEFT">repository: TripRepository</TD></TR><TR><TD ALIGN="LEFT">+ create(userId, data)<BR ALIGN="LEFT"/>+ save_itinerary(userId, tripId, data)<BR ALIGN="LEFT"/>+ parse_date(value)</TD></TR></TABLE>>];
+TripRepository [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="9" COLOR="#196773"><TR><TD BGCOLOR="#dfeeed"><B>TripRepository</B></TD></TR><TR><TD ALIGN="LEFT">db_path: str</TD></TR><TR><TD ALIGN="LEFT">+ create(userId, data)<BR ALIGN="LEFT"/>+ get(userId, tripId)<BR ALIGN="LEFT"/>+ list(userId)<BR ALIGN="LEFT"/>+ replace_items(..., version)</TD></TR></TABLE>>];
+Place [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="9" COLOR="#196773"><TR><TD BGCOLOR="#dfeeed"><B>Place</B></TD></TR><TR><TD ALIGN="LEFT">id: int<BR ALIGN="LEFT"/>name, location, category: str<BR ALIGN="LEFT"/>price: int, rating: float<BR ALIGN="LEFT"/>amenities: tuple</TD></TR></TABLE>>];
+ItineraryItem [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="9" COLOR="#196773"><TR><TD BGCOLOR="#dfeeed"><B>ItineraryItem</B></TD></TR><TR><TD ALIGN="LEFT">id: str<BR ALIGN="LEFT"/>trip_id, place_id: int<BR ALIGN="LEFT"/>day: str, position: int</TD></TR></TABLE>>];
+Trip [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="9" COLOR="#196773"><TR><TD BGCOLOR="#dfeeed"><B>Trip</B></TD></TR><TR><TD ALIGN="LEFT">id: int, user_id: str<BR ALIGN="LEFT"/>name: str, destinations: list[str]<BR ALIGN="LEFT"/>start_date, end_date: str<BR ALIGN="LEFT"/>privacy: str, version: int</TD></TR></TABLE>>];
+{rank=same; CatalogService; TripService; TripRepository;}
+{rank=same; Place; ItineraryItem; Trip;}
+CatalogService -> Place [style=dashed,label="searches",arrowhead=open];
+TripService -> TripRepository [style=dashed,label="uses",arrowhead=open];
+TripRepository -> Trip [style=dashed,label="serializes",arrowhead=open];
+TripRepository -> ItineraryItem [style=dashed,label="serializes",arrowhead=open];
+Trip -> ItineraryItem [dir=both,arrowtail=diamond,arrowhead=none,taillabel="1",headlabel="0..*",label="contains"];
+ItineraryItem -> Place [dir=none,taillabel="0..*",headlabel="1",label="scheduled place"];
+}

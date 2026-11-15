@@ -1,0 +1,86 @@
+[
+  {
+    "requirement": "FR-09",
+    "scope": "Preview result cards",
+    "use_case": "UC-05",
+    "test_cases": "TC01-04, UI01-02",
+    "status": "API Pass; UI Not Run"
+  },
+  {
+    "requirement": "FR-10",
+    "scope": "Location and category filters",
+    "use_case": "UC-05",
+    "test_cases": "TC01-06, TC22, TC28, UI01-02",
+    "status": "API/unit Pass; UI Not Run"
+  },
+  {
+    "requirement": "FR-14",
+    "scope": "Select one or more destinations",
+    "use_case": "UC-08",
+    "test_cases": "TC07-08, UI03",
+    "status": "Service Pass; UI Not Run"
+  },
+  {
+    "requirement": "FR-15",
+    "scope": "Enter start and end dates",
+    "use_case": "UC-08",
+    "test_cases": "TC09-11, TC24, UI03",
+    "status": "Service/API Pass; UI Not Run"
+  },
+  {
+    "requirement": "FR-16",
+    "scope": "Save trip for authenticated user",
+    "use_case": "UC-08",
+    "test_cases": "TC07, TC20-21, TC23, TC25",
+    "status": "Demo storage Pass; Auth integration incomplete"
+  },
+  {
+    "requirement": "FR-17",
+    "scope": "Add places to specific days",
+    "use_case": "UC-10 subset",
+    "test_cases": "TC12, TC14-17, UI04",
+    "status": "Service Pass; UI Not Run"
+  },
+  {
+    "requirement": "FR-21",
+    "scope": "Arrange activities in preferred order",
+    "use_case": "UC-10 subset",
+    "test_cases": "TC13, TC18-19, UI04-05",
+    "status": "Persistence Pass; UI Not Run"
+  },
+  {
+    "requirement": "NFR-02",
+    "scope": "p95 common screen load <=3s",
+    "use_case": "All assigned screens",
+    "test_cases": "NFR02-LOCAL; production test pending",
+    "status": "Not Run"
+  },
+  {
+    "requirement": "NFR-04",
+    "scope": "Modify only owned private trips",
+    "use_case": "UC-08 / UC-10",
+    "test_cases": "TC20; real JWT/RLS integration test pending",
+    "status": "Repository Pass; full authorization incomplete"
+  },
+  {
+    "requirement": "NFR-07",
+    "scope": "Meaningful external service errors",
+    "use_case": "UC-05 / UC-08 / UC-10",
+    "test_cases": "TC25, UI05; provider outage test pending",
+    "status": "Local DB error Pass; external service Not Run"
+  },
+  {
+    "requirement": "NFR-09",
+    "scope": "Accessible key tasks",
+    "use_case": "All assigned screens",
+    "test_cases": "UI06 plus keyboard and assistive technology audit",
+    "status": "Not Run"
+  },
+  {
+    "requirement": "NFR-12",
+    "scope": "Required fields and date order",
+    "use_case": "UC-08",
+    "test_cases": "TC08-11, TC24",
+    "status": "Pass at service/API boundary"
+  }
+]
