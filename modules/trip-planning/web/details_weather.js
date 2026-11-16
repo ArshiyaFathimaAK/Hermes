@@ -38,6 +38,7 @@ async function openDetails(id, from) {
     $('details-title').focus();
   } catch (e) { if (request === detailsRequest) status('details-status', e.message, true); }
 }
+window.hermes.openDetails = openDetails; /* Sharad: UC-04 reuse Reynard's details page from ranked results. */
 $('results').addEventListener('click', e => {
   const button = e.target.closest('[data-place-id]');
   if (button) openDetails(Number(button.dataset.placeId), 'explore');

@@ -6,3 +6,6 @@
 
 /* Spenser Saunders: UC-11 cost panel, UC-12 share panel and read-only shared view */
 .cost-total{font:34px/1.1 Georgia,serif;margin:4px 0 8px}.cost-days{list-style:none;padding:0;margin:12px 0;font-size:14px}.cost-days li{display:flex;justify-content:space-between;border-bottom:1px solid var(--line);padding:6px 0}#share-url{font-size:13px}#shared-days h2{margin-top:28px}
+
+/* Sharad Rangaraju: UC-03 profile form and UC-04 always-visible header search. */
+header{flex-wrap:wrap}header nav{flex-wrap:wrap}.header-search{flex:1 0 100%}.header-search label{margin-top:0}.header-search .two{grid-template-columns:minmax(0,1fr) auto}#profile-fields{margin:0}#profile-fields:disabled{opacity:.7}@media(max-width:760px){.header-search .two{grid-template-columns:1fr}.header-search button{width:100%}}

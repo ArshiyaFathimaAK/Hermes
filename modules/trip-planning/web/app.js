@@ -16,10 +16,11 @@ async function api(path, method = 'GET', data) {
 function navigate(view) {
   if (dirty && view !== 'itinerary' && !confirm('Leave without saving itinerary changes?')) return false;
   if (view !== 'itinerary') dirty = false;
-  for (const name of ['explore','create','trips','itinerary','details','weather','shared'])  /* Reynard: details, weather; Spenser: shared */ $(name).hidden = name !== view;
+  for (const name of ['explore','create','trips','itinerary','details','weather','shared','profile','search'])  /* Reynard: details, weather; Spenser: shared; Sharad: UC-03/04 profile, search */ $(name).hidden = name !== view;
   if (view !== 'shared' && new URLSearchParams(location.search).has('share')) history.replaceState(null, '', location.pathname); // Spenser: leave the shared view cleanly
   document.querySelectorAll('nav button').forEach(b => b.classList.toggle('active', b.dataset.view === view));
   if (view === 'trips') loadTrips();
+  if (view === 'profile') window.hermes.openProfile(); // Sharad: UC-03 load once; keep unsaved input on later visits.
   return true;
 }
 document.querySelectorAll('[data-view]').forEach(b => b.addEventListener('click', () => navigate(b.dataset.view)));
@@ -110,6 +111,7 @@ $('reload-trip').addEventListener('click',()=>trip&&openTrip(trip.id));
 async function init(){try{const config=await api('/api/config');catalog=(await api('/api/catalog')).results;for(const location of config.locations){$('location').add(new Option(location,location));const label=document.createElement('label');label.className='check';const input=document.createElement('input');input.type='checkbox';input.name='destination';input.value=location;label.append(input,document.createTextNode(' '+location));$('destinations').append(label);}await search();
   const shareToken=new URLSearchParams(location.search).get('share');if(shareToken!==null)await openShared(shareToken);}catch(e){status('search-status',e.message,true);}} // Spenser: open a share link
 window.hermes = {navigate, currentTrip: () => trip}; // Reynard: lets details_weather.js reuse navigation and the open trip
+Object.assign(window.hermes, {$, escapeText, status, api}); // Sharad: UC-03/04 reuse the existing helpers across modules.
 init();
 
 // --- Spenser Saunders: UC-11 View Estimated Trip Cost and UC-12 Share Trip ---

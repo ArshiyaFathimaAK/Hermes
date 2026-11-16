@@ -1,9 +1,22 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Hermes — Plan your next chapter</title><link rel="stylesheet" href="/style.css"></head>
 <body>
-<header><a class="brand" href="#explore">◆ Hermes<span>Make room for discovery.</span></a><nav aria-label="Main navigation"><button id="nav-explore" data-view="explore" class="active">Explore</button><button id="nav-create" data-view="create">Create trip</button><button id="nav-trips" data-view="trips">My trips</button><button id="nav-weather" data-view="weather">Weather</button></nav><span class="account">Arshiya · Demo account</span></header>
+<!-- Sharad: UC-03 Profile navigation; UC-04 search stays visible on every view (FR-08). -->
+<header><a class="brand" href="#explore">◆ Hermes<span>Make room for discovery.</span></a><nav aria-label="Main navigation"><button id="nav-explore" data-view="explore" class="active">Explore</button><button id="nav-create" data-view="create">Create trip</button><button id="nav-trips" data-view="trips">My trips</button><button id="nav-weather" data-view="weather">Weather</button><button id="nav-profile" data-view="profile">Profile</button></nav><span class="account">Arshiya · Demo account</span>
+<form id="destination-search-form" class="header-search" role="search" novalidate><label for="destination-query">Search destinations and stays</label><div class="two"><input id="destination-query" placeholder="Try Austin lodging or rooftop"><button type="submit">Search destinations</button></div></form></header>
 <div class="demo-banner">Local coursework demo · Synthetic places and prices · No live booking or account sign-in</div>
 <main>
+<!-- Sharad: UC-03 Manage User Profile (FR-06); real Supabase Auth is not implemented. -->
+<section id="profile" hidden aria-labelledby="profile-title"><div class="heading"><p class="eyebrow">YOUR TRAVEL DETAILS</p><h1 id="profile-title">Profile.</h1><p>Edit the fixed demo account's profile. No real Supabase Auth is implemented.</p></div>
+<form id="profile-form" class="trip-form" novalidate><fieldset id="profile-fields" disabled><legend>Profile details</legend>
+<label for="profile-display_name">Name *</label><input id="profile-display_name" autocomplete="name" required>
+<label for="profile-email">Email *</label><input id="profile-email" type="email" autocomplete="email" required>
+<label for="profile-phone">Phone (optional)</label><input id="profile-phone" type="tel" autocomplete="tel">
+<label for="profile-address">Address (optional)</label><input id="profile-address" autocomplete="street-address">
+<button type="submit" id="profile-save" class="full">Save profile</button></fieldset>
+<button type="button" id="profile-reload" class="secondary full">Reload saved profile</button><p id="profile-status" role="status"></p></form></section>
+<!-- Sharad: UC-04 ranked previews reuse UC-06 View details. All places are synthetic. -->
+<section id="search" hidden aria-labelledby="destination-title"><div class="heading"><p class="eyebrow">FIND YOUR NEXT DESTINATION</p><h1 id="destination-title">Search results.</h1><p>Search sample names, locations, categories and descriptions from any page.</p></div><p id="destination-status" role="status"></p><div id="destination-results" class="results"></div></section>
 <section id="explore" aria-labelledby="explore-title">
 <div class="heading"><p class="eyebrow">A LITTLE CURIOSITY GOES A LONG WAY</p><h1 id="explore-title">Find your next stop.</h1><p>Discover a place to stay or something worth the detour.</p></div>
 <form id="search-form" class="searchbar"><label for="query">Search places</label><input id="query" placeholder="Try Austin, Lakeside, or River Walk"><button type="submit">Search</button></form>
@@ -36,4 +49,5 @@
 <div class="two"><div><label for="weather-start">Start date *</label><input id="weather-start" type="date" required></div><div><label for="weather-end">End date *</label><input id="weather-end" type="date" required></div></div>
 <button type="submit" id="weather-submit" class="full">Show forecast</button></form>
 <p id="weather-status" role="status"></p><div id="weather-results" class="results"></div></section>
-</main><footer>Hermes · Arshiya Fathima · UC-05 / UC-08 / UC-10 · Reynard Landreneau · UC-06 / UC-07 · Spenser Saunders · UC-11 / UC-12</footer><script type="module" src="/app.js"></script><script type="module" src="/details_weather.js"></script></body></html>
+<!-- Sharad: UC-03/04 contribution footer and module, loaded after shared helpers and details. -->
+</main><footer>Hermes · Arshiya Fathima · UC-05 / UC-08 / UC-10 · Reynard Landreneau · UC-06 / UC-07 · Spenser Saunders · UC-11 / UC-12 · Sharad Rangaraju · UC-03 / UC-04</footer><script type="module" src="/app.js"></script><script type="module" src="/details_weather.js"></script><script type="module" src="/profile_search.js"></script></body></html>

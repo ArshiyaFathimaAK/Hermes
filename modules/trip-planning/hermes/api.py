@@ -12,6 +12,8 @@ from .details import PlaceDetailService  # Reynard: UC-06
 from .weather import WeatherService, WeatherUnavailable  # Reynard: UC-07
 from .cost import CostService        # Spenser Saunders: UC-11
 from .sharing import ShareService    # Spenser Saunders: UC-12
+from .profile import ProfileRepository, ProfileService  # Sharad: UC-03
+from .search import SearchService  # Sharad: UC-04
 
 ROOT = Path(__file__).resolve().parent.parent / 'web'
 DEMO_USER = 'demo-arshiya'
@@ -21,6 +23,8 @@ def make_server(db_path, port=8000, weather_provider=None):
     trips, catalog = TripService(repo), CatalogService()
     details, weather = PlaceDetailService(), WeatherService(weather_provider)  # Reynard: UC-06/07
     costs, sharing = CostService(repo), ShareService(repo)  # Spenser Saunders: UC-11, UC-12
+    profiles = ProfileService(ProfileRepository(db_path))  # Sharad: UC-03, fixed demo identity; no real Supabase Auth.
+    search = SearchService()  # Sharad: UC-04
     class Handler(BaseHTTPRequestHandler):
         def log_message(self, *args):
             pass
@@ -43,6 +47,19 @@ def make_server(db_path, port=8000, weather_provider=None):
         def route(self):
             parts = urlsplit(self.path)
             path = parts.path
+            # Sharad: UC-03 uses the existing demo identity and error mapping.
+            if path == '/api/profile':
+                if self.command == 'GET':
+                    return self.send_json(200, {'profile': profiles.get(DEMO_USER)})
+                if self.command == 'PUT':
+                    return self.send_json(200, {'profile': profiles.save(DEMO_USER, self.read_json()), 'message': 'Profile saved.'})
+            # Sharad: UC-04 ranked keyword search, separate from UC-05 filters.
+            if self.command == 'GET' and path == '/api/search':
+                args = {k: v[-1] for k, v in parse_qs(parts.query, keep_blank_values=True).items()}
+                query = args.get('q', '').strip()
+                results = search.search(query)
+                message = f'{len(results)} results for "{query}".' if results else 'No results found. Try a different search term.'
+                return self.send_json(200, {'results': results, 'message': message, 'sample_data': True})
             if self.command == 'GET' and path == '/api/catalog':
                 args = {k: v[-1] for k, v in parse_qs(parts.query).items()}
                 return self.send_json(200, {'results': catalog.search(args), 'sample_data': True})
@@ -76,11 +93,13 @@ def make_server(db_path, port=8000, weather_provider=None):
             if self.command == 'GET' and segments[:2] == ['api', 'shared'] and len(segments) in (2, 3):
                 return self.send_json(200, {'trip': sharing.view(segments[2] if len(segments) == 3 else '')})
             if not path.startswith('/api/') and self.command == 'GET':
-                name = {'/': 'index.html', '/app.js': 'app.js', '/style.css': 'style.css', '/details_weather.js': 'details_weather.js'}.get(path)
+                # Sharad: UC-03/04 front-end module registered like details_weather.js.
+                name = {'/': 'index.html', '/app.js': 'app.js', '/style.css': 'style.css', '/details_weather.js': 'details_weather.js', '/profile_search.js': 'profile_search.js'}.get(path)
                 if name:
                     payload = (ROOT / name).read_bytes()
                     self.send_response(200)
-                    self.send_header('Content-Type', {'index.html':'text/html; charset=utf-8','app.js':'text/javascript; charset=utf-8','style.css':'text/css; charset=utf-8','details_weather.js':'text/javascript; charset=utf-8'}[name])
+                    # Sharad: UC-03/04 JavaScript content type.
+                    self.send_header('Content-Type', {'index.html':'text/html; charset=utf-8','app.js':'text/javascript; charset=utf-8','style.css':'text/css; charset=utf-8','details_weather.js':'text/javascript; charset=utf-8','profile_search.js':'text/javascript; charset=utf-8'}[name])
                     self.send_header('Content-Length', str(len(payload)))
                     self.end_headers()
                     return self.wfile.write(payload)
