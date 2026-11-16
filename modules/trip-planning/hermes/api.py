@@ -8,13 +8,16 @@ from urllib.parse import urlsplit, parse_qs
 from .catalog import CatalogService, LOCATIONS, ValidationError
 from .repository import TripRepository, NotFoundError, ConflictError
 from .services import TripService
+from .details import PlaceDetailService  # Reynard: UC-06
+from .weather import WeatherService, WeatherUnavailable  # Reynard: UC-07
 
 ROOT = Path(__file__).resolve().parent.parent / 'web'
 DEMO_USER = 'demo-arshiya'
 
-def make_server(db_path, port=8000):
+def make_server(db_path, port=8000, weather_provider=None):
     repo = TripRepository(db_path)
     trips, catalog = TripService(repo), CatalogService()
+    details, weather = PlaceDetailService(), WeatherService(weather_provider)  # Reynard: UC-06/07
     class Handler(BaseHTTPRequestHandler):
         def log_message(self, *args):
             pass
@@ -42,6 +45,13 @@ def make_server(db_path, port=8000):
                 return self.send_json(200, {'results': catalog.search(args), 'sample_data': True})
             if self.command == 'GET' and path == '/api/config':
                 return self.send_json(200, {'locations': LOCATIONS, 'user': DEMO_USER, 'demo': True})
+            # Reynard: UC-06 place details and UC-07 weather (read-only endpoints)
+            if self.command == 'GET' and path == '/api/weather':
+                args = {k: v[-1] for k, v in parse_qs(parts.query).items()}
+                return self.send_json(200, weather.forecast(args))
+            segs = path.strip('/').split('/')
+            if self.command == 'GET' and len(segs) == 3 and segs[:2] == ['api', 'places'] and segs[2].isdigit():
+                return self.send_json(200, {'place': details.get(int(segs[2]))})
             if path == '/api/trips':
                 if self.command == 'GET':
                     return self.send_json(200, {'trips': repo.list(DEMO_USER)})
@@ -55,11 +65,11 @@ def make_server(db_path, port=8000):
                 if self.command == 'PUT' and len(segments) == 4 and segments[3] == 'itinerary':
                     return self.send_json(200, {'trip': trips.save_itinerary(DEMO_USER, trip_id, self.read_json()), 'message': 'Itinerary saved successfully.'})
             if not path.startswith('/api/') and self.command == 'GET':
-                name = {'/': 'index.html', '/app.js': 'app.js', '/style.css': 'style.css'}.get(path)
+                name = {'/': 'index.html', '/app.js': 'app.js', '/style.css': 'style.css', '/details_weather.js': 'details_weather.js'}.get(path)
                 if name:
                     payload = (ROOT / name).read_bytes()
                     self.send_response(200)
-                    self.send_header('Content-Type', {'index.html':'text/html; charset=utf-8','app.js':'text/javascript; charset=utf-8','style.css':'text/css; charset=utf-8'}[name])
+                    self.send_header('Content-Type', {'index.html':'text/html; charset=utf-8','app.js':'text/javascript; charset=utf-8','style.css':'text/css; charset=utf-8','details_weather.js':'text/javascript; charset=utf-8'}[name])
                     self.send_header('Content-Length', str(len(payload)))
                     self.end_headers()
                     return self.wfile.write(payload)
@@ -73,6 +83,8 @@ def make_server(db_path, port=8000):
                 self.send_json(404, {'error': str(error)})
             except ConflictError as error:
                 self.send_json(409, {'error': str(error)})
+            except WeatherUnavailable as error:
+                self.send_json(503, {'error': str(error)})
             except sqlite3.Error:
                 self.send_json(503, {'error': 'Could not save or load data. Please retry. Your unsaved form is still available.'})
             except Exception:

@@ -1,0 +1,30 @@
+# Reynard Landreneau - UC-06/UC-07 test run (assistant environment, 2026-11-15)
+# Python Python 3.12.3 | NOT a personal run: re-run locally and replace this file
+test_RL_TC01_lodging_details (tests.test_details_weather.DetailTests.test_RL_TC01_lodging_details) ... ok
+test_RL_TC03_destination_details (tests.test_details_weather.DetailTests.test_RL_TC03_destination_details) ... ok
+test_RL_TC04_unknown_place (tests.test_details_weather.DetailTests.test_RL_TC04_unknown_place) ... ok
+test_RL_TC06_every_catalog_place_has_matching_details (tests.test_details_weather.DetailTests.test_RL_TC06_every_catalog_place_has_matching_details) ... ok
+test_RL_TC05_api_missing_or_malformed_place_id (tests.test_details_weather.DetailsWeatherAPITests.test_RL_TC05_api_missing_or_malformed_place_id) ... ok
+test_RL_TC14_api_place_details (tests.test_details_weather.DetailsWeatherAPITests.test_RL_TC14_api_place_details) ... ok
+test_RL_TC15_api_weather_success_and_validation (tests.test_details_weather.DetailsWeatherAPITests.test_RL_TC15_api_weather_success_and_validation) ... ok
+test_RL_TC17_api_weather_outage_is_503_without_forecast (tests.test_details_weather.DetailsWeatherAPITests.test_RL_TC17_api_weather_outage_is_503_without_forecast) ... ok
+test_RL_TC02_forecast_for_trip_dates (tests.test_details_weather.WeatherTests.test_RL_TC02_forecast_for_trip_dates) ... ok
+test_RL_TC07_unsupported_or_missing_location (tests.test_details_weather.WeatherTests.test_RL_TC07_unsupported_or_missing_location) ... ok
+test_RL_TC08_reversed_dates (tests.test_details_weather.WeatherTests.test_RL_TC08_reversed_dates) ... ok
+test_RL_TC09_invalid_or_missing_dates (tests.test_details_weather.WeatherTests.test_RL_TC09_invalid_or_missing_dates) ... ok
+test_RL_TC10_range_limit_boundary (tests.test_details_weather.WeatherTests.test_RL_TC10_range_limit_boundary) ... ok
+test_RL_TC11_single_day (tests.test_details_weather.WeatherTests.test_RL_TC11_single_day) ... ok
+test_RL_TC12_provider_outage_returns_no_data (tests.test_details_weather.WeatherTests.test_RL_TC12_provider_outage_returns_no_data) ... ok
+test_RL_TC13_sample_forecast_is_deterministic (tests.test_details_weather.WeatherTests.test_RL_TC13_sample_forecast_is_deterministic) ... ok
+test_RL_TC16_invalid_input_never_calls_provider (tests.test_details_weather.WeatherTests.test_RL_TC16_invalid_input_never_calls_provider) ... ok
+
+----------------------------------------------------------------------
+Ran 17 tests in 2.050s
+
+OK
+
+# Full regression (Arshiya's 28 + Reynard's 17)
+----------------------------------------------------------------------
+Ran 45 tests in 5.164s
+
+OK

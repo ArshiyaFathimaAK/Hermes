@@ -16,7 +16,7 @@ async function api(path, method = 'GET', data) {
 function navigate(view) {
   if (dirty && view !== 'itinerary' && !confirm('Leave without saving itinerary changes?')) return false;
   if (view !== 'itinerary') dirty = false;
-  for (const name of ['explore','create','trips','itinerary']) $(name).hidden = name !== view;
+  for (const name of ['explore','create','trips','itinerary','details','weather'])  /* Reynard: added details, weather */ $(name).hidden = name !== view;
   document.querySelectorAll('nav button').forEach(b => b.classList.toggle('active', b.dataset.view === view));
   if (view === 'trips') loadTrips();
   return true;
@@ -37,7 +37,7 @@ async function search() {
     const {results} = await api('/api/catalog?' + new URLSearchParams(params));
     if (request !== searchRequest) return;
     status('search-status',results.length ? `${results.length} sample places found.` : 'No matching results. Change or clear your filters.');
-    $('results').innerHTML = results.map(p=>`<article class="result"><span class="kind">${escapeText(p.category)} · ${escapeText(p.location)}</span><h3>${escapeText(p.name)}</h3><p>${p.rating} / 5 · ${p.amenities.map(escapeText).join(', ') || 'Explore at your own pace'}</p><strong>${p.price === 0 ? 'Free' : '$'+p.price+(p.category === 'lodging' ? ' / night' : ' estimated')}</strong></article>`).join('');
+    $('results').innerHTML = results.map(p=>`<article class="result"><span class="kind">${escapeText(p.category)} · ${escapeText(p.location)}</span><h3>${escapeText(p.name)}</h3><p>${p.rating} / 5 · ${p.amenities.map(escapeText).join(', ') || 'Explore at your own pace'}</p><strong>${p.price === 0 ? 'Free' : '$'+p.price+(p.category === 'lodging' ? ' / night' : ' estimated')}</strong><button class="secondary" data-place-id="${p.id}">View details</button></article>`).join('');
   } catch (e) { if (request === searchRequest) status('search-status',e.message,true); }
 }
 $('search-form').addEventListener('submit',e=>{e.preventDefault();search();});
@@ -107,4 +107,5 @@ $('save-itinerary').addEventListener('click',async()=>{
 });
 $('reload-trip').addEventListener('click',()=>trip&&openTrip(trip.id));
 async function init(){try{const config=await api('/api/config');catalog=(await api('/api/catalog')).results;for(const location of config.locations){$('location').add(new Option(location,location));const label=document.createElement('label');label.className='check';const input=document.createElement('input');input.type='checkbox';input.name='destination';input.value=location;label.append(input,document.createTextNode(' '+location));$('destinations').append(label);}await search();}catch(e){status('search-status',e.message,true);}}
+window.hermes = {navigate, currentTrip: () => trip}; // Reynard: lets details_weather.js reuse navigation and the open trip
 init();
