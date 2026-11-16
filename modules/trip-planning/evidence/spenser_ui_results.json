@@ -1,0 +1,44 @@
+[
+  {
+    "id": "UI-UC11-01",
+    "status": "Pass",
+    "expected": "New trip shows $0 and \"Add stops to your itinerary to see an estimated cost.\"",
+    "actual": "$0 and the add-stops message"
+  },
+  {
+    "id": "UI-UC11-02",
+    "status": "Pass",
+    "expected": "Unsaved stops do not change the total; stale-estimate note appears",
+    "actual": "Stale note shown; total still $0 before save"
+  },
+  {
+    "id": "UI-UC11-03",
+    "status": "Pass",
+    "expected": "After save: $318; Lodging $290 (2 nights) \u00b7 Activities $28; two day rows",
+    "actual": "Estimated cost |  | $318 |  | Lodging $290 (2 nights) \u00b7 Activities $28 |  | 2026-11-20 | $173 | 2026-11-21 | $145 |  | Estimated total based on your saved itinerary."
+  },
+  {
+    "id": "UI-UC12-01",
+    "status": "Pass",
+    "expected": "Share link shown with the ready message",
+    "actual": "<server>/?share=4OGf4-a5wDL6cYaytTM6QQ"
+  },
+  {
+    "id": "UI-UC12-02",
+    "status": "Pass",
+    "expected": "Recipient sees the trip name, 3 stops, and no edit controls",
+    "actual": "Austin \u00b7 2026-11-20 to 2026-11-22; 3 stops; no edit buttons"
+  },
+  {
+    "id": "UI-UC12-03",
+    "status": "Pass",
+    "expected": "Unknown link shows \"This share link is not valid.\"",
+    "actual": "This share link is not valid."
+  },
+  {
+    "id": "UI-UC11-UC12-04",
+    "status": "Pass",
+    "expected": "No JavaScript errors during the run",
+    "actual": "No JavaScript errors"
+  }
+]
