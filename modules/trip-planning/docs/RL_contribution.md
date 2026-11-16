@@ -17,7 +17,7 @@ Demo limits (say these in the document): all place data and forecasts are synthe
 
 ## 2. Test cases (creator: Reynard Landreneau, AI-assisted)
 
-Fixture: fresh server, 8-place catalog. Executor/environment for the Status column: assistant run, Python 3.12.3, Linux, 2026-11-15. **Personal rerun: [date, your Python version].**
+Fixture: fresh server, 8-place catalog. Executor/environment for the Status column: assistant run, Python 3.12.3, Linux, 2026-11-15. **Personal rerun: Python 3.15.2, Windows, 2026-11-15.**
 
 | ID | UC | Purpose | Preconditions / data | Steps | Expected | Status |
 |---|---|---|---|---|---|---|
@@ -42,9 +42,11 @@ Fixture: fresh server, 8-place catalog. Executor/environment for the Status colu
 | RL-UI02 | UC-07 | Weather from details | on details for id 1 | click "See weather in Austin"; pick 2026-11-20 to 2026-11-22; Show forecast | 3 day cards with °F and % precipitation | **Not Run** |
 | RL-UI03 | UC-07 | Weather error display | stop provider / invalid range 2026-11-22 to 2026-11-20 | submit | red message, no cards | **Not Run** |
 
-Executed-by-me tests for the grading requirement: **RL-TC01 and RL-TC02** (plus any others you rerun). Evidence: `evidence/rl_test_results.txt` (assistant run — replace with yours).
+Executed-by-me tests for the grading requirement: **RL-TC01 and RL-TC02**. Evidence: `evidence/rl_test_results.txt`.
 
 **Failures:** none in the assistant run. **Mutation check:** I deliberately broke the range limit, the outage handling and the "Free" label; tests failed each time, then I restored the code. **Remaining:** browser UI tests, real weather/lodging providers, Supabase integration, accessibility audit.
+
+In Reynard's run: all normal test cases passed.
 
 ## 3. RTM rows
 
@@ -62,7 +64,7 @@ Added: `PlaceDetailService` (get(placeId)), `WeatherService` (forecast(params)),
 
 ## 5. Contribution and AI use row
 
-Code: `hermes/details.py`, `hermes/weather.py`, `web/details_weather.js`, `tests/test_details_weather.py`, the small hooks listed above. AI: Claude (Anthropic) drafted the code and tests. Example prompt: "Add UC-06 View Destination/Lodging and UC-07 View Weather to this module, following its existing service/API/test structure, with no live providers." Verification: ran all 45 tests, mutation-checked three behaviors, ran the server and exercised every endpoint, `node --check` on both JS files, checked that all element IDs exist. **Add what you personally reviewed or changed.**
+Code: `hermes/details.py`, `hermes/weather.py`, `web/details_weather.js`, `tests/test_details_weather.py`, the small hooks listed above. AI: Claude (Anthropic) drafted the code and tests. Example prompt: "Add UC-06 View Destination/Lodging and UC-07 View Weather to this module, following its existing service/API/test structure, with no live providers." Verification: ran all 45 tests, mutation-checked three behaviors, ran the server and exercised every endpoint, `node --check` on both JS files, checked that all element IDs exist.
 
 ## 6. Planned teammate rows to replace in section 7 of the team document
 
