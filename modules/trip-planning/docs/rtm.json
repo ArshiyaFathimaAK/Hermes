@@ -82,5 +82,40 @@
     "use_case": "UC-08",
     "test_cases": "TC08-11, TC24",
     "status": "Pass at service/API boundary"
+  },
+  {
+    "requirement": "FR-27",
+    "scope": "Calculate and display an estimated trip cost",
+    "use_case": "UC-11",
+    "test_cases": "TC-UC11-01 to TC-UC11-07, UI-UC11-01 to UI-UC11-03",
+    "status": "Unit/API/UI Pass"
+  },
+  {
+    "requirement": "FR-28",
+    "scope": "Generate a shareable link for a saved trip",
+    "use_case": "UC-12",
+    "test_cases": "TC-UC12-01 to TC-UC12-03, TC-UC12-09, UI-UC12-01",
+    "status": "Unit/API/UI Pass"
+  },
+  {
+    "requirement": "FR-29",
+    "scope": "Valid link shows only that trip, read-only",
+    "use_case": "UC-12",
+    "test_cases": "TC-UC12-04 to TC-UC12-09, UI-UC12-02, UI-UC12-03",
+    "status": "Unit/API/UI Pass"
+  },
+  {
+    "requirement": "NFR-04",
+    "scope": "Only the owner can see the estimate or create a link",
+    "use_case": "UC-11 / UC-12",
+    "test_cases": "TC-UC11-05, TC-UC12-03",
+    "status": "Demo identity Pass; real Supabase Auth pending"
+  },
+  {
+    "requirement": "NFR-08",
+    "scope": "Shared view omits owner ID and unrelated trips",
+    "use_case": "UC-12",
+    "test_cases": "TC-UC12-04, TC-UC12-05, TC-UC12-09",
+    "status": "Pass"
   }
 ]

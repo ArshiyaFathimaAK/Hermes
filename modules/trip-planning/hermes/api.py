@@ -10,6 +10,8 @@ from .repository import TripRepository, NotFoundError, ConflictError
 from .services import TripService
 from .details import PlaceDetailService  # Reynard: UC-06
 from .weather import WeatherService, WeatherUnavailable  # Reynard: UC-07
+from .cost import CostService        # Spenser Saunders: UC-11
+from .sharing import ShareService    # Spenser Saunders: UC-12
 
 ROOT = Path(__file__).resolve().parent.parent / 'web'
 DEMO_USER = 'demo-arshiya'
@@ -18,6 +20,7 @@ def make_server(db_path, port=8000, weather_provider=None):
     repo = TripRepository(db_path)
     trips, catalog = TripService(repo), CatalogService()
     details, weather = PlaceDetailService(), WeatherService(weather_provider)  # Reynard: UC-06/07
+    costs, sharing = CostService(repo), ShareService(repo)  # Spenser Saunders: UC-11, UC-12
     class Handler(BaseHTTPRequestHandler):
         def log_message(self, *args):
             pass
@@ -64,6 +67,14 @@ def make_server(db_path, port=8000, weather_provider=None):
                     return self.send_json(200, {'trip': repo.get(DEMO_USER, trip_id)})
                 if self.command == 'PUT' and len(segments) == 4 and segments[3] == 'itinerary':
                     return self.send_json(200, {'trip': trips.save_itinerary(DEMO_USER, trip_id, self.read_json()), 'message': 'Itinerary saved successfully.'})
+                # Spenser Saunders: UC-11 cost estimate and UC-12 share link for the owner's trip.
+                if self.command == 'GET' and len(segments) == 4 and segments[3] == 'cost':
+                    return self.send_json(200, {'estimate': costs.estimate(DEMO_USER, trip_id)})
+                if self.command == 'POST' and len(segments) == 4 and segments[3] == 'share':
+                    return self.send_json(200, sharing.create_link(DEMO_USER, trip_id))
+            # Spenser Saunders: UC-12 read-only view for anyone holding the link. No user identity is used.
+            if self.command == 'GET' and segments[:2] == ['api', 'shared'] and len(segments) in (2, 3):
+                return self.send_json(200, {'trip': sharing.view(segments[2] if len(segments) == 3 else '')})
             if not path.startswith('/api/') and self.command == 'GET':
                 name = {'/': 'index.html', '/app.js': 'app.js', '/style.css': 'style.css', '/details_weather.js': 'details_weather.js'}.get(path)
                 if name:

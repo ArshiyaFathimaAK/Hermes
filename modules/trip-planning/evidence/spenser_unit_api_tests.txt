@@ -1,0 +1,21 @@
+test_TC_UC11_07_api_cost_and_missing_trip (tests.test_cost_share.CostAndShareAPITests.test_TC_UC11_07_api_cost_and_missing_trip) ... ok
+test_TC_UC12_09_api_share_and_view (tests.test_cost_share.CostAndShareAPITests.test_TC_UC12_09_api_share_and_view) ... ok
+test_TC_UC11_01_empty_itinerary (tests.test_cost_share.CostAndShareTests.test_TC_UC11_01_empty_itinerary) ... ok
+test_TC_UC11_02_only_free_places (tests.test_cost_share.CostAndShareTests.test_TC_UC11_02_only_free_places) ... ok
+test_TC_UC11_03_lodging_nights_and_activities (tests.test_cost_share.CostAndShareTests.test_TC_UC11_03_lodging_nights_and_activities) ... ok
+test_TC_UC11_04_single_day_trip_boundary (tests.test_cost_share.CostAndShareTests.test_TC_UC11_04_single_day_trip_boundary) ... ok
+test_TC_UC11_05_other_users_trip_is_hidden (tests.test_cost_share.CostAndShareTests.test_TC_UC11_05_other_users_trip_is_hidden) ... ok
+test_TC_UC11_06_estimate_follows_saved_itinerary (tests.test_cost_share.CostAndShareTests.test_TC_UC11_06_estimate_follows_saved_itinerary) ... ok
+test_TC_UC12_01_owner_creates_link (tests.test_cost_share.CostAndShareTests.test_TC_UC12_01_owner_creates_link) ... ok
+test_TC_UC12_02_second_request_reuses_link (tests.test_cost_share.CostAndShareTests.test_TC_UC12_02_second_request_reuses_link) ... ok
+test_TC_UC12_03_non_owner_cannot_create_link (tests.test_cost_share.CostAndShareTests.test_TC_UC12_03_non_owner_cannot_create_link) ... ok
+test_TC_UC12_04_valid_link_shows_read_only_trip (tests.test_cost_share.CostAndShareTests.test_TC_UC12_04_valid_link_shows_read_only_trip) ... ok
+test_TC_UC12_05_link_exposes_no_other_trip (tests.test_cost_share.CostAndShareTests.test_TC_UC12_05_link_exposes_no_other_trip) ... ok
+test_TC_UC12_06_unknown_link (tests.test_cost_share.CostAndShareTests.test_TC_UC12_06_unknown_link) ... ok
+test_TC_UC12_07_malformed_links (tests.test_cost_share.CostAndShareTests.test_TC_UC12_07_malformed_links) ... ok
+test_TC_UC12_08_link_shows_latest_saved_itinerary (tests.test_cost_share.CostAndShareTests.test_TC_UC12_08_link_shows_latest_saved_itinerary) ... ok
+
+----------------------------------------------------------------------
+Ran 16 tests in 1.160s
+
+OK

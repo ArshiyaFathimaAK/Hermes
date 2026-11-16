@@ -3,3 +3,6 @@
 
 /* Reynard Landreneau: UC-06 detail page and UC-07 weather cards */
 .detail-card{max-width:720px;background:white;border:1px solid var(--line);border-radius:12px;padding:30px}.detail-card dl{display:grid;grid-template-columns:140px 1fr;gap:10px 20px;margin:20px 0}.detail-card dt{font-weight:600;color:var(--muted);font-size:14px}.detail-card dd{margin:0}.detail-card a{color:var(--teal);font-weight:600}.result button{margin-top:12px}.weather-day h3{font:20px Georgia,serif;margin:6px 0}.weather-day .temps{font-size:26px;font-weight:600;margin:8px 0}@media(max-width:760px){.detail-card dl{grid-template-columns:1fr}}
+
+/* Spenser Saunders: UC-11 cost panel, UC-12 share panel and read-only shared view */
+.cost-total{font:34px/1.1 Georgia,serif;margin:4px 0 8px}.cost-days{list-style:none;padding:0;margin:12px 0;font-size:14px}.cost-days li{display:flex;justify-content:space-between;border-bottom:1px solid var(--line);padding:6px 0}#share-url{font-size:13px}#shared-days h2{margin-top:28px}
