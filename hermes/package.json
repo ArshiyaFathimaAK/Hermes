@@ -57,6 +57,10 @@
     },
     "setupFilesAfterEnv": [
       "<rootDir>/jest.setup.ts"
-    ]
+    ],
+    "setupFiles": [
+      "react-native-gesture-handler/jestSetup"
+    ],
+    "resolver": "react-native-reanimated/jest/resolver.js"
   }
 }

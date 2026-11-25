@@ -115,6 +115,10 @@ and `theme`. Features import each other only through `@/features/<name>`. Lint e
 - Black is structure and blue is action: if it's blue, you can tap it.
 - Missing data is hidden, never filled in. Dates are always optional.
 - Touch targets are at least 44pt, and icon-only buttons need a `label`.
+- If it looks draggable, make it draggable, and keep tapping working too. Gestures use
+  `usePanGesture`, animations use Reanimated with the springs in `ui/motion.ts`. Let vertical drags scroll.
+  Write gesture options out in full (no spreads: the worklets compiler rejects them, and only a bundle
+  build such as `npx expo export -p ios` shows it), and ignore taps that were part of a drag.
 - Filters: common ones show first; mark rare ones `advanced` so they sit behind "More options".
 - Light and dark follow the device, or the choice in Account (`useThemeMode`). Styles with colors use `createStyles((colors) => ({ ... }))` and
   `const styles = useStyles()`; one-off values use `useColors()`. There is no static `colors` import.

@@ -15,7 +15,8 @@ import { ForecastCard } from './forecast-card';
 import { useDatePicker } from './use-date-picker';
 
 export function DatesScreen({ placeId }: { placeId: string }) {
-  const { range, pickDay, pickRange, forecast, save } = useDatePicker(placeId);
+  const { month, setMonth, range, pickDay, dragRange, pickPreset, forecast, save } =
+    useDatePicker(placeId);
   const [presets] = useState(getDatePresets);
 
   return (
@@ -49,12 +50,17 @@ export function DatesScreen({ placeId }: { placeId: string }) {
           <Chip
             key={preset.label}
             label={preset.label}
-            onPress={() => pickRange(preset.range)}
+            onPress={() => pickPreset(preset.range)}
           />
         ))}
       </ScrollView>
-      {/* The key jumps the calendar to the month of a new start day. */}
-      <Calendar key={range?.start.slice(0, 7)} range={range} onPickDay={pickDay} />
+      <Calendar
+        month={month}
+        onChangeMonth={setMonth}
+        range={range}
+        onPickDay={pickDay}
+        onDragRange={dragRange}
+      />
       {range && (
         <AsyncView state={forecast}>
           {(days) => <ForecastCard range={range} days={days} />}

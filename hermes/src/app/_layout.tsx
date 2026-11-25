@@ -10,6 +10,7 @@ import { Stack } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import { StatusBar } from 'expo-status-bar';
 import { useEffect } from 'react';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 import { AppProviders } from '@/state/app-providers';
 import { NavigationTheme } from '@/theme/navigation-theme';
@@ -36,20 +37,22 @@ export default function RootLayout() {
   if (!ready) return null;
 
   return (
-    <AppProviders>
-      <NavigationTheme>
-        <StatusBar style="auto" />
-        <Stack screenOptions={{ headerShown: false }}>
-          <Stack.Screen name="(tabs)" />
-          <Stack.Screen name="activity/[activityId]" />
-          <Stack.Screen name="shared/[token]" />
-          <Stack.Screen name="dates/[placeId]" options={{ presentation: 'modal' }} />
-          <Stack.Screen name="pick-place" options={{ presentation: 'modal' }} />
-          <Stack.Screen name="sign-in" options={{ presentation: 'modal' }} />
-          <Stack.Screen name="sign-up" options={{ presentation: 'modal' }} />
-          <Stack.Screen name="edit-profile" options={{ presentation: 'modal' }} />
-        </Stack>
-      </NavigationTheme>
-    </AppProviders>
+    <GestureHandlerRootView>
+      <AppProviders>
+        <NavigationTheme>
+          <StatusBar style="auto" />
+          <Stack screenOptions={{ headerShown: false }}>
+            <Stack.Screen name="(tabs)" />
+            <Stack.Screen name="activity/[activityId]" />
+            <Stack.Screen name="shared/[token]" />
+            <Stack.Screen name="dates/[placeId]" options={{ presentation: 'modal' }} />
+            <Stack.Screen name="pick-place" options={{ presentation: 'modal' }} />
+            <Stack.Screen name="sign-in" options={{ presentation: 'modal' }} />
+            <Stack.Screen name="sign-up" options={{ presentation: 'modal' }} />
+            <Stack.Screen name="edit-profile" options={{ presentation: 'modal' }} />
+          </Stack>
+        </NavigationTheme>
+      </AppProviders>
+    </GestureHandlerRootView>
   );
 }

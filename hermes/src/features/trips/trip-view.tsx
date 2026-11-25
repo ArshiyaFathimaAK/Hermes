@@ -9,6 +9,7 @@ import { useTrips } from '@/state/trips';
 import { spacing } from '@/theme';
 import { AsyncView } from '@/ui/async-view';
 import { Button } from '@/ui/button';
+import { Chip } from '@/ui/chip';
 import { IconButton } from '@/ui/icon-button';
 import { ListGroup, ListRow } from '@/ui/list-group';
 import { Message } from '@/ui/message';
@@ -49,6 +50,7 @@ export function TripView({ trip }: { trip: Trip }) {
   const unscheduled = unscheduledItems(trip.items);
   const editing = trip.items.find((item) => item.activityId === editingId);
   const placeId = trip.placeIds[0];
+  const openDates = () => router.push(routes.dates(placeId));
   const addThings = () => router.push(routes.place(placeId));
 
   return (
@@ -58,11 +60,21 @@ export function TripView({ trip }: { trip: Trip }) {
           <Text variant="title" accessibilityRole="header">
             {trip.name}
           </Text>
-          <Text color="textMuted">
-            {trip.dates
-              ? `${formatRange(trip.dates)} · ${formatCountdown(trip.dates.start)}`
-              : 'No dates yet'}
-          </Text>
+          {trip.dates ? (
+            <View style={styles.dates}>
+              <Chip
+                testID="trip-dates"
+                icon="calendar"
+                iconColor="actionText"
+                label={formatRange(trip.dates)}
+                accessibilityLabel={`${formatRange(trip.dates)}. Change dates`}
+                onPress={openDates}
+              />
+              <Text color="textMuted">{formatCountdown(trip.dates.start)}</Text>
+            </View>
+          ) : (
+            <Text color="textMuted">No dates yet</Text>
+          )}
         </View>
         <IconButton
           testID="share-trip"
@@ -116,7 +128,7 @@ export function TripView({ trip }: { trip: Trip }) {
                 variant="soft"
                 icon="calendar"
                 label="Add dates to plan by day"
-                onPress={() => router.push(routes.dates(placeId))}
+                onPress={openDates}
               />
             )}
 
@@ -171,6 +183,7 @@ export function TripView({ trip }: { trip: Trip }) {
 
 const styles = StyleSheet.create({
   header: { flexDirection: 'row', alignItems: 'flex-start', gap: spacing.xs },
-  fill: { flex: 1 },
+  fill: { flex: 1, gap: spacing.sm },
+  dates: { flexDirection: 'row', flexWrap: 'wrap', alignItems: 'center', gap: spacing.md },
   banners: { gap: spacing.sm },
 });
