@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="700" height="340" viewBox="0 0 350 170">
+<rect width="350" height="170" fill="#0B0B0C"></rect>
+<path d="M10 170 L10 70 Q 175 -10 340 70 L340 170" stroke="#3A3F4B" stroke-width="3" fill="none"></path>
+<path d="M60 170 L60 60 M120 170 L120 40 M175 170 L175 34 M230 170 L230 40 M290 170 L290 60" stroke="#24262C" stroke-width="2"></path>
+<path d="M70 30 V 58 M140 22 V 52 M210 22 V 52 M280 30 V 58" stroke="#5B6070" stroke-width="1.5"></path>
+<circle cx="70" cy="62" r="6" fill="#FFFFFF"></circle><circle cx="140" cy="56" r="6" fill="#FFFFFF"></circle><circle cx="210" cy="56" r="6" fill="#FFFFFF"></circle><circle cx="280" cy="62" r="6" fill="#FFFFFF"></circle>
+<rect x="24" y="92" width="80" height="16" fill="#FFFFFF"></rect><rect x="136" y="92" width="80" height="16" fill="#FFFFFF"></rect><rect x="248" y="92" width="80" height="16" fill="#FFFFFF"></rect>
+<rect x="24" y="110" width="80" height="34" fill="#1D4ED8"></rect><rect x="136" y="110" width="80" height="34" fill="#1D4ED8"></rect><rect x="248" y="110" width="80" height="34" fill="#1D4ED8"></rect>
+<rect x="0" y="150" width="350" height="20" fill="#24262C"></rect>
+<rect x="40" y="152" width="270" height="8" rx="4" fill="#9DB3EE"></rect>
+</svg>
