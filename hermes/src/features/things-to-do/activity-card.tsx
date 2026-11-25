@@ -1,7 +1,7 @@
-import { StyleSheet, View } from 'react-native';
+import { View } from 'react-native';
 
 import type { Activity } from '@/domain/activity';
-import { colors, radius, shadows, sizes, spacing } from '@/theme';
+import { createStyles, radius, shadows, sizes, spacing } from '@/theme';
 import { Badge } from '@/ui/badge';
 import { Icon } from '@/ui/icon';
 import { Photo } from '@/ui/photo';
@@ -16,7 +16,8 @@ interface ActivityCardProps {
 }
 
 export function ActivityCard({ activity, saved, onPress, onToggleSaved }: ActivityCardProps) {
-  const color = saved ? 'onAction' : 'action';
+  const styles = useStyles();
+  const color = saved ? 'onAction' : 'actionText';
   return (
     <View style={styles.card}>
       <Tappable
@@ -25,7 +26,7 @@ export function ActivityCard({ activity, saved, onPress, onToggleSaved }: Activi
         onPress={onPress}>
         <Photo source={activity.image} alt={activity.name} style={styles.photo}>
           {activity.bookable && (
-            <Badge variant="light" label="Bookable tour" style={styles.topLeft} />
+            <Badge variant="raised" label="Bookable tour" style={styles.topLeft} />
           )}
           {activity.photoCredit && (
             <Badge variant="overlay" label={activity.photoCredit} style={styles.bottomRight} />
@@ -53,7 +54,7 @@ export function ActivityCard({ activity, saved, onPress, onToggleSaved }: Activi
           </View>
           {activity.summary && <Text color="textSecondary">{activity.summary}</Text>}
           <View style={styles.row}>
-            <Icon name="pin" size={16} color="action" />
+            <Icon name="pin" size={16} color="actionText" />
             <Text variant="small" weight="semibold" style={styles.fill}>
               {activity.where}
             </Text>
@@ -75,10 +76,10 @@ export function ActivityCard({ activity, saved, onPress, onToggleSaved }: Activi
             <Text variant="small" weight="bold" style={styles.fill}>
               {activity.priceLabel}
             </Text>
-            <Text variant="small" weight="bold" color="action">
+            <Text variant="small" weight="bold" color="actionText">
               Details
             </Text>
-            <Icon name="chevronRight" size={16} color="action" />
+            <Icon name="chevronRight" size={16} color="actionText" />
           </View>
         </View>
       </Tappable>
@@ -99,7 +100,7 @@ export function ActivityCard({ activity, saved, onPress, onToggleSaved }: Activi
   );
 }
 
-const styles = StyleSheet.create({
+const useStyles = createStyles((colors) => ({
   card: {
     borderRadius: radius.xl,
     borderWidth: sizes.hairline,
@@ -123,8 +124,8 @@ const styles = StyleSheet.create({
     minHeight: sizes.touch,
     paddingHorizontal: spacing.md,
     borderRadius: radius.pill,
-    backgroundColor: colors.background,
+    backgroundColor: colors.raised,
     ...shadows.medium,
   },
   saved: { backgroundColor: colors.action },
-});
+}));

@@ -1,11 +1,11 @@
-import { StyleSheet, View } from 'react-native';
+import { View } from 'react-native';
 
 import type { Trip } from '@/domain/trip';
 import { CONDITION_LABELS, useCurrentWeather } from '@/features/weather';
 import { useShowTrips } from '@/navigation/use-show-trips';
 import { useTemperature } from '@/state/preferences';
 import { useTrips } from '@/state/trips';
-import { colors, radius, sizes, spacing } from '@/theme';
+import { createStyles, radius, sizes, spacing } from '@/theme';
 import { Badge } from '@/ui/badge';
 import { Icon } from '@/ui/icon';
 import { Tappable } from '@/ui/tappable';
@@ -14,6 +14,7 @@ import { formatCountdown, formatRange } from '@/utils/dates';
 import { pluralize } from '@/utils/format';
 
 export function UpNextCard({ trip }: { trip: Trip }) {
+  const styles = useStyles();
   const { selectTrip } = useTrips();
   const showTrips = useShowTrips();
   const weather = useCurrentWeather(trip.placeIds[0]);
@@ -30,10 +31,10 @@ export function UpNextCard({ trip }: { trip: Trip }) {
       style={styles.card}>
       <View style={styles.row}>
         <View style={styles.text}>
-          <Text variant="title" color="textOnInverse">
+          <Text variant="title" color="textOnFrame">
             {trip.name}
           </Text>
-          <Text color="textOnInverseMuted">
+          <Text color="textOnFrameMuted">
             {trip.dates ? formatRange(trip.dates) : 'No dates yet'}
           </Text>
         </View>
@@ -42,27 +43,27 @@ export function UpNextCard({ trip }: { trip: Trip }) {
       <View style={styles.footer}>
         {weather.status === 'ready' && (
           <View style={styles.weather}>
-            <Icon name={weather.data.condition} size={18} color="actionOnInverse" />
-            <Text weight="semibold" color="textOnInverse">
+            <Icon name={weather.data.condition} size={18} color="actionOnFrame" />
+            <Text weight="semibold" color="textOnFrame">
               {formatTemp(weather.data.temperature)} {CONDITION_LABELS[weather.data.condition]}
             </Text>
           </View>
         )}
-        <Text weight="semibold" color="textOnInverseMuted" style={styles.text}>
+        <Text weight="semibold" color="textOnFrameMuted" style={styles.text}>
           {pluralize(trip.items.length, 'thing')} saved
         </Text>
-        <Icon name="chevronRight" color="textOnInverse" />
+        <Icon name="chevronRight" color="textOnFrame" />
       </View>
     </Tappable>
   );
 }
 
-const styles = StyleSheet.create({
+const useStyles = createStyles((colors) => ({
   card: {
     gap: spacing.lg,
     padding: spacing.xl,
     borderRadius: radius.xl,
-    backgroundColor: colors.inverse,
+    backgroundColor: colors.frame,
   },
   row: { flexDirection: 'row', alignItems: 'flex-start', gap: spacing.md },
   text: { flex: 1 },
@@ -72,7 +73,7 @@ const styles = StyleSheet.create({
     gap: spacing.lg,
     paddingTop: spacing.lg,
     borderTopWidth: sizes.hairline,
-    borderTopColor: colors.inverseBorder,
+    borderTopColor: colors.frameBorder,
   },
   weather: { flexDirection: 'row', alignItems: 'center', gap: spacing.sm },
-});
+}));

@@ -1,18 +1,18 @@
-import { StyleSheet, type StyleProp, type ViewStyle } from 'react-native';
+import { type StyleProp, type ViewStyle } from 'react-native';
 
-import { colors, shadows, sizes, type ColorName } from '@/theme';
+import { createStyles, shadows, sizes, type ColorName } from '@/theme';
 
 import { Icon, type IconName } from './icon';
 import { Tappable } from './tappable';
 
-type IconButtonVariant = 'plain' | 'onInverse' | 'raised' | 'primary' | 'outline';
+type IconButtonVariant = 'plain' | 'onFrame' | 'raised' | 'primary' | 'outline';
 
 const FOREGROUND: Record<IconButtonVariant, ColorName> = {
   plain: 'text',
-  onInverse: 'textOnInverse',
+  onFrame: 'textOnFrame',
   raised: 'text',
   primary: 'onAction',
-  outline: 'action',
+  outline: 'actionText',
 };
 
 interface IconButtonProps {
@@ -37,6 +37,7 @@ export function IconButton({
   style,
   testID,
 }: IconButtonProps) {
+  const styles = useStyles();
   return (
     <Tappable
       onPress={onPress}
@@ -56,7 +57,7 @@ export function IconButton({
   );
 }
 
-const styles = StyleSheet.create({
+const useStyles = createStyles((colors) => ({
   base: {
     width: sizes.touch,
     height: sizes.touch,
@@ -64,7 +65,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  raised: { backgroundColor: colors.background, ...shadows.medium },
+  raised: { backgroundColor: colors.raised, ...shadows.medium },
   primary: { backgroundColor: colors.action },
-  outline: { borderWidth: 2, borderColor: colors.action },
-});
+  outline: { borderWidth: 2, borderColor: colors.actionText },
+}));

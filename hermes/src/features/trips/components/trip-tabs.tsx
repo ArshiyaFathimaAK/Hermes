@@ -29,7 +29,7 @@ export function TripTabs({ trips, activeId, onSelect, onNew }: TripTabsProps) {
           onPress={() => onSelect(trip.id)}
         />
       ))}
-      <Chip testID="new-trip" icon="add" iconColor="action" label="New trip" onPress={onNew} />
+      <Chip testID="new-trip" icon="add" iconColor="actionText" label="New trip" onPress={onNew} />
     </ScrollView>
   );
 }

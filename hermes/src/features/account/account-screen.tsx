@@ -1,12 +1,12 @@
 import { router } from 'expo-router';
-import { StyleSheet, View } from 'react-native';
+import { View } from 'react-native';
 
 import { routes } from '@/navigation/routes';
 import { useShowTrips } from '@/navigation/use-show-trips';
 import { usePreferences } from '@/state/preferences';
 import { useSession } from '@/state/session';
 import { useTrips } from '@/state/trips';
-import { colors, radius, spacing } from '@/theme';
+import { createStyles, radius, spacing, useThemeMode, type ThemeMode } from '@/theme';
 import { Button } from '@/ui/button';
 import { Icon } from '@/ui/icon';
 import { ListGroup, ListRow } from '@/ui/list-group';
@@ -21,10 +21,18 @@ const UNITS: { value: TemperatureUnit; label: string }[] = [
   { value: 'C', label: '°C' },
 ];
 
+const THEMES: { value: ThemeMode; label: string }[] = [
+  { value: 'auto', label: 'Auto' },
+  { value: 'light', label: 'Light' },
+  { value: 'dark', label: 'Dark' },
+];
+
 export function AccountScreen() {
+  const styles = useStyles();
   const { user, signOut } = useSession();
   const { trips } = useTrips();
   const showTrips = useShowTrips();
+  const { mode, setMode } = useThemeMode();
   const { temperatureUnit, setTemperatureUnit } = usePreferences();
 
   return (
@@ -34,7 +42,7 @@ export function AccountScreen() {
       </Text>
       <View style={styles.profile}>
         <View style={styles.avatar}>
-          <Icon name="person" size={30} color="textOnInverse" />
+          <Icon name="person" size={30} color="textOnFrame" />
         </View>
         <View style={styles.fill}>
           <Text variant="subheading">{user?.name ?? 'Guest'}</Text>
@@ -69,6 +77,12 @@ export function AccountScreen() {
       <Section title="Settings">
         <ListGroup>
           <ListRow
+            title="Theme"
+            trailing={
+              <SegmentedControl label="Theme" options={THEMES} value={mode} onChange={setMode} />
+            }
+          />
+          <ListRow
             title="Temperature"
             trailing={
               <SegmentedControl
@@ -88,7 +102,7 @@ export function AccountScreen() {
   );
 }
 
-const styles = StyleSheet.create({
+const useStyles = createStyles((colors) => ({
   profile: { flexDirection: 'row', alignItems: 'center', gap: spacing.lg },
   avatar: {
     width: 64,
@@ -96,7 +110,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: radius.pill,
-    backgroundColor: colors.inverse,
+    backgroundColor: colors.frame,
   },
   fill: { flex: 1 },
-});
+}));

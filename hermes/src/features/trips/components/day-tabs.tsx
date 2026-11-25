@@ -1,9 +1,9 @@
-import { ScrollView, StyleSheet } from 'react-native';
+import { ScrollView } from 'react-native';
 
 import type { IsoDate } from '@/domain/dates';
 import type { DailyWeather } from '@/domain/weather';
 import { useTemperature } from '@/state/preferences';
-import { colors, radius, sizes, spacing } from '@/theme';
+import { createStyles, radius, sizes, spacing } from '@/theme';
 import { Tappable } from '@/ui/tappable';
 import { Text } from '@/ui/text';
 import { dayOfMonth, formatLong, formatWeekday } from '@/utils/dates';
@@ -16,6 +16,7 @@ interface DayTabsProps {
 }
 
 export function DayTabs({ days, weather, selected, onSelect }: DayTabsProps) {
+  const styles = useStyles();
   const formatTemp = useTemperature();
   return (
     <ScrollView
@@ -26,7 +27,7 @@ export function DayTabs({ days, weather, selected, onSelect }: DayTabsProps) {
       contentContainerStyle={styles.row}>
       {days.map((date, day) => {
         const isSelected = day === selected;
-        const color = isSelected ? 'textOnInverse' : 'text';
+        const color = isSelected ? 'onSelected' : 'text';
         return (
           <Tappable
             key={date}
@@ -54,7 +55,7 @@ export function DayTabs({ days, weather, selected, onSelect }: DayTabsProps) {
   );
 }
 
-const styles = StyleSheet.create({
+const useStyles = createStyles((colors) => ({
   scroll: { flexGrow: 0, marginHorizontal: -spacing.xl },
   row: { flexGrow: 1, gap: spacing.sm, paddingHorizontal: spacing.xl },
   tab: {
@@ -67,5 +68,5 @@ const styles = StyleSheet.create({
     borderWidth: sizes.hairline,
     borderColor: colors.border,
   },
-  selected: { backgroundColor: colors.inverse, borderColor: colors.inverse },
-});
+  selected: { backgroundColor: colors.selected, borderColor: colors.selected },
+}));

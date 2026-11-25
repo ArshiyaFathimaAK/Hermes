@@ -100,3 +100,9 @@ describe('View plan', () => {
     expect(await screen.findByTestId('new-trip')).toBeTruthy();
   });
 });
+
+it('closes a screen opened from a link onto Explore', async () => {
+  await renderRouter('./src/app', { initialUrl: '/sign-in' });
+  await press('continue-as-guest');
+  expect(await screen.findByTestId('explore-screen')).toBeTruthy();
+});

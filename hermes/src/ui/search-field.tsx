@@ -1,6 +1,6 @@
-import { StyleSheet, TextInput, View } from 'react-native';
+import { TextInput, View } from 'react-native';
 
-import { colors, radius, sizes, spacing, typography } from '@/theme';
+import { createStyles, radius, sizes, spacing, typography, useColors } from '@/theme';
 
 import { Icon } from './icon';
 
@@ -13,6 +13,8 @@ interface SearchFieldProps {
 }
 
 export function SearchField({ label, placeholder, value, onChangeText, testID }: SearchFieldProps) {
+  const styles = useStyles();
+  const colors = useColors();
   return (
     <View style={[styles.box, value ? styles.active : null]}>
       <Icon name="search" />
@@ -32,7 +34,7 @@ export function SearchField({ label, placeholder, value, onChangeText, testID }:
   );
 }
 
-const styles = StyleSheet.create({
+const useStyles = createStyles((colors) => ({
   box: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -44,7 +46,7 @@ const styles = StyleSheet.create({
     borderColor: colors.surface,
     backgroundColor: colors.surface,
   },
-  active: { borderColor: colors.action },
+  active: { borderColor: colors.actionText },
   input: {
     ...typography.label,
     fontFamily: typography.body.fontFamily,
@@ -55,4 +57,4 @@ const styles = StyleSheet.create({
     color: colors.text,
     outlineWidth: 0,
   },
-});
+}));

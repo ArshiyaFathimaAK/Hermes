@@ -1,8 +1,8 @@
 import { useState } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { View } from 'react-native';
 
 import type { DateRange, IsoDate } from '@/domain/dates';
-import { colors, radius, sizes, spacing } from '@/theme';
+import { createStyles, radius, sizes, spacing } from '@/theme';
 import { IconButton } from '@/ui/icon-button';
 import { Tappable } from '@/ui/tappable';
 import { Text } from '@/ui/text';
@@ -26,6 +26,7 @@ interface CalendarProps {
 }
 
 export function Calendar({ range, onPickDay }: CalendarProps) {
+  const styles = useStyles();
   const now = today();
   const [month, setMonth] = useState(() => firstOfMonth(range?.start ?? now));
   const days = eachDay({ start: month, end: addDays(addMonths(month, 1), -1) });
@@ -90,7 +91,7 @@ export function Calendar({ range, onPickDay }: CalendarProps) {
   );
 }
 
-const styles = StyleSheet.create({
+const useStyles = createStyles((colors) => ({
   header: { flexDirection: 'row', alignItems: 'center' },
   month: { flex: 1 },
   grid: { flexDirection: 'row', flexWrap: 'wrap', rowGap: spacing.xxs },
@@ -98,4 +99,4 @@ const styles = StyleSheet.create({
   day: { height: sizes.touch, alignItems: 'center', justifyContent: 'center' },
   inRange: { backgroundColor: colors.actionSoft },
   end: { backgroundColor: colors.action, borderRadius: radius.md },
-});
+}));

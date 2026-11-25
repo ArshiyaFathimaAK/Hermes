@@ -1,9 +1,9 @@
-import { ScrollView, StyleSheet, View } from 'react-native';
+import { ScrollView, View } from 'react-native';
 
 import type { DateRange } from '@/domain/dates';
 import type { DailyWeather } from '@/domain/weather';
 import { useTemperature } from '@/state/preferences';
-import { colors, radius, spacing } from '@/theme';
+import { createStyles, radius, spacing } from '@/theme';
 import { Icon } from '@/ui/icon';
 import { Text } from '@/ui/text';
 import { daysBetween, formatRange, formatWeekday } from '@/utils/dates';
@@ -11,6 +11,7 @@ import { pluralize } from '@/utils/format';
 
 /** UC-07 View Weather. */
 export function ForecastCard({ range, days }: { range: DateRange; days: DailyWeather[] }) {
+  const styles = useStyles();
   const formatTemp = useTemperature();
   const anyTypical = days.some((day) => day.isTypical);
   return (
@@ -54,7 +55,7 @@ export function ForecastCard({ range, days }: { range: DateRange; days: DailyWea
   );
 }
 
-const styles = StyleSheet.create({
+const useStyles = createStyles((colors) => ({
   card: {
     gap: spacing.md,
     padding: spacing.lg,
@@ -65,4 +66,4 @@ const styles = StyleSheet.create({
   fill: { flex: 1 },
   days: { gap: spacing.md },
   day: { alignItems: 'center', gap: spacing.xs, minWidth: 42 },
-});
+}));

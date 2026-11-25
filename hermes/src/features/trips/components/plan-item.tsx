@@ -1,7 +1,6 @@
-import { StyleSheet } from 'react-native';
 
 import type { Activity } from '@/domain/activity';
-import { colors, radius, sizes, spacing } from '@/theme';
+import { createStyles, radius, sizes, spacing } from '@/theme';
 import { Icon } from '@/ui/icon';
 import { Tappable } from '@/ui/tappable';
 import { Text } from '@/ui/text';
@@ -14,6 +13,7 @@ interface PlanItemProps {
 }
 
 export function PlanItem({ activity, onPress, testID }: PlanItemProps) {
+  const styles = useStyles();
   return (
     <Tappable
       testID={testID}
@@ -34,17 +34,18 @@ export function PlanItem({ activity, onPress, testID }: PlanItemProps) {
 }
 
 export function AddItem({ onPress }: { onPress: () => void }) {
+  const styles = useStyles();
   return (
     <Tappable accessibilityLabel="Add something" onPress={onPress} style={styles.add}>
-      <Icon name="add" size={18} color="action" />
-      <Text weight="semibold" color="action">
+      <Icon name="add" size={18} color="actionText" />
+      <Text weight="semibold" color="actionText">
         Add something
       </Text>
     </Tappable>
   );
 }
 
-const styles = StyleSheet.create({
+const useStyles = createStyles((colors) => ({
   item: {
     gap: spacing.xs,
     paddingHorizontal: spacing.lg,
@@ -64,4 +65,4 @@ const styles = StyleSheet.create({
     borderStyle: 'dashed',
     borderColor: colors.actionBorder,
   },
-});
+}));

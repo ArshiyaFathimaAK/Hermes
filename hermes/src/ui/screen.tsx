@@ -1,8 +1,8 @@
 import type { PropsWithChildren, ReactNode } from 'react';
-import { KeyboardAvoidingView, ScrollView, StyleSheet, View } from 'react-native';
+import { KeyboardAvoidingView, ScrollView, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-import { colors, sizes, spacing } from '@/theme';
+import { createStyles, sizes, spacing } from '@/theme';
 
 interface ScreenProps extends PropsWithChildren {
   /** Stays put above the bottom edge, such as a save bar. */
@@ -16,6 +16,7 @@ interface ScreenProps extends PropsWithChildren {
 
 /** Outer frame of every screen: background, safe areas, scrolling and keyboard. */
 export function Screen({ children, footer, edgeToEdge, padded = true, testID }: ScreenProps) {
+  const styles = useStyles();
   const insets = useSafeAreaInsets();
   return (
     <KeyboardAvoidingView testID={testID} style={styles.root} behavior="padding">
@@ -36,6 +37,7 @@ export function Screen({ children, footer, edgeToEdge, padded = true, testID }: 
 
 /** A bar of actions for `footer`, clear of the home indicator. */
 export function FooterBar({ children }: PropsWithChildren) {
+  const styles = useStyles();
   const insets = useSafeAreaInsets();
   return (
     <View style={[styles.footer, { paddingBottom: Math.max(insets.bottom, spacing.md) }]}>
@@ -44,7 +46,7 @@ export function FooterBar({ children }: PropsWithChildren) {
   );
 }
 
-const styles = StyleSheet.create({
+const useStyles = createStyles((colors) => ({
   root: { flex: 1, backgroundColor: colors.background },
   content: {
     flexGrow: 1,
@@ -63,4 +65,4 @@ const styles = StyleSheet.create({
     borderTopWidth: sizes.hairline,
     borderTopColor: colors.border,
   },
-});
+}));

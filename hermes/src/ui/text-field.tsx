@@ -1,6 +1,6 @@
-import { StyleSheet, TextInput, View, type TextInputProps } from 'react-native';
+import { TextInput, View, type TextInputProps } from 'react-native';
 
-import { colors, radius, sizes, spacing, typography } from '@/theme';
+import { createStyles, radius, sizes, spacing, typography, useColors } from '@/theme';
 
 import { Text } from './text';
 
@@ -10,6 +10,8 @@ interface TextFieldProps extends Omit<TextInputProps, 'style'> {
 }
 
 export function TextField({ label, error, ...input }: TextFieldProps) {
+  const styles = useStyles();
+  const colors = useColors();
   return (
     <View style={styles.field}>
       <Text variant="small" weight="semibold">
@@ -30,7 +32,7 @@ export function TextField({ label, error, ...input }: TextFieldProps) {
   );
 }
 
-const styles = StyleSheet.create({
+const useStyles = createStyles((colors) => ({
   field: { gap: spacing.sm },
   input: {
     ...typography.label,
@@ -45,4 +47,4 @@ const styles = StyleSheet.create({
     color: colors.text,
   },
   invalid: { borderColor: colors.danger },
-});
+}));

@@ -1,6 +1,6 @@
 import { SymbolView, type SymbolViewProps } from 'expo-symbols';
 
-import { colors, type ColorName } from '@/theme';
+import { useColors, type ColorName } from '@/theme';
 
 // iOS uses SF Symbols; Android and web use Material Symbols.
 const ICONS = {
@@ -44,6 +44,7 @@ interface IconProps {
 
 /** Decorative: put the label on the thing you press. */
 export function Icon({ name, size = 20, color = 'text' }: IconProps) {
+  const colors = useColors();
   return (
     <SymbolView
       name={ICONS[name]}

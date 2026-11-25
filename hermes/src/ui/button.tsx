@@ -1,20 +1,20 @@
-import { StyleSheet, type StyleProp, type ViewStyle } from 'react-native';
+import { type StyleProp, type ViewStyle } from 'react-native';
 
-import { colors, radius, sizes, spacing, type ColorName } from '@/theme';
+import { createStyles, radius, sizes, spacing, type ColorName } from '@/theme';
 
 import { Icon, type IconName } from './icon';
 import { Tappable } from './tappable';
 import { Text } from './text';
 
-type ButtonVariant = 'primary' | 'soft' | 'outline' | 'quiet' | 'plain' | 'plainOnInverse';
+type ButtonVariant = 'primary' | 'soft' | 'outline' | 'quiet' | 'plain' | 'plainOnFrame';
 
 const FOREGROUND: Record<ButtonVariant, ColorName> = {
   primary: 'onAction',
-  soft: 'action',
+  soft: 'actionText',
   outline: 'text',
   quiet: 'text',
-  plain: 'action',
-  plainOnInverse: 'actionOnInverse',
+  plain: 'actionText',
+  plainOnFrame: 'actionOnFrame',
 };
 
 interface ButtonProps {
@@ -40,8 +40,9 @@ export function Button({
   style,
   testID,
 }: ButtonProps) {
+  const styles = useStyles();
   const color = FOREGROUND[variant];
-  const isPlain = variant === 'plain' || variant === 'plainOnInverse';
+  const isPlain = variant === 'plain' || variant === 'plainOnFrame';
   return (
     <Tappable
       onPress={onPress}
@@ -58,7 +59,7 @@ export function Button({
   );
 }
 
-const styles = StyleSheet.create({
+const useStyles = createStyles((colors) => ({
   base: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: spacing.sm },
   solid: {
     minHeight: sizes.control,
@@ -70,4 +71,4 @@ const styles = StyleSheet.create({
   soft: { backgroundColor: colors.actionSoft },
   outline: { borderWidth: 1.5, borderColor: colors.text },
   quiet: { borderWidth: sizes.hairline, borderColor: colors.border },
-});
+}));

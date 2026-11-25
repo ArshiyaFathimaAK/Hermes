@@ -12,6 +12,7 @@ import { StatusBar } from 'expo-status-bar';
 import { useEffect } from 'react';
 
 import { AppProviders } from '@/state/app-providers';
+import { NavigationTheme } from '@/theme/navigation-theme';
 
 SplashScreen.preventAutoHideAsync();
 
@@ -36,17 +37,19 @@ export default function RootLayout() {
 
   return (
     <AppProviders>
-      <StatusBar style="auto" />
-      <Stack screenOptions={{ headerShown: false }}>
-        <Stack.Screen name="(tabs)" />
-        <Stack.Screen name="activity/[activityId]" />
-        <Stack.Screen name="shared/[token]" />
-        <Stack.Screen name="dates/[placeId]" options={{ presentation: 'modal' }} />
-        <Stack.Screen name="pick-place" options={{ presentation: 'modal' }} />
-        <Stack.Screen name="sign-in" options={{ presentation: 'modal' }} />
-        <Stack.Screen name="sign-up" options={{ presentation: 'modal' }} />
-        <Stack.Screen name="edit-profile" options={{ presentation: 'modal' }} />
-      </Stack>
+      <NavigationTheme>
+        <StatusBar style="auto" />
+        <Stack screenOptions={{ headerShown: false }}>
+          <Stack.Screen name="(tabs)" />
+          <Stack.Screen name="activity/[activityId]" />
+          <Stack.Screen name="shared/[token]" />
+          <Stack.Screen name="dates/[placeId]" options={{ presentation: 'modal' }} />
+          <Stack.Screen name="pick-place" options={{ presentation: 'modal' }} />
+          <Stack.Screen name="sign-in" options={{ presentation: 'modal' }} />
+          <Stack.Screen name="sign-up" options={{ presentation: 'modal' }} />
+          <Stack.Screen name="edit-profile" options={{ presentation: 'modal' }} />
+        </Stack>
+      </NavigationTheme>
     </AppProviders>
   );
 }

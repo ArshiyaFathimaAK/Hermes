@@ -2,7 +2,7 @@ import { Image, type ImageProps } from 'expo-image';
 import { StyleSheet, View, type StyleProp, type ViewStyle } from 'react-native';
 import type { PropsWithChildren } from 'react';
 
-import { colors } from '@/theme';
+import { createStyles } from '@/theme';
 
 interface PhotoProps extends PropsWithChildren {
   source: ImageProps['source'];
@@ -12,6 +12,7 @@ interface PhotoProps extends PropsWithChildren {
 
 /** Image with a tinted background while it loads. Children sit on top. */
 export function Photo({ source, alt, style, children }: PhotoProps) {
+  const styles = useStyles();
   return (
     <View style={[styles.frame, style]}>
       {source ? (
@@ -22,6 +23,6 @@ export function Photo({ source, alt, style, children }: PhotoProps) {
   );
 }
 
-const styles = StyleSheet.create({
+const useStyles = createStyles((colors) => ({
   frame: { overflow: 'hidden', backgroundColor: colors.photo },
-});
+}));

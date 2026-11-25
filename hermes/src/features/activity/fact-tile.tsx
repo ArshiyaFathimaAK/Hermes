@@ -1,7 +1,7 @@
 import type { ReactNode } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { View } from 'react-native';
 
-import { colors, radius, spacing } from '@/theme';
+import { createStyles, radius, spacing } from '@/theme';
 import { Text } from '@/ui/text';
 
 interface FactTileProps {
@@ -12,6 +12,7 @@ interface FactTileProps {
 }
 
 export function FactTile({ label, value, note, icon }: FactTileProps) {
+  const styles = useStyles();
   return (
     <View style={styles.tile}>
       <Text variant="caption" weight="semibold" color="textMuted">
@@ -32,7 +33,7 @@ export function FactTile({ label, value, note, icon }: FactTileProps) {
   );
 }
 
-const styles = StyleSheet.create({
+const useStyles = createStyles((colors) => ({
   tile: {
     flexGrow: 1,
     flexBasis: '45%',
@@ -42,4 +43,4 @@ const styles = StyleSheet.create({
     backgroundColor: colors.surfaceSoft,
   },
   value: { flexDirection: 'row', alignItems: 'center', gap: spacing.xs },
-});
+}));

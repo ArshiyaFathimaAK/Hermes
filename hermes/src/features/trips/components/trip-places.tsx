@@ -20,13 +20,13 @@ export function TripPlaces({ places, onOpen, onAdd }: TripPlacesProps) {
             key={place.id}
             testID={`trip-place-${place.id}`}
             icon="pin"
-            iconColor="action"
+            iconColor="actionText"
             label={place.name}
             accessibilityLabel={`Open ${place.name}`}
             onPress={() => onOpen(place.id)}
           />
         ))}
-        <Chip testID="add-place" icon="add" iconColor="action" label="Add place" onPress={onAdd} />
+        <Chip testID="add-place" icon="add" iconColor="actionText" label="Add place" onPress={onAdd} />
       </View>
     </Section>
   );

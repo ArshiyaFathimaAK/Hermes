@@ -1,7 +1,7 @@
 import { Children, type PropsWithChildren, type ReactNode } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { View } from 'react-native';
 
-import { colors, radius, sizes, spacing } from '@/theme';
+import { createStyles, radius, sizes, spacing } from '@/theme';
 
 import { Icon } from './icon';
 import { Tappable } from './tappable';
@@ -9,6 +9,7 @@ import { Text } from './text';
 
 /** Rounded box of rows with dividers between them. */
 export function ListGroup({ children }: PropsWithChildren) {
+  const styles = useStyles();
   return (
     <View style={styles.group}>
       {Children.toArray(children).map((child, index) => (
@@ -40,6 +41,7 @@ export function ListRow({
   trailing,
   testID,
 }: ListRowProps) {
+  const styles = useStyles();
   const content = (
     <>
       <View style={styles.text}>
@@ -76,7 +78,7 @@ export function ListRow({
   );
 }
 
-const styles = StyleSheet.create({
+const useStyles = createStyles((colors) => ({
   group: {
     borderRadius: radius.xl,
     borderWidth: sizes.hairline,
@@ -94,4 +96,4 @@ const styles = StyleSheet.create({
   },
   text: { flex: 1, gap: spacing.xxs },
   disabled: { opacity: 0.5 },
-});
+}));

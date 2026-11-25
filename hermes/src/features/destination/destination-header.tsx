@@ -1,5 +1,6 @@
-import { router } from 'expo-router';
-import { StyleSheet, View } from 'react-native';
+import { router, useIsFocused } from 'expo-router';
+import { StatusBar } from 'expo-status-bar';
+import { View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import type { DateRange } from '@/domain/dates';
@@ -7,7 +8,7 @@ import type { Place } from '@/domain/place';
 import { CONDITION_LABELS, summarizeDays, useCurrentWeather, useDailyWeather } from '@/features/weather';
 import { goBack, routes } from '@/navigation/routes';
 import { useTemperature } from '@/state/preferences';
-import { colors, spacing } from '@/theme';
+import { createStyles, spacing } from '@/theme';
 import { Chip } from '@/ui/chip';
 import { IconButton } from '@/ui/icon-button';
 import { Text } from '@/ui/text';
@@ -33,24 +34,28 @@ function useWeatherChip(placeId: string, dates?: DateRange) {
 }
 
 export function DestinationHeader({ place, dates }: { place: Place; dates?: DateRange }) {
+  const styles = useStyles();
   const insets = useSafeAreaInsets();
+  const isFocused = useIsFocused();
   const weather = useWeatherChip(place.id, dates);
   const openDates = () => router.push(routes.dates(place.id));
 
   return (
     <View style={[styles.header, { paddingTop: insets.top + spacing.sm }]}>
+      {/* The frame is dark in both modes. */}
+      {isFocused && <StatusBar style="light" />}
       <IconButton
         icon="back"
-        variant="onInverse"
+        variant="onFrame"
         label="Back"
         onPress={goBack}
         style={styles.back}
       />
       <View>
-        <Text variant="hero" color="textOnInverse" accessibilityRole="header">
+        <Text variant="hero" color="textOnFrame" accessibilityRole="header">
           {place.name}
         </Text>
-        <Text color="textOnInverseMuted">{place.region}</Text>
+        <Text color="textOnFrameMuted">{place.region}</Text>
       </View>
       <View style={styles.chips}>
         <Chip
@@ -62,9 +67,9 @@ export function DestinationHeader({ place, dates }: { place: Place; dates?: Date
         />
         {weather && (
           <Chip
-            variant="inverse"
+            variant="onFrame"
             icon={weather.icon}
-            iconColor="actionOnInverse"
+            iconColor="actionOnFrame"
             label={weather.label}
             accessibilityLabel={`Weather: ${weather.label}. Open dates and forecast`}
             onPress={openDates}
@@ -75,13 +80,13 @@ export function DestinationHeader({ place, dates }: { place: Place; dates?: Date
   );
 }
 
-const styles = StyleSheet.create({
+const useStyles = createStyles((colors) => ({
   header: {
     gap: spacing.lg,
     paddingHorizontal: spacing.xl,
     paddingBottom: spacing.xxl,
-    backgroundColor: colors.inverse,
+    backgroundColor: colors.frame,
   },
   back: { marginLeft: -spacing.md },
   chips: { flexDirection: 'row', flexWrap: 'wrap', gap: spacing.sm },
-});
+}));

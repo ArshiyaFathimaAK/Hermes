@@ -1,13 +1,6 @@
 import { Text as NativeText, type TextProps as NativeTextProps } from 'react-native';
 
-import {
-  colors,
-  fonts,
-  typography,
-  type ColorName,
-  type FontWeightName,
-  type TextVariant,
-} from '@/theme';
+import { fonts, typography, useColors, type ColorName, type FontWeightName, type TextVariant } from '@/theme';
 
 export interface TextProps extends NativeTextProps {
   variant?: TextVariant;
@@ -24,6 +17,7 @@ export function Text({
   style,
   ...rest
 }: TextProps) {
+  const colors = useColors();
   return (
     <NativeText
       {...rest}

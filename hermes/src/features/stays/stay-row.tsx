@@ -1,7 +1,7 @@
-import { StyleSheet, View } from 'react-native';
+import { View } from 'react-native';
 
 import type { Stay } from '@/domain/stay';
-import { colors, radius, sizes, spacing } from '@/theme';
+import { createStyles, radius, sizes, spacing } from '@/theme';
 import { Icon } from '@/ui/icon';
 import { IconButton } from '@/ui/icon-button';
 import { Text } from '@/ui/text';
@@ -15,10 +15,11 @@ interface StayRowProps {
 }
 
 export function StayRow({ stay, nights, chosen, onToggle }: StayRowProps) {
+  const styles = useStyles();
   return (
     <View style={styles.row}>
       <View style={styles.photo}>
-        <Icon name="bed" size={28} color="action" />
+        <Icon name="bed" size={28} color="actionText" />
       </View>
       <View style={styles.body}>
         <Text variant="label" weight="bold">
@@ -33,7 +34,7 @@ export function StayRow({ stay, nights, chosen, onToggle }: StayRowProps) {
           </Text>{' '}
           {stay.scoreWord} · {stay.reviewCount} reviews
         </Text>
-        <Text variant="caption" weight="semibold" color="action">
+        <Text variant="caption" weight="semibold" color="actionText">
           {stay.near}
         </Text>
         <Text variant="caption" color="textSecondary">
@@ -56,7 +57,7 @@ export function StayRow({ stay, nights, chosen, onToggle }: StayRowProps) {
   );
 }
 
-const styles = StyleSheet.create({
+const useStyles = createStyles((colors) => ({
   row: {
     flexDirection: 'row',
     gap: spacing.md,
@@ -73,4 +74,4 @@ const styles = StyleSheet.create({
     backgroundColor: colors.actionSoft,
   },
   body: { flex: 1, gap: spacing.xs },
-});
+}));

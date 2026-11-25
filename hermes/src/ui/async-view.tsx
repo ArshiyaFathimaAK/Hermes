@@ -1,7 +1,7 @@
 import type { ReactNode } from 'react';
 import { ActivityIndicator, StyleSheet, View } from 'react-native';
 
-import { colors, spacing } from '@/theme';
+import { spacing, useColors } from '@/theme';
 import type { AsyncState } from '@/utils/use-async';
 
 import { Message } from './message';
@@ -13,6 +13,7 @@ interface AsyncViewProps<T> {
 
 /** Draws loading and error states so screens only handle the ready one. */
 export function AsyncView<T>({ state, children }: AsyncViewProps<T>) {
+  const colors = useColors();
   if (state.status === 'loading') {
     return (
       <View style={styles.loading}>

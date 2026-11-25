@@ -1,6 +1,6 @@
-import { StyleSheet, View } from 'react-native';
+import { View } from 'react-native';
 
-import { colors, radius, shadows, sizes, spacing } from '@/theme';
+import { createStyles, radius, shadows, sizes, spacing } from '@/theme';
 
 import { Icon } from './icon';
 import { Tappable } from './tappable';
@@ -24,6 +24,7 @@ interface MapViewProps {
 
 /** Placeholder. Replace the inside of this file with a real map. */
 export function MapView({ height, pins }: MapViewProps) {
+  const styles = useStyles();
   return (
     <View style={[styles.map, { height }]}>
       <View style={styles.water} />
@@ -59,7 +60,7 @@ export function MapView({ height, pins }: MapViewProps) {
   );
 }
 
-const styles = StyleSheet.create({
+const useStyles = createStyles((colors) => ({
   map: { borderRadius: radius.xl, overflow: 'hidden', backgroundColor: colors.mapLand },
   water: {
     position: 'absolute',
@@ -76,7 +77,7 @@ const styles = StyleSheet.create({
     right: 0,
     top: '36%',
     height: 3,
-    backgroundColor: colors.background,
+    backgroundColor: colors.mapRoad,
   },
   street: {
     position: 'absolute',
@@ -84,7 +85,7 @@ const styles = StyleSheet.create({
     bottom: -20,
     left: '45%',
     width: 3,
-    backgroundColor: colors.background,
+    backgroundColor: colors.mapRoad,
     transform: [{ rotate: '16deg' }],
   },
   pin: { position: 'absolute', borderRadius: radius.pill, ...shadows.medium },
@@ -93,7 +94,7 @@ const styles = StyleSheet.create({
     paddingVertical: spacing.xs,
     borderWidth: 1.5,
     borderColor: colors.text,
-    backgroundColor: colors.background,
+    backgroundColor: colors.raised,
     transform: [{ translateX: '-50%' }],
   },
   marker: {
@@ -102,7 +103,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     borderWidth: 3,
-    borderColor: colors.background,
+    borderColor: colors.onAction,
     backgroundColor: colors.action,
     transform: [{ translateX: '-50%' }],
   },
@@ -113,8 +114,8 @@ const styles = StyleSheet.create({
     top: spacing.sm,
     paddingHorizontal: spacing.sm,
     borderRadius: radius.sm,
-    backgroundColor: colors.background,
+    backgroundColor: colors.raised,
     borderWidth: sizes.hairline,
     borderColor: colors.borderStrong,
   },
-});
+}));

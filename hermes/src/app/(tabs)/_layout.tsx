@@ -1,25 +1,29 @@
 import { Tabs } from 'expo-router';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-import { colors, sizes, typography } from '@/theme';
+import { sizes, typography, useColors } from '@/theme';
 import { Icon, type IconName } from '@/ui/icon';
+
+// The tab behind screens that were opened from a link.
+export const unstable_settings = { anchor: '(explore)' };
 
 function tab(title: string, icon: IconName) {
   return {
     title,
     tabBarIcon: ({ focused }: { focused: boolean }) => (
-      <Icon name={icon} size={24} color={focused ? 'action' : 'textMuted'} />
+      <Icon name={icon} size={24} color={focused ? 'actionText' : 'textMuted'} />
     ),
   };
 }
 
 export default function TabsLayout() {
+  const colors = useColors();
   const insets = useSafeAreaInsets();
   return (
     <Tabs
       screenOptions={{
         headerShown: false,
-        tabBarActiveTintColor: colors.action,
+        tabBarActiveTintColor: colors.actionText,
         tabBarInactiveTintColor: colors.textMuted,
         tabBarLabelStyle: typography.tabLabel,
         tabBarStyle: {

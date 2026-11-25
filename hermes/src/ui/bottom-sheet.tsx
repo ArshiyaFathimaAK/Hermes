@@ -2,7 +2,7 @@ import type { PropsWithChildren, ReactNode } from 'react';
 import { KeyboardAvoidingView, Modal, Pressable, ScrollView, StyleSheet, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-import { colors, radius, sizes, spacing } from '@/theme';
+import { createStyles, radius, sizes, spacing } from '@/theme';
 
 import { SheetHeader } from './sheet-header';
 
@@ -24,6 +24,7 @@ export function BottomSheet({
   footer,
   children,
 }: BottomSheetProps) {
+  const styles = useStyles();
   const insets = useSafeAreaInsets();
   return (
     <Modal visible={visible} transparent animationType="fade" onRequestClose={onClose}>
@@ -53,7 +54,7 @@ export function BottomSheet({
   );
 }
 
-const styles = StyleSheet.create({
+const useStyles = createStyles((colors) => ({
   root: { flex: 1, justifyContent: 'flex-end', alignItems: 'center' },
   scrim: { backgroundColor: colors.scrim },
   sheet: {
@@ -66,8 +67,8 @@ const styles = StyleSheet.create({
     paddingTop: spacing.lg,
     borderTopLeftRadius: radius.xxl,
     borderTopRightRadius: radius.xxl,
-    backgroundColor: colors.background,
+    backgroundColor: colors.sheet,
   },
   scroll: { flexGrow: 0, flexShrink: 1 },
   content: { gap: spacing.xl },
-});
+}));

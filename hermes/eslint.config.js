@@ -1,6 +1,11 @@
 const { defineConfig, globalIgnores } = require('eslint/config');
 const expoConfig = require('eslint-config-expo/flat');
 
+const palettes = {
+  group: ['@/theme/colors'],
+  message: 'Use useColors() or createStyles() from @/theme, so dark mode works.',
+};
+
 const featureInternals = {
   group: ['@/features/*/*'],
   message: 'Import a feature from its index (@/features/name), never from inside it.',
@@ -11,7 +16,7 @@ module.exports = defineConfig([
   expoConfig,
   {
     files: ['src/**/*.{ts,tsx}'],
-    rules: { 'no-restricted-imports': ['error', { patterns: [featureInternals] }] },
+    rules: { 'no-restricted-imports': ['error', { patterns: [featureInternals, palettes] }] },
   },
   {
     // Only src/theme may define colors.
@@ -34,7 +39,7 @@ module.exports = defineConfig([
       'no-restricted-imports': [
         'error',
         {
-          patterns: [featureInternals],
+          patterns: [featureInternals, palettes],
           paths: [
             {
               name: 'react-native',
@@ -74,7 +79,7 @@ module.exports = defineConfig([
     rules: {
       'no-restricted-imports': [
         'error',
-        { patterns: [{ group: ['@/features/*', '@/app/*'], message: 'Only routes and features may import features.' }] },
+        { patterns: [palettes, { group: ['@/features/*', '@/app/*'], message: 'Only routes and features may import features.' }] },
       ],
     },
   },

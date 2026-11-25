@@ -1,12 +1,17 @@
-import { StyleSheet } from 'react-native';
 
-import { colors, radius, sizes, spacing, type ColorName } from '@/theme';
+import { createStyles, radius, sizes, spacing, type ColorName } from '@/theme';
 
 import { Icon, type IconName } from './icon';
 import { Tappable } from './tappable';
 import { Text } from './text';
 
-type ChipVariant = 'outline' | 'primary' | 'inverse';
+type ChipVariant = 'outline' | 'primary' | 'onFrame';
+
+const FOREGROUND: Record<ChipVariant, ColorName> = {
+  outline: 'text',
+  primary: 'onAction',
+  onFrame: 'textOnFrame',
+};
 
 interface ChipProps {
   label: string;
@@ -19,7 +24,7 @@ interface ChipProps {
   testID?: string;
 }
 
-/** Pill-shaped choice or shortcut. `selected` fills it black. */
+/** Pill-shaped choice or shortcut. `selected` fills it in. */
 export function Chip({
   label,
   onPress,
@@ -30,7 +35,8 @@ export function Chip({
   accessibilityLabel,
   testID,
 }: ChipProps) {
-  const color: ColorName = selected || variant !== 'outline' ? 'textOnInverse' : 'text';
+  const styles = useStyles();
+  const color: ColorName = selected ? 'onSelected' : FOREGROUND[variant];
   return (
     <Tappable
       onPress={onPress}
@@ -38,7 +44,7 @@ export function Chip({
       accessibilityState={{ selected }}
       testID={testID}
       style={[styles.base, styles[variant], selected && styles.selected]}>
-      {icon && <Icon name={icon} size={18} color={iconColor ?? color} />}
+      {icon && <Icon name={icon} size={18} color={selected ? color : (iconColor ?? color)} />}
       <Text variant="small" weight="semibold" color={color}>
         {label}
       </Text>
@@ -46,7 +52,7 @@ export function Chip({
   );
 }
 
-const styles = StyleSheet.create({
+const useStyles = createStyles((colors) => ({
   base: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -56,8 +62,8 @@ const styles = StyleSheet.create({
     borderRadius: radius.pill,
     borderWidth: sizes.hairline,
   },
-  outline: { borderColor: colors.borderStrong, backgroundColor: colors.background },
+  outline: { borderColor: colors.borderStrong },
   primary: { borderColor: colors.action, backgroundColor: colors.action },
-  inverse: { borderColor: colors.inverseSurface, backgroundColor: colors.inverseSurface },
-  selected: { borderColor: colors.inverse, backgroundColor: colors.inverse },
-});
+  onFrame: { borderColor: colors.frameSurface, backgroundColor: colors.frameSurface },
+  selected: { borderColor: colors.selected, backgroundColor: colors.selected },
+}));

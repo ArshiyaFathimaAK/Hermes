@@ -116,7 +116,12 @@ and `theme`. Features import each other only through `@/features/<name>`. Lint e
 - Missing data is hidden, never filled in. Dates are always optional.
 - Touch targets are at least 44pt, and icon-only buttons need a `label`.
 - Filters: common ones show first; mark rare ones `advanced` so they sit behind "More options".
-- Light mode only for now. Color names say what they are for, so a dark set can be added later.
+- Light and dark follow the device, or the choice in Account (`useThemeMode`). Styles with colors use `createStyles((colors) => ({ ... }))` and
+  `const styles = useStyles()`; one-off values use `useColors()`. There is no static `colors` import.
+- Pick colors by purpose: fill with `action`, but write and draw with `actionText`. Use `selected` for
+  chosen things, `frame` for the dark blocks around a place, `raised` for things that float.
+- A new color goes in **both** palettes in `theme/colors.ts`, plus a row in `contrast-test.ts` if text
+  sits on it. Never check for dark mode in a feature.
 
 ## Navigation
 
