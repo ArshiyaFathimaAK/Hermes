@@ -26,7 +26,10 @@ export function DeleteTrip({ trip }: { trip: Trip }) {
             <Button
               testID="confirm-delete-trip"
               label="Delete trip"
-              onPress={() => deleteTrip(trip.id)}
+              onPress={() => {
+                setAsking(false);
+                deleteTrip(trip.id);
+              }}
             />
             <Button variant="quiet" label="Keep trip" onPress={() => setAsking(false)} />
           </>
