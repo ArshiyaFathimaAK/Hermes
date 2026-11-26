@@ -93,7 +93,10 @@ export function TripsProvider({ children }: PropsWithChildren) {
       commit(next);
       setActiveTripId(next[next.length - 1].id);
     },
-    deleteTrip: (tripId) => commit(logic.deleteTrip(trips, tripId)),
+    deleteTrip: (tripId) => {
+      commit(logic.deleteTrip(trips, tripId));
+      if (activeTrip?.id === tripId) setActiveTripId(undefined);
+    },
     removeItem: (tripId, activityId) => commit(logic.removeItem(trips, tripId, activityId)),
     toggleActivity: (place, activityId) =>
       commit(

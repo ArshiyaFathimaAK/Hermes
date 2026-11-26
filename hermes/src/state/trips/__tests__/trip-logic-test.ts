@@ -48,4 +48,22 @@ describe('trip logic', () => {
     const next = logic.toggleActivity(trips, lisbon, 'belem', undefined, 'trip-lisbon-2');
     expect(next.map((t) => t.items.length)).toEqual([0, 1]);
   });
+
+  it('deletes only the requested trip', () => {
+    const trips = logic.createTrip(logic.createTrip([], lisbon), lisbon);
+    expect(logic.deleteTrip(trips, 'trip-lisbon-2')).toEqual([trips[0]]);
+  });
+
+  it('moves an item to a new day and time slot', () => {
+    let trips = logic.toggleActivity([], lisbon, 'belem');
+    trips = logic.scheduleItem(trips, 'trip-lisbon', 'belem', {
+      day: 0,
+      slot: 'morning',
+    });
+    trips = logic.scheduleItem(trips, 'trip-lisbon', 'belem', {
+      day: 2,
+      slot: 'evening',
+    });
+    expect(trips[0].items[0].schedule).toEqual({ day: 2, slot: 'evening' });
+  });
 });
