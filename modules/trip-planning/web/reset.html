@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Hermes - Set New Password</title>
+</head>
+<body>
+  <h1>Set a new password</h1>
+  <input id="newPw" type="password" placeholder="New password">
+  <button onclick="handleUpdate()">Set new password</button>
+  <p id="pwMsg"></p>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="auth_validation.js"></script>
+  <script src="auth_actions.js"></script>
+  <script>
+    async function handleUpdate() {
+      const r = await updatePassword(document.getElementById("newPw").value);
+      document.getElementById("pwMsg").textContent = r.message;
+    }
+  </script>
+</body>
+</html>

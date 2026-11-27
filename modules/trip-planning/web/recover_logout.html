@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Hermes - Recover Password and Log Out</title>
+</head>
+<body>
+  <h1>Recover password</h1>
+  <input id="resetEmail" type="email" placeholder="Email">
+  <button onclick="handleReset()">Forgot password</button>
+  <p id="resetMsg"></p>
+
+  <h1>Log out</h1>
+  <p id="status"></p>
+  <button onclick="handleLogout()">Log Out</button>
+  <p id="logoutMsg"></p>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="auth_validation.js"></script>
+  <script src="auth_actions.js"></script>
+  <script>
+    async function handleReset() {
+      const r = await requestPasswordReset(document.getElementById("resetEmail").value);
+      document.getElementById("resetMsg").textContent = r.message;
+    }
+    async function handleLogout() {
+      const r = await logOut();
+      document.getElementById("logoutMsg").textContent = r.message;
+      showStatus();
+    }
+    async function showStatus() {
+      document.getElementById("status").textContent =
+        (await isLoggedIn()) ? "Status: logged in" : "Status: logged out";
+    }
+    showStatus();
+  </script>
+</body>
+</html>
