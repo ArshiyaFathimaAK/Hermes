@@ -149,6 +149,38 @@ export function scheduleItem(
   });
 }
 
+/** One line of a generated plan (Generate AI Itinerary). */
+export interface PlannedItem {
+  activityId: string;
+  placeId: string;
+  schedule: TripSchedule;
+  /** True for something that isn't in the trip yet. */
+  suggested: boolean;
+}
+
+/**
+ * Puts a generated plan into a trip, in one change: saved things move to their day and slot, and
+ * suggestions are added. Lines that no longer fit are skipped: a saved thing removed while the plan
+ * was being made, a suggestion that has been saved since, or a place no longer in the trip.
+ */
+export function applyPlan(trips: Trip[], tripId: string, plan: PlannedItem[]) {
+  return updateTrip(trips, tripId, (trip) => {
+    const inTrip = new Set(trip.items.map((item) => item.activityId));
+    const fits = plan.filter(
+      (line) =>
+        trip.placeIds.includes(line.placeId) && inTrip.has(line.activityId) !== line.suggested,
+    );
+    const planned = new Set(fits.map((line) => line.activityId));
+    return {
+      ...trip,
+      items: [
+        ...trip.items.filter((item) => !planned.has(item.activityId)),
+        ...fits.map(({ activityId, placeId, schedule }) => ({ activityId, placeId, schedule })),
+      ],
+    };
+  });
+}
+
 const sameSlot = (a: TripItem, b: TripItem) =>
   a.schedule?.day === b.schedule?.day && a.schedule?.slot === b.schedule?.slot;
 

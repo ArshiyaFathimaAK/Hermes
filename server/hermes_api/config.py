@@ -19,6 +19,16 @@ class Settings(BaseSettings):
     viator_api_key: str = ""
     booking_api_key: str = ""
 
+    # Generate AI Itinerary. Without a key, plans come from simple rules instead.
+    openai_api_key: str = ""
+    # Any chat model your key can use that supports JSON schema answers. A fast, cheap one is best.
+    openai_model: str = "gpt-6.2-astra"
+    openai_base_url: str = "https://api.openai.com/v1"
+    # Under the app's 10-second wait, so a slow AI falls back to the rules before the app gives up.
+    openai_timeout: float = 8.0
+    # Optional, for reasoning models: "low" answers faster. Leave empty for models without it.
+    openai_reasoning_effort: str = ""
+
 
 @lru_cache
 def get_settings() -> Settings:

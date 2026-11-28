@@ -7,11 +7,12 @@ from .config import get_settings
 from .errors import add_error_handlers
 from .features.activities.router import router as activities
 from .features.costs.router import router as costs
+from .features.itinerary.router import router as itinerary
 from .features.places.router import router as places
 from .features.stays.router import router as stays
 from .features.weather.router import router as weather
 
-FEATURE_ROUTERS = [places, activities, stays, weather, costs]
+FEATURE_ROUTERS = [places, activities, stays, weather, costs, itinerary]
 
 
 def create_app() -> FastAPI:

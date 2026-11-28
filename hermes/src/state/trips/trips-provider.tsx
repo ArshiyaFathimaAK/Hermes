@@ -38,6 +38,8 @@ interface TripsStore {
   addPlace: (tripId: string, placeId: string) => void;
   scheduleItem: (tripId: string, activityId: string, schedule?: TripSchedule) => void;
   moveItem: (tripId: string, activityId: string, by: -1 | 1) => void;
+  /** Generate AI Itinerary: puts a whole plan into the trip as one change. */
+  applyPlan: (tripId: string, plan: logic.PlannedItem[]) => void;
   /** Set when the last save failed. */
   saveError?: string;
 }
@@ -150,6 +152,7 @@ export function TripsProvider({ children }: PropsWithChildren) {
       commit(logic.scheduleItem(trips, tripId, activityId, schedule)),
     moveItem: (tripId, activityId, by) =>
       commit(logic.moveItem(trips, tripId, activityId, by)),
+    applyPlan: (tripId, plan) => commit(logic.applyPlan(trips, tripId, plan)),
     saveError,
   };
 
