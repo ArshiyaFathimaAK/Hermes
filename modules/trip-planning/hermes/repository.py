@@ -25,6 +25,11 @@ class TripRepository:
               id TEXT PRIMARY KEY, trip_id INTEGER NOT NULL REFERENCES trips(id),
               place_id INTEGER NOT NULL, day TEXT NOT NULL, position INTEGER NOT NULL,
               UNIQUE(trip_id, day, position));
+            -- Spenser Saunders, UC-12: one share link per trip. A new table (not a new column)
+            -- so hermes.db files created before this change keep working.
+            CREATE TABLE IF NOT EXISTS share_links (
+              token TEXT PRIMARY KEY, trip_id INTEGER NOT NULL UNIQUE REFERENCES trips(id),
+              created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP);
             ''')
     @contextmanager
     def connection(self):
@@ -70,3 +75,22 @@ class TripRepository:
                     (item['id'], trip_id, item['place_id'], item['day'], item['position']))
             # Any insert failure rolls back both deletion and version change.
         return self.get(user_id, trip_id)
+
+    # --- Spenser Saunders: UC-12 Share Trip (FR-28, FR-29) ---
+    def get_or_create_share_token(self, user_id, trip_id, new_token):
+        """Return the trip's share token. On first use, store new_token and set privacy to 'link'.
+        Owner only: raises NotFoundError for a missing trip or someone else's."""
+        with self.connection() as db:
+            db.execute('BEGIN IMMEDIATE')
+            self._trip(db, user_id, trip_id)
+            row = db.execute('SELECT token FROM share_links WHERE trip_id=?', (trip_id,)).fetchone()
+            if row is not None:
+                return row['token']
+            db.execute('INSERT INTO share_links(token, trip_id) VALUES(?,?)', (new_token, trip_id))
+            db.execute("UPDATE trips SET privacy='link' WHERE id=?", (trip_id,))
+            return new_token
+    def get_shared(self, token):
+        """Return the one trip a share token points to, or None if the token is unknown."""
+        with self.connection() as db:
+            row = db.execute('SELECT t.id, t.user_id FROM share_links s JOIN trips t ON t.id = s.trip_id WHERE s.token=?', (token,)).fetchone()
+            return None if row is None else self._trip(db, row['user_id'], row['id'])

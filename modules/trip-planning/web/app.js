@@ -16,9 +16,11 @@ async function api(path, method = 'GET', data) {
 function navigate(view) {
   if (dirty && view !== 'itinerary' && !confirm('Leave without saving itinerary changes?')) return false;
   if (view !== 'itinerary') dirty = false;
-  for (const name of ['explore','create','trips','itinerary','details','weather'])  /* Reynard: added details, weather */ $(name).hidden = name !== view;
+  for (const name of ['explore','create','trips','itinerary','details','weather','shared','profile','search'])  /* Reynard: details, weather; Spenser: shared; Sharad: UC-03/04 profile, search */ $(name).hidden = name !== view;
+  if (view !== 'shared' && new URLSearchParams(location.search).has('share')) history.replaceState(null, '', location.pathname); // Spenser: leave the shared view cleanly
   document.querySelectorAll('nav button').forEach(b => b.classList.toggle('active', b.dataset.view === view));
   if (view === 'trips') loadTrips();
+  if (view === 'profile') window.hermes.openProfile(); // Sharad: UC-03 load once; keep unsaved input on later visits.
   return true;
 }
 document.querySelectorAll('[data-view]').forEach(b => b.addEventListener('click', () => navigate(b.dataset.view)));
@@ -77,10 +79,10 @@ async function openTrip(id){
   try{const result=await api('/api/trips/'+id);trip=result.trip;items=trip.items.map(x=>({...x}));selectedDay=trip.start_date;dirty=false;navigate('itinerary');
   $('itinerary-title').textContent=trip.name;$('trip-summary').textContent=`${trip.destinations.join(' + ')} · ${trip.start_date} to ${trip.end_date}`;
   $('place-picker').innerHTML=catalog.filter(p=>trip.destinations.includes(p.location)).map(p=>`<option value="${p.id}">${escapeText(p.name)} (${p.category})</option>`).join('');
-  status('itinerary-status','');renderItinerary();}
+  status('itinerary-status','');renderItinerary();resetShare();loadCost();} // Spenser: UC-11/UC-12 panels
   catch(e){status($('itinerary').hidden?'trips-status':'itinerary-status',e.message,true);}
 }
-function markDirty(){dirty=true;$('dirty-status').textContent='Unsaved changes. Save your itinerary to keep them.';}
+function markDirty(){dirty=true;$('dirty-status').textContent='Unsaved changes. Save your itinerary to keep them.';note('cost-status',COST_STALE);} // Spenser: cost note
 function move(id,direction){
  const group=items.filter(x=>x.day===selectedDay), from=group.findIndex(x=>x.id===id),to=from+direction;
  if(from<0||to<0||to>=group.length)return;
@@ -101,11 +103,63 @@ function renderItinerary(){
 $('add-form').addEventListener('submit',e=>{e.preventDefault();if(!trip)return;items.push({id:crypto.randomUUID(),place_id:Number($('place-picker').value),day:selectedDay});markDirty();renderItinerary();});
 $('save-itinerary').addEventListener('click',async()=>{
  $('save-itinerary').disabled=true;
- try{const result=await api(`/api/trips/${trip.id}/itinerary`,'PUT',{version:trip.version,items});trip=result.trip;items=trip.items.map(x=>({...x}));dirty=false;renderItinerary();status('itinerary-status',result.message);}
+ try{const result=await api(`/api/trips/${trip.id}/itinerary`,'PUT',{version:trip.version,items});trip=result.trip;items=trip.items.map(x=>({...x}));dirty=false;renderItinerary();status('itinerary-status',result.message);loadCost();} // Spenser: refresh UC-11 estimate after save
  catch(e){status('itinerary-status',e.message,true);}
  finally{$('save-itinerary').disabled=false;}
 });
 $('reload-trip').addEventListener('click',()=>trip&&openTrip(trip.id));
-async function init(){try{const config=await api('/api/config');catalog=(await api('/api/catalog')).results;for(const location of config.locations){$('location').add(new Option(location,location));const label=document.createElement('label');label.className='check';const input=document.createElement('input');input.type='checkbox';input.name='destination';input.value=location;label.append(input,document.createTextNode(' '+location));$('destinations').append(label);}await search();}catch(e){status('search-status',e.message,true);}}
+async function init(){try{const config=await api('/api/config');catalog=(await api('/api/catalog')).results;for(const location of config.locations){$('location').add(new Option(location,location));const label=document.createElement('label');label.className='check';const input=document.createElement('input');input.type='checkbox';input.name='destination';input.value=location;label.append(input,document.createTextNode(' '+location));$('destinations').append(label);}await search();
+  const shareToken=new URLSearchParams(location.search).get('share');if(shareToken!==null)await openShared(shareToken);}catch(e){status('search-status',e.message,true);}} // Spenser: open a share link
 window.hermes = {navigate, currentTrip: () => trip}; // Reynard: lets details_weather.js reuse navigation and the open trip
+Object.assign(window.hermes, {$, escapeText, status, api}); // Sharad: UC-03/04 reuse the existing helpers across modules.
 init();
+
+// --- Spenser Saunders: UC-11 View Estimated Trip Cost and UC-12 Share Trip ---
+// Drafted with AI assistance (Claude), reviewed and tested. The server computes the estimate and
+// owns every share-link check; this code only displays results and messages.
+const COST_STALE = 'Unsaved changes are not in this estimate. Save your itinerary to update it.';
+const money = n => n === 0 ? 'Free' : '$' + n.toLocaleString('en-US');
+function note(id, message, error = false) { $(id).textContent = message; $(id).className = error ? 'error' : 'muted'; }
+async function loadCost() {
+  if (!trip) return;
+  try {
+    const {estimate: e} = await api(`/api/trips/${trip.id}/cost`);
+    $('cost-total').textContent = e.total === 0 ? '$0' : money(e.total);
+    $('cost-split').textContent = e.item_count ? `Lodging ${money(e.lodging_total)} (${e.lodging_nights} night${e.lodging_nights === 1 ? '' : 's'}) · Activities ${money(e.activities_total)}` : '';
+    $('cost-days').innerHTML = e.by_day.filter(d => d.stops > 0).map(d => `<li><span>${escapeText(d.day)}</span><span>${money(d.subtotal)}</span></li>`).join('');
+    note('cost-status', dirty ? COST_STALE : e.message);
+  } catch (err) { note('cost-status', err.message, true); }
+}
+function resetShare() {
+  for (const id of ['share-url', 'share-url-label', 'copy-share']) $(id).hidden = true;
+  $('share-url').value = ''; note('share-status', '');
+}
+$('share-trip').addEventListener('click', async () => {
+  if (!trip) return;
+  $('share-trip').disabled = true;
+  try {
+    const link = await api(`/api/trips/${trip.id}/share`, 'POST');
+    $('share-url').value = location.origin + link.path;
+    for (const id of ['share-url', 'share-url-label', 'copy-share']) $(id).hidden = false;
+    status('share-status', dirty ? `${link.message} Unsaved changes are not shared until you save.` : link.message);
+  } catch (err) { status('share-status', err.message, true); }
+  finally { $('share-trip').disabled = false; }
+});
+$('copy-share').addEventListener('click', async () => {
+  try { await navigator.clipboard.writeText($('share-url').value); status('share-status', 'Link copied.'); }
+  catch { $('share-url').select(); note('share-status', 'Select the link and copy it.'); }
+});
+async function openShared(token) {
+  navigate('shared');
+  try {
+    const {trip: t} = await api('/api/shared/' + encodeURIComponent(token));
+    $('shared-title').textContent = t.name;
+    $('shared-summary').textContent = `${t.destinations.join(' + ')} · ${t.start_date} to ${t.end_date}`;
+    const days = [...new Set(t.stops.map(s => s.day))];
+    $('shared-days').innerHTML = days.length ? days.map(day => `<h2>${escapeText(day)}</h2><ol>${t.stops.filter(s => s.day === day).map((s, i) => `<li class="stop"><span>${i + 1}</span><div class="details"><h3>${escapeText(s.name)}</h3><p>${escapeText(s.category)} · ${escapeText(s.location)}</p></div></li>`).join('')}</ol>`).join('') : '<p class="empty">This trip has no stops yet.</p>';
+    note('shared-status', '');
+  } catch (err) {
+    $('shared-title').textContent = 'Shared trip'; $('shared-summary').textContent = ''; $('shared-days').innerHTML = '';
+    note('shared-status', err.message, true);
+  }
+}

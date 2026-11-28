@@ -1,0 +1,118 @@
+# Sharad Rangaraju - UC-03/UC-04 test run (assistant run, not a personal run, 2026-11-15T23:20:11-06:00) | OS Linux-7.3.4-1-cachyos-x86_64-with-glibc2.44 | Python 3.14.10
+# Purpose: full regression output; author review and personal rerun pending.
+test_TC_UC11_07_api_cost_and_missing_trip (test_cost_share.CostAndShareAPITests.test_TC_UC11_07_api_cost_and_missing_trip) ... ok
+test_TC_UC12_09_api_share_and_view (test_cost_share.CostAndShareAPITests.test_TC_UC12_09_api_share_and_view) ... ok
+test_TC_UC11_01_empty_itinerary (test_cost_share.CostAndShareTests.test_TC_UC11_01_empty_itinerary) ... ok
+test_TC_UC11_02_only_free_places (test_cost_share.CostAndShareTests.test_TC_UC11_02_only_free_places) ... ok
+test_TC_UC11_03_lodging_nights_and_activities (test_cost_share.CostAndShareTests.test_TC_UC11_03_lodging_nights_and_activities) ... ok
+test_TC_UC11_04_single_day_trip_boundary (test_cost_share.CostAndShareTests.test_TC_UC11_04_single_day_trip_boundary) ... ok
+test_TC_UC11_05_other_users_trip_is_hidden (test_cost_share.CostAndShareTests.test_TC_UC11_05_other_users_trip_is_hidden) ... ok
+test_TC_UC11_06_estimate_follows_saved_itinerary (test_cost_share.CostAndShareTests.test_TC_UC11_06_estimate_follows_saved_itinerary) ... ok
+test_TC_UC12_01_owner_creates_link (test_cost_share.CostAndShareTests.test_TC_UC12_01_owner_creates_link) ... ok
+test_TC_UC12_02_second_request_reuses_link (test_cost_share.CostAndShareTests.test_TC_UC12_02_second_request_reuses_link) ... ok
+test_TC_UC12_03_non_owner_cannot_create_link (test_cost_share.CostAndShareTests.test_TC_UC12_03_non_owner_cannot_create_link) ... ok
+test_TC_UC12_04_valid_link_shows_read_only_trip (test_cost_share.CostAndShareTests.test_TC_UC12_04_valid_link_shows_read_only_trip) ... ok
+test_TC_UC12_05_link_exposes_no_other_trip (test_cost_share.CostAndShareTests.test_TC_UC12_05_link_exposes_no_other_trip) ... ok
+test_TC_UC12_06_unknown_link (test_cost_share.CostAndShareTests.test_TC_UC12_06_unknown_link) ... ok
+test_TC_UC12_07_malformed_links (test_cost_share.CostAndShareTests.test_TC_UC12_07_malformed_links) ... ok
+test_TC_UC12_08_link_shows_latest_saved_itinerary (test_cost_share.CostAndShareTests.test_TC_UC12_08_link_shows_latest_saved_itinerary) ... ok
+test_RL_TC01_lodging_details (test_details_weather.DetailTests.test_RL_TC01_lodging_details) ... ok
+test_RL_TC03_destination_details (test_details_weather.DetailTests.test_RL_TC03_destination_details) ... ok
+test_RL_TC04_unknown_place (test_details_weather.DetailTests.test_RL_TC04_unknown_place) ... ok
+test_RL_TC06_every_catalog_place_has_matching_details (test_details_weather.DetailTests.test_RL_TC06_every_catalog_place_has_matching_details) ... ok
+test_RL_TC05_api_missing_or_malformed_place_id (test_details_weather.DetailsWeatherAPITests.test_RL_TC05_api_missing_or_malformed_place_id) ... ok
+test_RL_TC14_api_place_details (test_details_weather.DetailsWeatherAPITests.test_RL_TC14_api_place_details) ... ok
+test_RL_TC15_api_weather_success_and_validation (test_details_weather.DetailsWeatherAPITests.test_RL_TC15_api_weather_success_and_validation) ... ok
+test_RL_TC17_api_weather_outage_is_503_without_forecast (test_details_weather.DetailsWeatherAPITests.test_RL_TC17_api_weather_outage_is_503_without_forecast) ... ok
+test_RL_TC02_forecast_for_trip_dates (test_details_weather.WeatherTests.test_RL_TC02_forecast_for_trip_dates) ... ok
+test_RL_TC07_unsupported_or_missing_location (test_details_weather.WeatherTests.test_RL_TC07_unsupported_or_missing_location) ... ok
+test_RL_TC08_reversed_dates (test_details_weather.WeatherTests.test_RL_TC08_reversed_dates) ... ok
+test_RL_TC09_invalid_or_missing_dates (test_details_weather.WeatherTests.test_RL_TC09_invalid_or_missing_dates) ... ok
+test_RL_TC10_range_limit_boundary (test_details_weather.WeatherTests.test_RL_TC10_range_limit_boundary) ... ok
+test_RL_TC11_single_day (test_details_weather.WeatherTests.test_RL_TC11_single_day) ... ok
+test_RL_TC12_provider_outage_returns_no_data (test_details_weather.WeatherTests.test_RL_TC12_provider_outage_returns_no_data) ... ok
+test_RL_TC13_sample_forecast_is_deterministic (test_details_weather.WeatherTests.test_RL_TC13_sample_forecast_is_deterministic) ... ok
+test_RL_TC16_invalid_input_never_calls_provider (test_details_weather.WeatherTests.test_RL_TC16_invalid_input_never_calls_provider) ... ok
+test_TC23_api_create_and_read (test_features.APITests.test_TC23_api_create_and_read) ... ok
+test_TC24_api_validation (test_features.APITests.test_TC24_api_validation) ... ok
+test_TC25_api_failed_save (test_features.APITests.test_TC25_api_failed_save) ... ok
+test_TC26_malformed_json (test_features.APITests.test_TC26_malformed_json) ... /usr/lib/python3.14/tempfile.py:538: ResourceWarning: Implicitly cleaning up <HTTPError 400: 'Bad Request'>
+  _warnings.warn(self.warn_message, ResourceWarning)
+ok
+test_TC27_missing_trip (test_features.APITests.test_TC27_missing_trip) ... ok
+test_TC28_api_search_validation (test_features.APITests.test_TC28_api_search_validation) ... ok
+test_TC01_combined_filters (test_features.FeatureTests.test_TC01_combined_filters) ... ok
+test_TC02_case_insensitive_search (test_features.FeatureTests.test_TC02_case_insensitive_search) ... ok
+test_TC03_no_results (test_features.FeatureTests.test_TC03_no_results) ... ok
+test_TC04_clear_filters (test_features.FeatureTests.test_TC04_clear_filters) ... ok
+test_TC05_invalid_price_range (test_features.FeatureTests.test_TC05_invalid_price_range) ... ok
+test_TC06_malformed_numeric_filters (test_features.FeatureTests.test_TC06_malformed_numeric_filters) ... ok
+test_TC07_multi_destination_create (test_features.FeatureTests.test_TC07_multi_destination_create) ... ok
+test_TC08_missing_fields (test_features.FeatureTests.test_TC08_missing_fields) ... ok
+test_TC09_reversed_dates (test_features.FeatureTests.test_TC09_reversed_dates) ... ok
+test_TC10_invalid_calendar_date (test_features.FeatureTests.test_TC10_invalid_calendar_date) ... ok
+test_TC11_single_day_trip (test_features.FeatureTests.test_TC11_single_day_trip) ... ok
+test_TC12_add_destination_and_lodging (test_features.FeatureTests.test_TC12_add_destination_and_lodging) ... ok
+test_TC13_reorder_persisted (test_features.FeatureTests.test_TC13_reorder_persisted) ... ok
+test_TC14_day_outside_trip (test_features.FeatureTests.test_TC14_day_outside_trip) ... ok
+test_TC15_unknown_place (test_features.FeatureTests.test_TC15_unknown_place) ... ok
+test_TC16_duplicate_item_id (test_features.FeatureTests.test_TC16_duplicate_item_id) ... ok
+test_TC17_wrong_destination (test_features.FeatureTests.test_TC17_wrong_destination) ... ok
+test_TC18_stale_version (test_features.FeatureTests.test_TC18_stale_version) ... ok
+test_TC19_rollback_failed_save (test_features.FeatureTests.test_TC19_rollback_failed_save) ... ok
+test_TC20_owner_isolation (test_features.FeatureTests.test_TC20_owner_isolation) ... ok
+test_TC21_trip_survives_reopen (test_features.FeatureTests.test_TC21_trip_survives_reopen) ... ok
+test_TC22_sql_like_search_is_literal (test_features.FeatureTests.test_TC22_sql_like_search_is_literal) ... ok
+test_SR_TC06_stale_profile_is_409_and_unchanged (test_profile_search.ProfileSearchAPITests.test_SR_TC06_stale_profile_is_409_and_unchanged) ... ok
+test_SR_TC08_no_search_results (test_profile_search.ProfileSearchAPITests.test_SR_TC08_no_search_results) ... ok
+test_SR_TC09_search_validation (test_profile_search.ProfileSearchAPITests.test_SR_TC09_search_validation) ... ok
+test_SR_TC10_profile_http_round_trip (test_profile_search.ProfileSearchAPITests.test_SR_TC10_profile_http_round_trip) ... ok
+test_SR_TC17_search_api_message_and_static_module (test_profile_search.ProfileSearchAPITests.test_SR_TC17_search_api_message_and_static_module) ... ok
+test_SR_NF01_one_hundred_searches (test_profile_search.ProfileSearchTests.test_SR_NF01_one_hundred_searches) ... 
+SR-NF01 assistant run: 100 searches, average 0.027 ms.
+ok
+test_SR_TC01_profile_persists_and_trims (test_profile_search.ProfileSearchTests.test_SR_TC01_profile_persists_and_trims) ... ok
+test_SR_TC02_austin_lodging_ranked (test_profile_search.ProfileSearchTests.test_SR_TC02_austin_lodging_ranked) ... ok
+test_SR_TC03_invalid_emails (test_profile_search.ProfileSearchTests.test_SR_TC03_invalid_emails) ... ok
+test_SR_TC04_invalid_names (test_profile_search.ProfileSearchTests.test_SR_TC04_invalid_names) ... ok
+test_SR_TC05_unsupported_field (test_profile_search.ProfileSearchTests.test_SR_TC05_unsupported_field) ... ok
+test_SR_TC07_description_only_match (test_profile_search.ProfileSearchTests.test_SR_TC07_description_only_match) ... ok
+test_SR_TC11_phone_and_address_boundaries (test_profile_search.ProfileSearchTests.test_SR_TC11_phone_and_address_boundaries) ... ok
+test_SR_TC12_invalid_bodies_and_versions (test_profile_search.ProfileSearchTests.test_SR_TC12_invalid_bodies_and_versions) ... ok
+test_SR_TC13_empty_profile_and_user_isolation (test_profile_search.ProfileSearchTests.test_SR_TC13_empty_profile_and_user_isolation) ... ok
+test_SR_TC14_search_weights_and_all_words (test_profile_search.ProfileSearchTests.test_SR_TC14_search_weights_and_all_words) ... ok
+test_SR_TC15_concurrent_first_save_and_stale_update (test_profile_search.ProfileSearchTests.test_SR_TC15_concurrent_first_save_and_stale_update) ... ok
+test_SR_TC16_failed_update_rolls_back_and_trip_tables_coexist (test_profile_search.ProfileSearchTests.test_SR_TC16_failed_update_rolls_back_and_trip_tables_coexist) ... ok
+
+----------------------------------------------------------------------
+Ran 79 tests in 8.647s
+
+OK
+
+# Additional assistant checks: JavaScript syntax and existing auth tests.
+node --check web/app.js: Pass
+node --check web/details_weather.js: Pass
+node --check web/profile_search.js: Pass
+$ node tests/auth_validation.test.js
+✔ TC-CA-01 valid email and password produce no errors (0.523888ms)
+✔ TC-CA-04 invalid email format is rejected (0.094588ms)
+✔ TC-CA-05 weak password is rejected (0.065985ms)
+✔ TC-CA-06 empty fields show required message (0.062959ms)
+✔ TC-LI-04 login with empty fields is rejected (0.073058ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 5
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 7.751937
+
+# Additional assistant browser run: installed headless Chromium, Node/CDP, temporary DB.
+# Temporary harness: /tmp/hermes-profile-search-ui.mjs; no application dependencies added.
+SR-UI01 Pass: profile loads, saves trimmed values, and retains invalid input across errors and navigation.
+SR-UI02 Pass: conflict preserves draft; explicit reload gets the saved profile.
+SR-UI03 Pass: ranked results, description search, details and Back navigation work.
+SR-UI04 Pass: no-results and validation messages leave no old cards.
+SR-UI05 Pass: header search visible in all nine views; checked pages fit 390px; no JavaScript exceptions.
+# Browser command exited 0. Full accessibility and production load tests were not performed.

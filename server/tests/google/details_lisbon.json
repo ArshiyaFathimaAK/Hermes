@@ -1,0 +1,10 @@
+{
+  "id": "ChIJO_PkYRozGQ0R0DaQ5L3rAAQ",
+  "formattedAddress": "Lisbon, Portugal",
+  "addressComponents": [
+    { "longText": "Lisbon", "shortText": "Lisbon", "types": ["locality", "political"], "languageCode": "en" },
+    { "longText": "Lisbon", "shortText": "Lisbon", "types": ["administrative_area_level_1", "political"], "languageCode": "en" },
+    { "longText": "Portugal", "shortText": "PT", "types": ["country", "political"], "languageCode": "en" }
+  ],
+  "location": { "latitude": 38.7222524, "longitude": -9.1393366 }
+}

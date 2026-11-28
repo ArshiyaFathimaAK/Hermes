@@ -109,3 +109,70 @@ ChatGPT/Codex drafted the code, tests, documentation and class model. The assist
 executed the included unit/API suite and JavaScript syntax check. It added date and
 filter validation, transaction rollback, ownership checks and stale-version handling.
 
+
+---
+
+# Spenser's Assignment 4 contribution: UC-11 and UC-12
+
+Prepared for Spenser Saunders with Claude (Anthropic) assistance. Builds on Arshiya's
+module above and follows the same layers: `web/` → `api.py` → service → `repository.py` → SQLite.
+
+## What it adds
+
+- **UC-11 View Estimated Trip Cost (FR-27).** The itinerary screen shows an estimated
+  total, lodging vs. activities, and a subtotal for each day that has stops.
+- **UC-12 Share Trip (FR-28, FR-29).** The itinerary screen has a **Create share link**
+  button. Anyone opening `http://127.0.0.1:8000/?share=<token>` sees that one trip, read-only.
+
+## Rules chosen for the demo
+
+- Estimate = sum of the catalog price of every stop in the **saved** itinerary. A lodging
+  placed on a day counts as one night. Free places count as $0. Unsaved edits are not
+  included; the panel says so until you save.
+- One share link per trip; asking again returns the same link. Creating a link sets the
+  trip's privacy to `link`. Only the owner can create it (NFR-04).
+- Tokens come from `secrets.token_urlsafe(16)` (128 random bits). The shared view returns
+  only the trip name, cities, dates and stops: no owner ID, trip ID or other trips (FR-29).
+- Unknown and malformed links both get "This share link is not valid."
+- No way to turn a link off yet (not required by FR-28/FR-29).
+
+## Files
+
+| File | Change |
+| --- | --- |
+| `hermes/cost.py` | New. `CostService.estimate(user_id, trip_id)` |
+| `hermes/sharing.py` | New. `ShareService.create_link(...)`, `ShareService.view(token)` |
+| `hermes/repository.py` | Added `share_links` table, `get_or_create_share_token`, `get_shared` |
+| `hermes/api.py` | Added `GET /api/trips/<id>/cost`, `POST /api/trips/<id>/share`, `GET /api/shared/<token>` |
+| `web/index.html`, `web/app.js`, `web/style.css` | Cost panel, Share panel, read-only shared view (marked "Spenser") |
+| `tests/test_cost_share.py` | New. 16 unit and API tests |
+| `tests/ui_cost_share.py` | New. 7 browser checks with screenshots (optional, needs Playwright) |
+| `docs/test_cases.json`, `docs/rtm.json` | Added TC-UC11-*, TC-UC12-*, UI-UC11/12-* and RTM rows for FR-27, FR-28, FR-29, NFR-04, NFR-08 |
+| `docs/design_classes.*` | Added CostService, ShareService, ShareLink (blue) |
+| `evidence/spenser_*` | Test output, browser results and screenshots |
+
+## Run the tests
+
+```text
+python -m unittest tests.test_cost_share -v      # the 16 new tests
+python -m unittest discover -s tests -v          # everything: 61 tests
+python tests/ui_cost_share.py                    # optional browser checks
+```
+
+All 61 unit/API tests (Arshiya 28, Reynard 17, Spenser 16) and all 7 browser checks passed
+in the assistant environment on 2026-11-15, after rebasing onto Reynard's UC-06/UC-07 commit (`evidence/spenser_*`). That run does not count as the student's own run:
+rerun them on your computer and record the results before submission.
+
+## AI use (Assignment 4 disclosure, draft for Spenser to edit)
+
+- **Tool:** Claude (Anthropic), in a claude.ai session with the course slides, the SE
+  document, and this repository.
+- **Example prompts:** "What will the process be to create those 2 UC's in this code base
+  as an agent?" · "Begin building, ask questions as needed."
+- **What the assistant did:** proposed the cost and sharing rules, wrote the services,
+  routes, UI and tests, and ran the full suite and a browser click-through.
+- **How it was checked:** the new tests follow Ch13.2 (equivalence classes and boundaries
+  for cost; a decision table for sharing); Arshiya's 28 tests were rerun to catch
+  regressions; the screens were checked with screenshots.
+- **Still to do by Spenser:** [ ] read the diff · [ ] run the tests locally and record
+  results · [ ] confirm the cost rule with the team · [ ] agree the merge with Arshiya.
