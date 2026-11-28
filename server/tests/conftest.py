@@ -3,12 +3,14 @@ from fastapi.testclient import TestClient
 
 from hermes_api.config import Settings, get_settings
 from hermes_api.features.places.provider import get_place_provider
+from hermes_api.features.stays.provider import get_stay_provider
 from hermes_api.features.weather.mock import MockWeatherProvider
 from hermes_api.features.weather.provider import get_weather_provider
 from hermes_api.main import create_app
 
 # Providers chosen once per server (cached), cleared so each test picks again without keys.
-CACHED_PROVIDERS = [get_place_provider]
+# Add yours here if it's cached with @lru_cache.
+CACHED_PROVIDERS = [get_place_provider, get_stay_provider]
 
 
 @pytest.fixture(autouse=True)

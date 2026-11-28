@@ -11,10 +11,8 @@ Google charges per request and the key has a daily limit, so this provider asks 
 The app debounces typing too (hermes/src/features/explore/use-explore.ts).
 """
 
-import asyncio
 import logging
 import time
-from collections import OrderedDict, deque
 from collections.abc import Awaitable, Callable
 from typing import Any
 
@@ -23,6 +21,7 @@ import httpx
 from ...config import get_settings
 from ...errors import NotFound, UpstreamUnavailable
 from ...ids import make_id, split_id
+from ...request_cache import CachedCalls, CallLimit, TtlCache
 from .mock import MockPlaceProvider
 from .models import Place
 
@@ -56,47 +55,6 @@ async def send_with_httpx(
             return response.status_code, response.json()
     except (httpx.HTTPError, ValueError) as error:
         raise UpstreamUnavailable(DOWN) from error
-
-
-class TtlCache:
-    """A small in-memory cache: entries expire, and the oldest go first when it's full."""
-
-    def __init__(self, seconds: float, size: int, clock: Callable[[], float]):
-        self._seconds, self._size, self._clock = seconds, size, clock
-        self._entries: OrderedDict[str, tuple[float, Any]] = OrderedDict()
-
-    def get(self, key: str) -> Any | None:
-        entry = self._entries.get(key)
-        if entry is None or entry[0] < self._clock():
-            self._entries.pop(key, None)
-            return None
-        self._entries.move_to_end(key)
-        return entry[1]
-
-    def put(self, key: str, value: Any) -> None:
-        self._entries[key] = (self._clock() + self._seconds, value)
-        self._entries.move_to_end(key)
-        while len(self._entries) > self._size:
-            self._entries.popitem(last=False)
-
-
-class CallLimit:
-    """Allows `per_minute` calls in any 60 seconds, so a bug or a busy hour can't burn the quota."""
-
-    def __init__(self, per_minute: int, clock: Callable[[], float]):
-        self._per_minute, self._clock = per_minute, clock
-        self._calls: deque[float] = deque()
-
-    def take(self) -> None:
-        now = self._clock()
-        while self._calls and self._calls[0] <= now - 60:
-            self._calls.popleft()
-        if len(self._calls) >= self._per_minute:
-            logger.warning(
-                "Google Places: over %s calls a minute, refusing more.", self._per_minute
-            )
-            raise UpstreamUnavailable(BUSY)
-        self._calls.append(now)
 
 
 def normalize(query: str) -> str:
@@ -152,9 +110,8 @@ class GooglePlaceProvider:
     ):
         self._api_key = api_key
         self._send = send
-        self._cache = TtlCache(CACHE_SECONDS, CACHE_SIZE, clock)
-        self._limit = CallLimit(CALLS_PER_MINUTE, clock)
-        self._pending: dict[str, asyncio.Future[Any]] = {}
+        self._calls = CachedCalls(TtlCache(CACHE_SECONDS, CACHE_SIZE, clock))
+        self._limit = CallLimit(CALLS_PER_MINUTE, service="Google Places", busy=BUSY, clock=clock)
         # Places saved before search went live (sample ids) still open.
         self._samples = MockPlaceProvider()
 
@@ -163,7 +120,7 @@ class GooglePlaceProvider:
         if len(q) < MIN_QUERY_LENGTH:
             return []
         body = {"input": q, "includedPrimaryTypes": ["(regions)"]}
-        return await self._once(
+        return await self._calls.once(
             f"search:{q}",
             lambda: self._call("POST", AUTOCOMPLETE_URL, body, places_from_autocomplete),
         )
@@ -175,31 +132,10 @@ class GooglePlaceProvider:
         if source != "google" or "/" in google_id:
             raise NotFound(NOT_FOUND)
         url = DETAILS_URL.format(place_id=google_id)
-        return await self._once(
+        return await self._calls.once(
             f"place:{google_id}",
             lambda: self._call("GET", url, None, place_from_details, fields=DETAILS_FIELDS),
         )
-
-    async def _once(self, key: str, fetch: Callable[[], Awaitable[Any]]) -> Any:
-        """The cached answer, or one shared call for everyone asking the same thing right now."""
-        cached = self._cache.get(key)
-        if cached is not None:
-            return cached
-        if key in self._pending:
-            return await asyncio.shield(self._pending[key])
-        future: asyncio.Future[Any] = asyncio.get_running_loop().create_future()
-        self._pending[key] = future
-        try:
-            value = await fetch()
-            self._cache.put(key, value)
-            future.set_result(value)
-            return value
-        except Exception as error:
-            future.set_exception(error)
-            future.exception()  # Mark as seen when nobody else was waiting.
-            raise
-        finally:
-            del self._pending[key]
 
     async def _call(self, method: str, url: str, body: Any, parse, *, fields: str | None = None):
         self._limit.take()

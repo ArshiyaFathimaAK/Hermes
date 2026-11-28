@@ -14,8 +14,13 @@ interface StayRowProps {
   onToggle: () => void;
 }
 
+/** Joins the parts that exist with " · ". Missing data is hidden, never filled in. */
+const joined = (...parts: (string | undefined)[]) => parts.filter(Boolean).join(' · ');
+
 export function StayRow({ stay, nights, chosen, onToggle }: StayRowProps) {
   const styles = useStyles();
+  const kindAndArea = joined(stay.kind, stay.area);
+  const reviews = joined(stay.scoreWord, stay.reviewCount && `${stay.reviewCount} reviews`);
   return (
     <View style={styles.row}>
       <View style={styles.photo}>
@@ -25,25 +30,35 @@ export function StayRow({ stay, nights, chosen, onToggle }: StayRowProps) {
         <Text variant="label" weight="bold">
           {stay.name}
         </Text>
-        <Text variant="caption" color="textSecondary">
-          {stay.kind} · {stay.area}
-        </Text>
-        <Text variant="caption" color="textSecondary">
-          <Text variant="caption" weight="bold">
-            {stay.score}
-          </Text>{' '}
-          {stay.scoreWord} · {stay.reviewCount} reviews
-        </Text>
-        <Text variant="caption" weight="semibold" color="actionText">
-          {stay.near}
-        </Text>
-        <Text variant="caption" color="textSecondary">
-          <Text variant="label" weight="extrabold">
-            {formatMoney(stay.nightly * nights)}
-          </Text>{' '}
-          for {pluralize(nights, 'night')}
-          {stay.freeCancellation ? ' · Free cancellation' : ''}
-        </Text>
+        {kindAndArea !== '' && (
+          <Text variant="caption" color="textSecondary">
+            {kindAndArea}
+          </Text>
+        )}
+        {(stay.score !== undefined || reviews !== '') && (
+          <Text variant="caption" color="textSecondary">
+            {stay.score !== undefined && (
+              <Text variant="caption" weight="bold">
+                {stay.score}{' '}
+              </Text>
+            )}
+            {reviews}
+          </Text>
+        )}
+        {stay.near && (
+          <Text variant="caption" weight="semibold" color="actionText">
+            {stay.near}
+          </Text>
+        )}
+        {stay.nightly !== undefined && (
+          <Text variant="caption" color="textSecondary">
+            <Text variant="label" weight="extrabold">
+              {formatMoney(stay.nightly * nights)}
+            </Text>{' '}
+            for {pluralize(nights, 'night')}
+            {stay.freeCancellation ? ' · Free cancellation' : ''}
+          </Text>
+        )}
       </View>
       <IconButton
         testID={`stay-${stay.id}`}

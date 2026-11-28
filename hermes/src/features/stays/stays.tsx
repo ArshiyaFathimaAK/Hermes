@@ -23,12 +23,12 @@ import { StayRow } from './stay-row';
 import { useStays } from './use-stays';
 
 export function Stays({ place }: { place: Place }) {
-  const { all, visible, filters, setFilters, sort, setSort } = useStays(place.id);
   const { datesForPlace, tripForPlace, toggleStay } = useTrips();
+  const dates = datesForPlace(place.id);
+  const { all, visible, filters, setFilters, sort, setSort } = useStays(place.id, dates);
   const gate = useAccountGate();
   const [sorting, setSorting] = useState(false);
 
-  const dates = datesForPlace(place.id);
   const nights = dates ? daysBetween(dates.start, dates.end) : 0;
   const chosenId = tripForPlace(place.id)?.stayIds[place.id];
   const toggle = (stayId: string) => gate('save-to-trip', () => toggleStay(place, stayId));
@@ -64,14 +64,20 @@ export function Stays({ place }: { place: Place }) {
             <View style={styles.content}>
               <MapView
                 height={196}
-                pins={visible.map((stay) => ({
-                  id: stay.id,
-                  label: `${stay.name}, ${formatMoney(stay.nightly)} a night`,
-                  text: formatMoney(stay.nightly),
-                  position: stay.mapPosition,
-                  selected: stay.id === chosenId,
-                  onPress: () => toggle(stay.id),
-                }))}
+                pins={visible.flatMap((stay) =>
+                  stay.mapPosition && stay.nightly !== undefined
+                    ? [
+                        {
+                          id: stay.id,
+                          label: `${stay.name}, ${formatMoney(stay.nightly)} a night`,
+                          text: formatMoney(stay.nightly),
+                          position: stay.mapPosition,
+                          selected: stay.id === chosenId,
+                          onPress: () => toggle(stay.id),
+                        },
+                      ]
+                    : [],
+                )}
               />
               <View style={styles.heading}>
                 <Text variant="subheading" style={styles.fill}>
@@ -96,8 +102,8 @@ export function Stays({ place }: { place: Place }) {
                 />
               ))}
               <Text variant="caption" color="textMuted" style={styles.credit}>
-                Stays, scores and prices for {formatRange(dates)} come from Booking.com, and you
-                finish booking there. Walking times to your saves are worked out by the app.
+                Stays, scores and prices for {formatRange(dates)} come from LiteAPI, for two
+                adults.
               </Text>
             </View>
             <BottomSheet visible={sorting} title="Sort by" onClose={() => setSorting(false)}>
