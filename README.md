@@ -1,5 +1,8 @@
 # 🌍 Hermes
 
+> **Developers and AI agents: start with [AGENTS.md](AGENTS.md).** It explains how the app, the
+> server and Supabase fit together, and how to run them.
+
 Your all in one website for travel!
 
 The app that makes traveling easier, and takes the planning off your shoulders!

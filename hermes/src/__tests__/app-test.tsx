@@ -50,3 +50,13 @@ it('applies filters and closes the sheet', async () => {
   expect(screen.queryByTestId('activity-sintra')).toBeNull();
   expect(screen.getByTestId('activity-belem')).toBeTruthy();
 });
+
+it('remembers who signed in after the app restarts', async () => {
+  const { authService } = jest.requireActual<typeof import('@/services/auth')>('@/services/auth');
+  const restore = jest
+    .spyOn(authService, 'currentUser')
+    .mockResolvedValue({ id: 'demo-user', name: 'Returning Traveler', email: 'r@example.com' });
+  await open('/account');
+  expect(await screen.findByText('Returning Traveler')).toBeTruthy();
+  restore.mockRestore();
+});

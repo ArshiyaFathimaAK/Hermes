@@ -35,10 +35,18 @@ function firstUnused(taken: string[], base: string, separator: string) {
   return candidate;
 }
 
+/** Makes the id for a new trip. Storage can supply one (the database needs UUIDs). */
+export type NewTripId = () => string;
+
 /** Always adds a trip, even when another one already includes the place. */
-export function createTrip(trips: Trip[], place: PlaceRef, dates?: DateRange): Trip[] {
+export function createTrip(
+  trips: Trip[],
+  place: PlaceRef,
+  dates?: DateRange,
+  newId?: NewTripId,
+): Trip[] {
   const trip: Trip = {
-    id: firstUnused(trips.map((t) => t.id), `trip-${place.id}`, '-'),
+    id: newId?.() ?? firstUnused(trips.map((t) => t.id), `trip-${place.id}`, '-'),
     name: firstUnused(trips.map((t) => t.name), place.name, ' '),
     placeIds: [place.id],
     dates,
@@ -53,8 +61,13 @@ function updateTrip(trips: Trip[], tripId: string, update: (trip: Trip) => Trip)
 }
 
 /** The first save for a place creates its trip; people can also start one with createTrip. */
-export function ensureTrip(trips: Trip[], place: PlaceRef, dates?: DateRange): Trip[] {
-  return findTripForPlace(trips, place.id) ? trips : createTrip(trips, place, dates);
+export function ensureTrip(
+  trips: Trip[],
+  place: PlaceRef,
+  dates?: DateRange,
+  newId?: NewTripId,
+): Trip[] {
+  return findTripForPlace(trips, place.id) ? trips : createTrip(trips, place, dates, newId);
 }
 
 export function toggleActivity(
@@ -63,8 +76,9 @@ export function toggleActivity(
   activityId: string,
   dates?: DateRange,
   activeTripId?: string,
+  newId?: NewTripId,
 ): Trip[] {
-  const next = ensureTrip(trips, place, dates);
+  const next = ensureTrip(trips, place, dates, newId);
   const target = findTripForPlace(next, place.id, activeTripId)!;
   if (isActivitySaved(target, activityId)) return removeItem(next, target.id, activityId);
   return updateTrip(next, target.id, (trip) => ({
@@ -80,8 +94,9 @@ export function toggleStay(
   stayId: string,
   dates?: DateRange,
   activeTripId?: string,
+  newId?: NewTripId,
 ): Trip[] {
-  const next = ensureTrip(trips, place, dates);
+  const next = ensureTrip(trips, place, dates, newId);
   const target = findTripForPlace(next, place.id, activeTripId)!;
   return updateTrip(next, target.id, (trip) => {
     const stayIds = { ...trip.stayIds };

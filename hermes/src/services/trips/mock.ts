@@ -1,6 +1,7 @@
 import type { Trip } from '@/domain/trip';
 import { addDays, today } from '@/utils/dates';
 
+import { applyTripChanges } from './changes';
 import type { TripService } from './contract';
 
 /** Kept in memory: closing the app resets it. */
@@ -35,7 +36,7 @@ export const mockTripService: TripService = {
   async load(userId) {
     return saved.get(userId) ?? [];
   },
-  async save(userId, trips) {
-    saved.set(userId, trips);
+  async apply(userId, changes) {
+    saved.set(userId, applyTripChanges(saved.get(userId) ?? [], changes));
   },
 };

@@ -1,4 +1,4 @@
-import { createContext, use, useState, type PropsWithChildren } from 'react';
+import { createContext, use, useEffect, useState, type PropsWithChildren } from 'react';
 
 import type { User } from '@/domain/user';
 import { authService } from '@/services/auth';
@@ -19,6 +19,25 @@ const SessionContext = createContext<Session | null>(null);
 
 export function SessionProvider({ children }: PropsWithChildren) {
   const [user, setUser] = useState<User | null>(null);
+
+  // Pick up a login from before the app was closed, and follow changes such as one expiring.
+  useEffect(() => {
+    let active = true;
+    authService
+      .currentUser()
+      .then((current) => {
+        // Never undo a sign-in that happened while this was loading.
+        if (active && current) setUser((now) => now ?? current);
+      })
+      .catch(() => {});
+    const stop = authService.onUserChange((next) => {
+      if (active) setUser(next);
+    });
+    return () => {
+      active = false;
+      stop();
+    };
+  }, []);
 
   const session: Session = {
     user,

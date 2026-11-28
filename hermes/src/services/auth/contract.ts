@@ -19,4 +19,11 @@ export interface AuthService {
   /** Temporary: see config.demoSignIn. */
   signInAsDemo(): Promise<User>;
   signOut(): Promise<void>;
+  /** Who is signed in now, or null. Called when the app starts: a login lasts across restarts. */
+  currentUser(): Promise<User | null>;
+  /**
+   * Calls `listener` whenever sign-in changes outside the app's own buttons, such as a login
+   * expiring. Returns a function that stops listening.
+   */
+  onUserChange(listener: (user: User | null) => void): () => void;
 }

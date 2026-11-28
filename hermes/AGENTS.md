@@ -1,4 +1,5 @@
-This is an Expo/React Native mobile application. Prioritize mobile-first patterns, performance, and cross-platform compatibility.
+This is an Expo/React Native mobile application. Read `../AGENTS.md` first: it explains how this app,
+the Python server in `../server` and Supabase fit together, and how to run them. Prioritize mobile-first patterns, performance, and cross-platform compatibility.
 
 ## Expo has changed — do not trust your training data
 
@@ -80,20 +81,63 @@ and `theme`. Features import each other only through `@/features/<name>`. Lint e
 
 ### Replacing a mock
 
-1. Add `services/<name>/live.ts` that implements the interface in `contract.ts`.
-2. Point `services/<name>/index.ts` at it. That is the only line that switches.
-3. To fail, reject with an `Error` whose message can be shown to people. Screens already draw loading,
-   error and empty states.
-4. Keep `mock.ts`: tests and teammates rely on it.
-5. Need more data? Add an **optional** field to the type in `domain/`. Changing or removing a field
-   affects other people, so ask first.
+Each service has `contract.ts` (what it must do), `mock.ts` (sample data) and `index.ts` (which one
+the app uses). Going live means writing `live.ts` and changing one line in `index.ts`.
+
+**Data about places** (search, things to do, stays, weather, cost) comes from the Python server:
+
+1. Copy `services/places/live.ts`. Call `apiGet` / `apiPost` from `services/api-client.ts`, never
+   `fetch`. The server's JSON already matches `domain/`, so most methods are one line.
+2. Point `index.ts` at it. The server must be running (`../AGENTS.md`).
+
+**People's data** (accounts, profiles, trips, share links, recent places) comes from Supabase:
+
+1. Find your tables in `../supabase/AGENTS.md`. If they aren't applied to Supabase yet, ask the
+   project lead; until then keep `index.ts` on the mock.
+2. Copy the pattern in `services/trips/`, the finished example:
+   - `live.ts` calls `getSupabase()` from `services/supabase.ts`. Wrap **every** call in `must(...)`,
+     and every update or delete in `mustChange(... .select())`. Supabase returns errors instead of
+     throwing them, and an update that a policy blocks reports success without changing anything.
+   - `rows.ts` turns database rows (snake_case) into `domain/` types (camelCase). Keep that mapping
+     there, and test it (`__tests__/rows-test.ts`).
+   - Column names come from `services/database.types.ts`, so TypeScript catches a typo or a renamed
+     column. Don't add `as` casts to make an error go away.
+3. Point `index.ts` at it.
+
+Either way:
+
+- Reject with an `Error` whose message can be shown to people. Screens already draw loading, error and
+  empty states.
+- Keep `mock.ts`. Tests always use the mocks (`jest.setup.js` makes sure), so switching `index.ts`
+  never breaks anyone's tests. Test `live.ts` by importing it directly.
+- Need more data? Add an **optional** field to the type in `domain/`. Changing or removing a field
+  affects other people, so ask first.
+
+### Trips: how saving works
+
+Trip rules (`state/trips/trip-logic.ts`) change whole trips. The app then works out the smallest
+changes (`services/trips/changes.ts`: add item, set dates, ...), one per database row, and sends only
+those, in order, one save at a time. If a save fails, the app reloads what's really stored.
+
+Adding a field to a trip touches, in one pull request: `domain/trip.ts`, the migration,
+`database.types.ts`, `services/trips/rows.ts`, and `services/trips/changes.ts` (`diffTrips` and
+`applyTripChanges`). The test in `services/trips/__tests__/changes-test.ts` replays random edits and
+checks that storing only the changes rebuilds the same trips: extend its random steps to cover the field.
+
+### Accounts
+
+The auth service also restores a login when the app starts (`currentUser`) and reports a login that
+expires or ends elsewhere (`onUserChange`). A live auth service must implement both, or people will
+look signed out after every restart. Sign-up passes the name as metadata, which makes the profile:
+`supabase.auth.signUp({ email, password, options: { data: { name } } })`.
 
 ### Adding tests
 
 - Put them in a `__tests__/` folder beside the code, named `*-test.ts(x)`. Never inside `src/app/`.
-- Mock trips are reset before every test (`jest.setup.ts`). If your mock keeps data, reset it there too.
+- Mock trips are reset before every test (`jest.setup.js`). If your mock keeps data, reset it there too.
 - Tests fail on navigation errors ("not handled by any navigator"), even if the right screen shows.
 - Use one test file per use case so people don't edit the same one.
+- A test fails if an `.env` file holds a secret key (`src/__tests__/no-secrets-in-app-test.js`).
 - `src/__tests__/app-test.tsx` shows how to drive the whole app. Find things by `testID` or label.
   Treat existing `testID`s as public: don't rename them.
 
@@ -143,7 +187,7 @@ and `theme`. Features import each other only through `@/features/<name>`. Lint e
 
 ## What is fake right now
 
-Sign-in accepts anything, all data is sample data held in memory, share links only work until the app
+Sign-in accepts anything, all data is sample data held in memory (Supabase has no tables yet), share links only work until the app
 restarts, and the map is a placeholder (`ui/map-view.tsx`). Notifications are out of scope.
 A trip may hold several places, and several trips may include the same place. Saves go to the active
 trip when it includes the place (`findTripForPlace`).

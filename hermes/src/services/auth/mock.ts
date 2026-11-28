@@ -14,4 +14,11 @@ export const mockAuthService: AuthService = {
     return { id: DEMO_USER_ID, name: 'Demo Traveler', email: 'demo@example.com' };
   },
   async signOut() {},
+  // Mock logins don't last across restarts.
+  async currentUser() {
+    return null;
+  },
+  onUserChange() {
+    return () => {};
+  },
 };
