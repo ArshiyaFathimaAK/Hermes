@@ -1,5 +1,5 @@
 import type { WeatherService } from './contract';
-import { mockWeatherService } from './mock';
+import { liveWeatherService } from './live';
 
-/** Swap the mock for the real implementation here. Nothing else needs to change. */
-export const weatherService: WeatherService = mockWeatherService;
+/** Live: needs the server running (see AGENTS.md at the repository root). Tests use mock.ts instead. */
+export const weatherService: WeatherService = liveWeatherService;

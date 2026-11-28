@@ -18,6 +18,8 @@ class WeatherProvider(Protocol):
 
 
 def get_weather_provider() -> WeatherProvider:
-    from .mock import MockWeatherProvider
+    # Open-Meteo needs no API key, so there is nothing to fall back from. Tests swap in the mock
+    # (see tests/conftest.py), so they need no network.
+    from .live import LiveWeatherProvider
 
-    return MockWeatherProvider()
+    return LiveWeatherProvider()
