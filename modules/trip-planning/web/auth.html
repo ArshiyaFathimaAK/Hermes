@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="utf-8"><title>Hermes - Create Account and Log In</title></head>
+<body>
+  <h1>Create account</h1>
+  <input id="caEmail" type="email" placeholder="Email">
+  <input id="caPw" type="password" placeholder="Password">
+  <button onclick="handleCreate()">Create Account</button>
+  <p id="caMsg"></p>
+
+  <h1>Log in</h1>
+  <input id="liEmail" type="email" placeholder="Email">
+  <input id="liPw" type="password" placeholder="Password">
+  <button onclick="handleLogin()">Log In</button>
+  <p id="liMsg"></p>
+
+  <p><a href="recover_logout.html">Forgot password / Log out</a></p>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="auth_validation.js"></script>
+  <script src="auth_actions.js"></script>
+  <script>
+    async function handleCreate() {
+      const r = await createAccount(document.getElementById("caEmail").value, document.getElementById("caPw").value);
+      document.getElementById("caMsg").textContent = r.message;
+    }
+    async function handleLogin() {
+      const r = await logIn(document.getElementById("liEmail").value, document.getElementById("liPw").value);
+      document.getElementById("liMsg").textContent = r.message;
+    }
+  </script>
+</body>
+</html>
