@@ -3,22 +3,23 @@ import type { Database } from '@/services/database.types';
 
 type Tables = Database['public']['Tables'];
 type TripRow = Tables['trips']['Row'];
-type PlaceRow = Pick<
-  Tables['trip_places']['Row'],
-  'place_id' | 'position' | 'stay_id' | 'created_at'
->;
 type ItemRow = Pick<
   Tables['trip_items']['Row'],
   'activity_id' | 'place_id' | 'day' | 'slot' | 'sort_order' | 'created_at'
 >;
-
-/** What load() selects: a trip with its places and items nested. */
+type PlaceRow = Pick<
+  Tables['trip_places']['Row'],
+  'place_id' | 'position' | 'stay_id' | 'created_at'
+> & { trip_items: ItemRow[] };
+/**
+ * What load() selects: a trip, its places, and each place's items. Items hang off places, not
+ * trips, because that's the relation in the database (trip_items.(trip_id, place_id)).
+ */
 export const TRIP_SELECT =
-  'id, name, start_date, end_date, trip_places(place_id, position, stay_id, created_at), trip_items(activity_id, place_id, day, slot, sort_order, created_at)';
+  'id, name, start_date, end_date, trip_places(place_id, position, stay_id, created_at, trip_items(activity_id, place_id, day, slot, sort_order, created_at))';
 
 export type TripWithRows = Pick<TripRow, 'id' | 'name' | 'start_date' | 'end_date'> & {
   trip_places: PlaceRow[];
-  trip_items: ItemRow[];
 };
 
 const isSlot = (slot: string | null): slot is DaySlot => DAY_SLOTS.includes(slot as DaySlot);
@@ -29,7 +30,9 @@ const byOrder = (a: { created_at: string }, b: { created_at: string }) =>
 /** Database rows to the app's Trip. Kept apart from the network calls so it can be tested. */
 export function tripFromRows(row: TripWithRows): Trip {
   const places = [...row.trip_places].sort((a, b) => a.position - b.position || byOrder(a, b));
-  const items = [...row.trip_items].sort((a, b) => a.sort_order - b.sort_order || byOrder(a, b));
+  const items = row.trip_places
+    .flatMap((place) => place.trip_items)
+    .sort((a, b) => a.sort_order - b.sort_order || byOrder(a, b));
   return {
     id: row.id,
     name: row.name,

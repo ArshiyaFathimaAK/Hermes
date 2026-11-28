@@ -16,11 +16,20 @@ the team tells you, ask them before acting.
 Where data lives:
 
 - **Supabase**: accounts, profiles, trips, itineraries and share links. The app talks to Supabase
-  directly, through `hermes/src/services/supabase.ts`. The tables are designed in `supabase/`, but
-  until they're applied the app still uses mock data.
+  directly, through `hermes/src/services/supabase.ts`. The tables are live; each service switches
+  from mock data once its use case is implemented.
 - **Python server**: anything fetched live about real places (search, things to do, stays, weather)
   and anything that needs a secret API key. It stores nothing about users.
 - **The app**: everything on screen, plus filtering results it already has.
+
+**How the three agree on the same place.** Only the server creates ids for places, things to do and
+stays. The app passes them along unchanged, and Supabase stores only the ids, never names or details.
+Every screen asks the server for details by id, so everyone sees the same current information. Live
+ids carry their source (`google:...`, `viator:...`); never build, edit or parse an id outside the
+server. An id that stops existing shows as "No longer available".
+
+Sample data for both mocks is one file, `hermes/src/services/sample-data.json`, so the app's and the
+server's mocks always agree. Change sample data there, never in a single mock.
 
 | Use case | App | Server | Supabase |
 | --- | --- | --- | --- |

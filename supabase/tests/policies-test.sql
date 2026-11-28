@@ -122,6 +122,16 @@ select t.rows('security definer functions without a fixed search_path',
   $$select 1 from pg_proc f join pg_namespace n on n.oid = f.pronamespace
      where n.nspname = 'public' and f.prosecdef
        and not exists (select 1 from unnest(coalesce(f.proconfig, '{}')) c where c like 'search_path=%')$$, 0);
+-- Only these may be called while signed out. Anything else is a mistake, even if harmless.
+select t.rows('functions signed-out visitors can call, other than get_shared_trip',
+  $$select 1 from pg_proc f join pg_namespace n on n.oid = f.pronamespace
+     where n.nspname = 'public' and has_function_privilege('anon', f.oid, 'EXECUTE')
+       and f.proname not in ('get_shared_trip')$$, 0);
+select t.rows('trigger functions callable through the API',
+  $$select 1 from pg_proc f join pg_namespace n on n.oid = f.pronamespace
+     where n.nspname = 'public' and f.prorettype = 'trigger'::regtype
+       and (has_function_privilege('anon', f.oid, 'EXECUTE')
+         or has_function_privilege('authenticated', f.oid, 'EXECUTE'))$$, 0);
 select t.rows('updated_at columns that never update',
   $$select 1 from pg_attribute a join pg_class c on c.oid = a.attrelid
        join pg_namespace n on n.oid = c.relnamespace

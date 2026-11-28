@@ -14,7 +14,7 @@ def test_get_many_leaves_out_unknown_ids(client):
 def test_detail_includes_links(client):
     detail = client.get("/activities/belem").json()
     assert detail["mapsUrl"].startswith("https://www.google.com/maps/")
-    assert [n["id"] for n in detail["nearby"]] == ["alfama", "market"]
+    assert [n["id"] for n in detail["nearby"]] == ["lxf", "market"]
 
 
 def test_unknown_activity_is_a_404(client):

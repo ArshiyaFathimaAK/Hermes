@@ -1,6 +1,6 @@
 def test_lists_stays_for_a_place(client):
     stays = client.get("/places/lisbon/stays").json()
-    assert [s["id"] for s in stays] == ["river", "chiado"]
+    assert [s["id"] for s in stays] == ["river", "belem-house", "chiado"]
     assert stays[0]["mapPosition"] == {"x": 0.56, "y": 0.5}
 
 

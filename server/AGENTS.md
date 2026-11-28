@@ -50,9 +50,11 @@ hermes_api/
     <feature>/
       models.py    Request and response shapes. Must match hermes/src/domain/.
       provider.py  The interface (a Protocol), and get_<feature>_provider(): which one is used.
-      mock.py      Sample data. Keep it working.
+      mock.py      Reads the shared sample data. Keep it working.
       router.py    The HTTP endpoints. Thin: check input, call the provider, return.
       live.py      Yours to write: the real implementation.
+  ids.py         make_id / split_id: live ids carry their source (google:..., viator:...).
+  sample_data.py Loads ../hermes/src/services/sample-data.json, shared with the app's mocks.
 tests/           One test file per feature. They use the mocks, so they need no network or keys.
 ```
 
@@ -71,7 +73,10 @@ tests/           One test file per feature. They use the mocks, so they need no 
 2. Point `get_<feature>_provider()` in `provider.py` at it. That one line switches the server over.
    If your provider needs a key that isn't set, fall back to the mock, so teammates without the key
    can still run everything.
-3. Map the outside service's data into this feature's models. Leave a field empty (`None`) when the
+3. Give every id its source with `make_id("google", place_id)` from `ids.py`, and read it back
+   with `split_id` to know which service to ask. Ids must stay the same for the same thing: the app
+   saves them in Supabase and asks for them again later.
+   Map the outside service's data into this feature's models. Leave a field empty (`None`) when the
    source has no value: the app hides it. Never invent a value.
 4. Raise `NotFound` for unknown ids and `ApiError("...")` for bad input. Outside failures come from
    `get_json` as `UpstreamUnavailable`. Messages are shown to people, so write them for people.

@@ -1,7 +1,7 @@
 # Hermes database (Supabase)
 
-Read `../AGENTS.md` first. **These migrations are a proposal until the project lead applies them.**
-Nothing here changes the Supabase project by itself.
+Read `../AGENTS.md` first. Every migration here is applied to the Supabase project
+"3354 Term Project". Files here don't change the project by themselves: someone applies them.
 
 ## Ask first
 
@@ -16,6 +16,7 @@ Each use case has its own table and its own migration file, so people don't edit
 | Migration | Tables | Use case | Who may use it |
 | --- | --- | --- | --- |
 | `..._shared_helpers` | — (helpers) | everyone | project lead changes it |
+| `..._lock_down_and_index` | — (fixes from Supabase's advisors) | — | — |
 | `..._profiles` | `profiles` | UC-01, UC-03 | each person: own row, name only |
 | `..._trips` | `trips`, `trip_places` | UC-08, UC-09, UC-06 stays | the trip's owner |
 | `..._trip_items` | `trip_items` | UC-10 | the trip's owner |
@@ -49,8 +50,8 @@ files". It needs these files; everything else stays as it is.
 | UC-08, UC-09, UC-10 Trips | `trips`, `trip_places`, `trip_items` | `trips/live.ts`: already written |
 | UC-12 Share trip | `share_links`, `get_shared_trip()` | `sharing/live.ts` |
 
-The tables only work once the project lead has applied the migrations. After that, regenerate
-`hermes/src/services/database.types.ts` (see the top of that file).
+`hermes/src/services/database.types.ts` is generated from the live database. Regenerate it after
+every migration (see the top of that file).
 
 ## Rules for every table
 
@@ -59,7 +60,9 @@ The tables only work once the project lead has applied the migrations. After tha
 - `revoke all ... from anon`, then grant `authenticated` only what the app needs. Supabase lets
   signed-out visitors reach new tables unless you do this.
 - Functions that bypass security (`security definer`) set `search_path = ''` and are granted only to
-  the roles that need them.
+  the roles that need them. Supabase lets **anyone** call a new function through its API, so revoke
+  `execute` from `public, anon, authenticated` first, then grant it back only where needed. Trigger
+  functions are never granted.
 - Checks belong in the database too (`check`, `unique`, foreign keys), not only in the app.
 - A table with an `updated_at` column needs the `set_updated_at` trigger.
 
@@ -86,7 +89,10 @@ The tests check all of these for **every** table and function automatically, inc
    bash supabase/tests/run-local.sh
    ```
 
-4. Open a pull request and ask the project lead to apply it.
-5. After it's applied, regenerate `hermes/src/services/database.types.ts`, then fix whatever
+4. Open a pull request and ask the project lead to apply it. Whoever applies it then runs Supabase's
+   security and performance advisors, and fixes anything new in a follow-up migration.
+5. Supabase records each migration under the time it was applied. Rename the file to match
+   (the connector's `list_migrations` shows the times), so the files and the project stay in step.
+6. After it's applied, regenerate `hermes/src/services/database.types.ts`, then fix whatever
    TypeScript reports, usually a `rows.ts` mapping. Update `hermes/src/domain/` if the app needs the
    new data.

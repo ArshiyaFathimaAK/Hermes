@@ -92,22 +92,25 @@ the app uses). Going live means writing `live.ts` and changing one line in `inde
 
 **People's data** (accounts, profiles, trips, share links, recent places) comes from Supabase:
 
-1. Find your tables in `../supabase/AGENTS.md`. If they aren't applied to Supabase yet, ask the
-   project lead; until then keep `index.ts` on the mock.
+1. Find your tables in `../supabase/AGENTS.md`. They're live in Supabase.
 2. Copy the pattern in `services/trips/`, the finished example:
    - `live.ts` calls `getSupabase()` from `services/supabase.ts`. Wrap **every** call in `must(...)`,
      and every update or delete in `mustChange(... .select())`. Supabase returns errors instead of
      throwing them, and an update that a policy blocks reports success without changing anything.
    - `rows.ts` turns database rows (snake_case) into `domain/` types (camelCase). Keep that mapping
      there, and test it (`__tests__/rows-test.ts`).
-   - Column names come from `services/database.types.ts`, so TypeScript catches a typo or a renamed
-     column. Don't add `as` casts to make an error go away.
+   - Column names come from `services/database.types.ts`, generated from the live database, so
+     TypeScript catches a typo, a renamed column, or a query joining tables that aren't related.
+     Don't add `as` casts to make an error go away.
 3. Point `index.ts` at it.
 
 Either way:
 
 - Reject with an `Error` whose message can be shown to people. Screens already draw loading, error and
   empty states.
+- Mocks read their data from `services/sample-data.ts` (the shared `sample-data.json`). Add sample
+  data there, so the server's mocks get it too.
+- Ids from the server are opaque: store and send them back as they are. Never build or parse one.
 - Keep `mock.ts`. Tests always use the mocks (`jest.setup.js` makes sure), so switching `index.ts`
   never breaks anyone's tests. Test `live.ts` by importing it directly.
 - Need more data? Add an **optional** field to the type in `domain/`. Changing or removing a field
