@@ -24,7 +24,8 @@ export function EditProfileScreen() {
             autoComplete="name"
             onSubmitEditing={save}
           />
-          <Button testID="save-profile" label="Save" disabled={busy} onPress={save} />
+          <Button testID="save-profile" label={busy ? 'Saving…' : 'Save'}
+            disabled={busy} onPress={save} />
         </>
       ) : (
         <Message

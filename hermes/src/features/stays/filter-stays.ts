@@ -50,15 +50,22 @@ export const STAY_FILTERS: FilterSection[] = [
 
 export function filterStays(stays: Stay[], values: FilterValues, sort: StaySort): Stay[] {
   const { price = [], score = [], kind = [], amenities = [] } = values;
+  // A stay missing what a filter asks about doesn't match it: unknown isn't "under $100".
   const matches = stays.filter((stay) => {
-    if (price.length > 0 && stay.nightly > Number(price[0])) return false;
-    if (score.length > 0 && stay.score < Number(score[0])) return false;
-    if (kind.length > 0 && !kind.includes(stay.kind)) return false;
+    if (price.length > 0 && !(stay.nightly !== undefined && stay.nightly <= Number(price[0])))
+      return false;
+    if (score.length > 0 && !(stay.score !== undefined && stay.score >= Number(score[0])))
+      return false;
+    if (kind.length > 0 && !(stay.kind && kind.includes(stay.kind))) return false;
     return amenities.every((amenity) =>
-      amenity === 'Free cancellation' ? stay.freeCancellation : stay.amenities.includes(amenity),
+      amenity === 'Free cancellation'
+        ? stay.freeCancellation === true
+        : (stay.amenities ?? []).includes(amenity),
     );
   });
-  if (sort === 'price') matches.sort((a, b) => a.nightly - b.nightly);
-  if (sort === 'score') matches.sort((a, b) => b.score - a.score);
+  // Stays without the value go last.
+  if (sort === 'price')
+    matches.sort((a, b) => (a.nightly ?? Infinity) - (b.nightly ?? Infinity));
+  if (sort === 'score') matches.sort((a, b) => (b.score ?? -Infinity) - (a.score ?? -Infinity));
   return matches;
 }

@@ -18,6 +18,8 @@ class Settings(BaseSettings):
     google_places_api_key: str = ""
     viator_api_key: str = ""
     booking_api_key: str = ""
+    # Hotels and prices for UC-06 lodging. A sandbox key (sand_...) gives test prices.
+    liteapi_api_key: str = ""
 
 
 @lru_cache

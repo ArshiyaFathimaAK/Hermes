@@ -1,0 +1,164 @@
+{
+  "suggestions": [
+    {
+      "placePrediction": {
+        "place": "places/ChIJO_PkYRozGQ0R0DaQ5L3rAAQ",
+        "placeId": "ChIJO_PkYRozGQ0R0DaQ5L3rAAQ",
+        "text": {
+          "text": "Lisbon, Portugal",
+          "matches": [
+            {
+              "endOffset": 5
+            }
+          ]
+        },
+        "structuredFormat": {
+          "mainText": {
+            "text": "Lisbon",
+            "matches": [
+              {
+                "endOffset": 5
+              }
+            ]
+          },
+          "secondaryText": {
+            "text": "Portugal"
+          }
+        },
+        "types": [
+          "locality",
+          "geocode",
+          "political"
+        ]
+      }
+    },
+    {
+      "placePrediction": {
+        "place": "places/ChIJmblDvuICNIgRGiNj3M7-ZRY",
+        "placeId": "ChIJmblDvuICNIgRGiNj3M7-ZRY",
+        "text": {
+          "text": "Lisbon, OH, USA",
+          "matches": [
+            {
+              "endOffset": 5
+            }
+          ]
+        },
+        "structuredFormat": {
+          "mainText": {
+            "text": "Lisbon",
+            "matches": [
+              {
+                "endOffset": 5
+              }
+            ]
+          },
+          "secondaryText": {
+            "text": "OH, USA"
+          }
+        },
+        "types": [
+          "political",
+          "locality",
+          "geocode"
+        ]
+      }
+    },
+    {
+      "placePrediction": {
+        "place": "places/ChIJz7QpE3xQzlIRnm7bXQc5oVQ",
+        "placeId": "ChIJz7QpE3xQzlIRnm7bXQc5oVQ",
+        "text": {
+          "text": "Lisbon, ND, USA",
+          "matches": [
+            {
+              "endOffset": 5
+            }
+          ]
+        },
+        "structuredFormat": {
+          "mainText": {
+            "text": "Lisbon",
+            "matches": [
+              {
+                "endOffset": 5
+              }
+            ]
+          },
+          "secondaryText": {
+            "text": "ND, USA"
+          }
+        },
+        "types": [
+          "geocode",
+          "locality",
+          "political"
+        ]
+      }
+    },
+    {
+      "placePrediction": {
+        "place": "places/ChIJ6YALc2p95IcRv53YVav87MQ",
+        "placeId": "ChIJ6YALc2p95IcRv53YVav87MQ",
+        "text": {
+          "text": "Lisbon, IA, USA",
+          "matches": [
+            {
+              "endOffset": 5
+            }
+          ]
+        },
+        "structuredFormat": {
+          "mainText": {
+            "text": "Lisbon",
+            "matches": [
+              {
+                "endOffset": 5
+              }
+            ]
+          },
+          "secondaryText": {
+            "text": "IA, USA"
+          }
+        },
+        "types": [
+          "geocode",
+          "political",
+          "locality"
+        ]
+      }
+    },
+    {
+      "placePrediction": {
+        "place": "places/ChIJ-_0JybRxskwRQ_VeYIn1zng",
+        "placeId": "ChIJ-_0JybRxskwRQ_VeYIn1zng",
+        "text": {
+          "text": "Lisbon, ME, USA",
+          "matches": [
+            {
+              "endOffset": 5
+            }
+          ]
+        },
+        "structuredFormat": {
+          "mainText": {
+            "text": "Lisbon",
+            "matches": [
+              {
+                "endOffset": 5
+              }
+            ]
+          },
+          "secondaryText": {
+            "text": "ME, USA"
+          }
+        },
+        "types": [
+          "geocode",
+          "locality",
+          "political"
+        ]
+      }
+    }
+  ]
+}

@@ -1,5 +1,5 @@
 import type { StayService } from './contract';
-import { mockStayService } from './mock';
+import { liveStayService } from './live';
 
-/** Swap the mock for the real implementation here. Nothing else needs to change. */
-export const stayService: StayService = mockStayService;
+/** Live: needs the server running (see AGENTS.md at the repository root). Tests use mock.ts instead. */
+export const stayService: StayService = liveStayService;
