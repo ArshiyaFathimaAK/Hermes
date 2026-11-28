@@ -1,5 +1,5 @@
 import type { DateRange } from '@/domain/dates';
-import type { Stay } from '@/domain/stay';
+import type { Stay, StayDetail } from '@/domain/stay';
 
 /** UC-06 View Lodging. Prices depend on dates: pass the trip's dates whenever there are some. */
 export interface StayService {
@@ -7,4 +7,6 @@ export interface StayService {
   list(placeId: string, dates?: DateRange): Promise<Stay[]>;
   /** Unknown ids are left out. With dates, priced for them; a stay with no room has no price. */
   getMany(stayIds: string[], dates?: DateRange): Promise<Stay[]>;
+  /** One stay for its own screen, priced for the dates when there are some. */
+  detail(stayId: string, dates?: DateRange): Promise<StayDetail>;
 }

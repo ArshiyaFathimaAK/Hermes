@@ -4,7 +4,7 @@ from typing import Annotated
 from fastapi import APIRouter, Depends, Query
 
 from ...errors import ApiError
-from .models import Stay, StayDates
+from .models import Stay, StayDates, StayDetail
 from .provider import StayProvider, get_stay_provider
 
 router = APIRouter(tags=["stays"])
@@ -47,3 +47,8 @@ async def get_many(
     ids: Annotated[str, Query(description="Comma-separated stay ids")] = "",
 ) -> list[Stay]:
     return await provider.get_many([i for i in ids.split(",") if i][:50], dates)
+
+
+@router.get("/stays/{stay_id}", response_model_exclude_none=True)
+async def detail(stay_id: str, provider: Provider, dates: Dates) -> StayDetail:
+    return await provider.detail(stay_id, dates)

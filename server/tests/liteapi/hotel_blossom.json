@@ -1,0 +1,726 @@
+{
+  "data": {
+    "id": "lp6557b9a5",
+    "name": "THE BLOSSOM KYOTO",
+    "hotelDescription": "<p><strong>Luxurious Accommodation in the Heart of Kyoto</strong></p><p><strong>Convenient Location</strong>: Situated in the center of Kyoto, THE BLOSSOM KYOTO offers easy access to popular attractions such as TKP Garden City Kyoto and Gion Shijo Station.</p><p><strong>Modern Amenities</strong>: Enjoy air-conditioned rooms with flat-screen TVs, free WiFi, and a fitness center during your stay. The hotel also provides a 24-hour front desk, luggage storage, and currency exchange for your convenience.</p><p><strong>Dining and Relaxation</strong>: Indulge in delicious meals at the on-site restaurant and unwind with a drink at the bar. Whether you're here for business or leisure, THE BLOSSOM KYOTO offers the perfect blend of comfort and convenience.</p><p>Book your stay at THE BLOSSOM KYOTO now for an unforgettable experience in Kyoto.</p>",
+    "hotelImportantInformation": "A deposit may be required at the property.",
+    "checkinCheckoutTimes": {
+      "checkin_start": "03:00 PM",
+      "checkin_end": "12:00 AM",
+      "checkout": "11:00 AM",
+      "instructions": [],
+      "special_instructions": ""
+    },
+    "hotelImages": [
+      {
+        "url": "https://static.cupid.travel/hotels/405883583.jpg",
+        "urlHd": "https://static.cupid.travel/hotels/405883583.jpg",
+        "caption": "building",
+        "order": 0,
+        "defaultImage": true
+      },
+      {
+        "url": "https://static.cupid.travel/hotels/405883937.jpg",
+        "urlHd": "https://static.cupid.travel/hotels/405883937.jpg",
+        "caption": "",
+        "order": 0,
+        "defaultImage": false
+      },
+      {
+        "url": "https://static.cupid.travel/hotels/405883919.jpg",
+        "urlHd": "https://static.cupid.travel/hotels/405883919.jpg",
+        "caption": "",
+        "order": 0,
+        "defaultImage": false
+      },
+      {
+        "url": "https://static.cupid.travel/hotels/405882793.jpg",
+        "urlHd": "https://static.cupid.travel/hotels/405882793.jpg",
+        "caption": "",
+        "order": 0,
+        "defaultImage": false
+      }
+    ],
+    "main_photo": "https://static.cupid.travel/hotels/405883583.jpg",
+    "thumbnail": "https://static.cupid.travel/hotels/thumbnail/405883583.jpg",
+    "currency": "JPY",
+    "country": "jp",
+    "city": "Kyoto",
+    "starRating": 4,
+    "location": {
+      "latitude": 34.996456,
+      "longitude": 135.762044
+    },
+    "address": "140-2 Manjujicho, Shimogyo-ku",
+    "hotelFacilities": [
+      "WiFi available",
+      "Free WiFi",
+      "Non-smoking rooms",
+      "Air conditioning",
+      "Fitness center",
+      "24-hour front desk",
+      "Restaurant",
+      "Heating",
+      "Family rooms",
+      "Lift / Elevator",
+      "Luggage storage",
+      "Safety deposit box",
+      "Bar",
+      "Currency exchange",
+      "Non-smoking throughout",
+      "Designated smoking area",
+      "Kid-friendly buffet",
+      "Public Bath",
+      "Fire extinguishers",
+      "Invoice provided",
+      "Smoke alarms",
+      "CCTV outside property",
+      "CCTV in common areas",
+      "24-hour security",
+      "Security alarm",
+      "Key card access"
+    ],
+    "zip": "600-8104",
+    "chain": "Not Available",
+    "facilities": [
+      {
+        "facilityId": 47,
+        "name": "WiFi available"
+      },
+      {
+        "facilityId": 107,
+        "name": "Free WiFi"
+      },
+      {
+        "facilityId": 16,
+        "name": "Non-smoking rooms"
+      },
+      {
+        "facilityId": 109,
+        "name": "Air conditioning"
+      },
+      {
+        "facilityId": 11,
+        "name": "Fitness center"
+      },
+      {
+        "facilityId": 8,
+        "name": "24-hour front desk"
+      },
+      {
+        "facilityId": 3,
+        "name": "Restaurant"
+      },
+      {
+        "facilityId": 80,
+        "name": "Heating"
+      },
+      {
+        "facilityId": 28,
+        "name": "Family rooms"
+      },
+      {
+        "facilityId": 48,
+        "name": "Lift / Elevator"
+      },
+      {
+        "facilityId": 91,
+        "name": "Luggage storage"
+      },
+      {
+        "facilityId": 51,
+        "name": "Safety deposit box"
+      },
+      {
+        "facilityId": 7,
+        "name": "Bar"
+      },
+      {
+        "facilityId": 53,
+        "name": "Currency exchange"
+      },
+      {
+        "facilityId": 108,
+        "name": "Non-smoking throughout"
+      },
+      {
+        "facilityId": 110,
+        "name": "Designated smoking area"
+      },
+      {
+        "facilityId": 177,
+        "name": "Kid-friendly buffet"
+      },
+      {
+        "facilityId": 167,
+        "name": "Public Bath"
+      },
+      {
+        "facilityId": 425,
+        "name": "Fire extinguishers"
+      },
+      {
+        "facilityId": 465,
+        "name": "Invoice provided"
+      },
+      {
+        "facilityId": 422,
+        "name": "Smoke alarms"
+      },
+      {
+        "facilityId": 424,
+        "name": "CCTV outside property"
+      },
+      {
+        "facilityId": 423,
+        "name": "CCTV in common areas"
+      },
+      {
+        "facilityId": 418,
+        "name": "24-hour security"
+      },
+      {
+        "facilityId": 421,
+        "name": "Security alarm"
+      },
+      {
+        "facilityId": 420,
+        "name": "Key card access"
+      }
+    ],
+    "rooms": [
+      {
+        "id": 2713031,
+        "roomName": "Moderate Twin Room (2 Adults)",
+        "roomTitle": "",
+        "description": "Featuring free toiletries, this twin room includes a private bathroom with a shower, a bidet and a hairdryer. The twin room features air conditioning, a wardrobe, a safe deposit box, an electric kettle, as well as a flat-screen TV. The unit has 2 beds.",
+        "markdownDescription": "",
+        "normalizedDescription": "",
+        "roomSizeSquare": 25,
+        "roomSizeUnit": "sqm",
+        "hotelId": "lp6557b9a5",
+        "maxAdults": 2,
+        "maxChildren": 1,
+        "maxOccupancy": 3,
+        "ranking": null,
+        "bedTypes": [
+          {
+            "quantity": 2,
+            "bedType": "Twin bed",
+            "bedSize": "90-130 cm wide",
+            "id": 166
+          }
+        ],
+        "roomAmenities": [
+          {
+            "amenitiesId": 312,
+            "name": "Shower",
+            "sort": 0
+          },
+          {
+            "amenitiesId": 293,
+            "name": "Safety deposit box",
+            "sort": 17
+          },
+          {
+            "amenitiesId": 339,
+            "name": "TV",
+            "sort": 0
+          },
+          {
+            "amenitiesId": 342,
+            "name": "Telephone",
+            "sort": 0
+          },
+          {
+            "amenitiesId": 11,
+            "name": "Air conditioning",
+            "sort": 0
+          },
+          {
+            "amenitiesId": 148,
+            "name": "Hair dryer",
+            "sort": 0
+          },
+          {
+            "amenitiesId": 281,
+            "name": "Refrigerator",
+            "sort": 0
+          },
+          {
+            "amenitiesId": 350,
+            "name": "Toilet",
+            "sort": 10
+          },
+          {
+            "amenitiesId": 266,
+            "name": "Private bathroom",
+            "sort": 0
+          },
+          {
+            "amenitiesId": 156,
+            "name": "Heating",
+            "sort": 0
+          },
+          {
+            "amenitiesId": 318,
+            "name": "Slippers",
+            "sort": 0
+          },
+          {
+            "amenitiesId": 328,
+            "name": "Sofa",
+            "sort": 65
+          },
+          {
+            "amenitiesId": 96,
+            "name": "Electric kettle",
+            "sort": 0
+          },
+          {
+            "amenitiesId": 377,
+            "name": "Wardrobe or closet",
+            "sort": 0
+          },
+          {
+            "amenitiesId": 30,
+            "name": "Bidet",
+            "sort": 0
+          },
+          {
+            "amenitiesId": 197,
+            "name": "Linen",
+            "sort": 43
+          },
+          {
+            "amenitiesId": 366,
+            "name": "Upper floors accessible by elevator",
+            "sort": 166
+          },
+          {
+            "amenitiesId": 352,
+            "name": "Toilet paper",
+            "sort": 0
+          },
+          {
+            "amenitiesId": 37,
+            "name": "Bottle of water",
+            "sort": 152
+          },
+          {
+            "amenitiesId": 361,
+            "name": "Trash cans",
+            "sort": 85
+          },
+          {
+            "amenitiesId": 307,
+            "name": "Shampoo",
+            "sort": 0
+          },
+          {
+            "amenitiesId": 71,
+            "name": "Conditioner",
+            "sort": 108
+          },
+          {
+            "amenitiesId": 35,
+            "name": "Body soap",
+            "sort": 109
+          },
+          {
+            "amenitiesId": 247,
+            "name": "Pajamas",
+            "sort": 87
+          },
+          {
+            "amenitiesId": 327,
+            "name": "Socket near the bed",
+            "sort": 89
+          },
+          {
+            "amenitiesId": 108,
+            "name": "Feather pillow",
+            "sort": 91
+          },
+          {
+            "amenitiesId": 5,
+            "name": "Accessible by lift",
+            "sort": 29
+          },
+          {
+            "amenitiesId": 182,
+            "name": "Key card access",
+            "sort": 158
+          },
+          {
+            "amenitiesId": 12,
+            "name": "Air purifiers",
+            "sort": 186
+          },
+          {
+            "amenitiesId": 123,
+            "name": "Free gym access",
+            "sort": 194
+          },
+          {
+            "amenitiesId": 316,
+            "name": "Single-room air conditioning for guest accommodation",
+            "sort": 187
+          }
+        ],
+        "photos": [
+          {
+            "url": "https://static.cupid.travel/rooms-large-pictures/405884650.jpg",
+            "imageDescription": "",
+            "imageClass1": "hotel room",
+            "imageClass2": "",
+            "failoverPhoto": "https://q-xx.bstatic.com/xdata/images/hotel/max1200/405884650.jpg?k=9bd4aafbb68d7fd7fbdaec5a1523441f6fa442a823d01c4759a5a257a2983aa7&o=",
+            "mainPhoto": true,
+            "score": 0,
+            "classId": 80,
+            "classOrder": 0,
+            "hd_url": "https://static.cupid.travel/rooms-large-pictures/405884650.jpg"
+          },
+          {
+            "url": "https://static.cupid.travel/rooms-large-pictures/405892701.jpg",
+            "imageDescription": "",
+            "imageClass1": "other",
+            "imageClass2": "",
+            "failoverPhoto": "https://q-xx.bstatic.com/xdata/images/hotel/max1200/405892701.jpg?k=6c2203961f17469eda4a3774c34f6e6b9ad8e9ab98a6615ff0c28854c9531afd&o=",
+            "mainPhoto": false,
+            "score": 0,
+            "classId": 124,
+            "classOrder": 0,
+            "hd_url": "https://static.cupid.travel/rooms-large-pictures/405892701.jpg"
+          },
+          {
+            "url": "https://static.cupid.travel/rooms-large-pictures/405884649.jpg",
+            "imageDescription": "",
+            "imageClass1": "",
+            "imageClass2": "",
+            "failoverPhoto": "https://q-xx.bstatic.com/xdata/images/hotel/max1200/405884649.jpg?k=1002076983f5197ceb2ef52706d8053ac6e8838e4c57481335a58cc347d85ffb&o=",
+            "mainPhoto": false,
+            "score": 0,
+            "classId": 0,
+            "classOrder": 0,
+            "hd_url": "https://static.cupid.travel/rooms-large-pictures/405884649.jpg"
+          },
+          {
+            "url": "https://static.cupid.travel/rooms-large-pictures/405884648.jpg",
+            "imageDescription": "",
+            "imageClass1": "",
+            "imageClass2": "",
+            "failoverPhoto": "https://q-xx.bstatic.com/xdata/images/hotel/max1200/405884648.jpg?k=3c59b0ee049eed6144040262d217f864276cb1839fa2571d40b6c7a8f753dce2&o=",
+            "mainPhoto": false,
+            "score": 0,
+            "classId": 0,
+            "classOrder": 0,
+            "hd_url": "https://static.cupid.travel/rooms-large-pictures/405884648.jpg"
+          },
+          {
+            "url": "https://static.cupid.travel/rooms-large-pictures/405884644.jpg",
+            "imageDescription": "",
+            "imageClass1": "",
+            "imageClass2": "",
+            "failoverPhoto": "https://q-xx.bstatic.com/xdata/images/hotel/max1200/405884644.jpg?k=1d72d387187d9ff0d1195ea97f74c37d8f078e07015ea3fea1bf526770dec921&o=",
+            "mainPhoto": false,
+            "score": 0,
+            "classId": 0,
+            "classOrder": 0,
+            "hd_url": "https://static.cupid.travel/rooms-large-pictures/405884644.jpg"
+          },
+          {
+            "url": "https://static.cupid.travel/rooms-large-pictures/405884647.jpg",
+            "imageDescription": "",
+            "imageClass1": "",
+            "imageClass2": "",
+            "failoverPhoto": "https://q-xx.bstatic.com/xdata/images/hotel/max1200/405884647.jpg?k=cec06809e277d2f3c85291d5ab0209b700f656dba9fd6a263edd7e3cd618b3da&o=",
+            "mainPhoto": false,
+            "score": 0,
+            "classId": 0,
+            "classOrder": 0,
+            "hd_url": "https://static.cupid.travel/rooms-large-pictures/405884647.jpg"
+          }
+        ],
+        "views": [],
+        "bedRelation": "NONE",
+        "officialSiteRoomName": null,
+        "attributes": {
+          "television": true,
+          "televisionSize": null,
+          "airConditioner": true,
+          "hairDryer": true,
+          "iron": null,
+          "hangers": null,
+          "coffeeMaker": null,
+          "crib": null,
+          "laptopFriendlyWorkplace": null,
+          "kitchen": null,
+          "smokeDetector": null,
+          "carbonMonoxideDetector": null
+        },
+        "parentRoomId": null
+      }
+    ],
+    "phone": "+81 75-754-8735",
+    "poi": [
+      {
+        "name": "Fushimi Inari Taisha",
+        "category": "religious",
+        "distanceKm": 3.2,
+        "importance": "iconic"
+      },
+      {
+        "name": "Kiyomizu-dera",
+        "category": "religious",
+        "distanceKm": 4,
+        "importance": "iconic"
+      },
+      {
+        "name": "Kinkaku-ji (Golden Pavilion)",
+        "category": "religious",
+        "distanceKm": 5.5,
+        "importance": "iconic"
+      },
+      {
+        "name": "Arashiyama Bamboo Grove",
+        "category": "nature",
+        "distanceKm": 8.5,
+        "importance": "iconic"
+      },
+      {
+        "name": "Nishiki Market",
+        "category": "shopping",
+        "distanceKm": 1.8,
+        "importance": "major"
+      },
+      {
+        "name": "Gion District",
+        "category": "district",
+        "distanceKm": 2.5,
+        "importance": "major"
+      },
+      {
+        "name": "Kyoto Imperial Palace",
+        "category": "landmark",
+        "distanceKm": 2.7,
+        "importance": "major"
+      },
+      {
+        "name": "Nijo Castle",
+        "category": "landmark",
+        "distanceKm": 3,
+        "importance": "major"
+      },
+      {
+        "name": "Kansai International Airport (KIX)",
+        "category": "airport",
+        "distanceKm": 65,
+        "importance": "major"
+      },
+      {
+        "name": "Kyoto Station",
+        "category": "train_station",
+        "distanceKm": 0.5,
+        "importance": "notable"
+      }
+    ],
+    "fax": "",
+    "email": "",
+    "hotelType": "Hotels",
+    "hotelTypeId": 204,
+    "airportCode": "",
+    "rating": 9.3,
+    "reviewCount": 5005,
+    "parking": "",
+    "groupRoomMin": 0,
+    "childAllowed": true,
+    "petsAllowed": false,
+    "policies": [],
+    "rohId": 2713029,
+    "sentiment_analysis": {
+      "cons": [
+        "Inconsistent Room Maintenance",
+        "Limited Food Quality"
+      ],
+      "pros": [
+        "Cleanliness",
+        "Good Service",
+        "Great Location",
+        "Spacious Rooms",
+        "Excellent Amenities"
+      ],
+      "categories": [
+        {
+          "name": "Cleanliness",
+          "rating": 8.51,
+          "description": "While generally clean, some reviews mentioned that rooms were not adequately maintained during the stay."
+        },
+        {
+          "name": "Service",
+          "rating": 9.98,
+          "description": "Guests praised the attentiveness and friendliness of the staff, indicating a high level of service."
+        },
+        {
+          "name": "Location",
+          "rating": 9.52,
+          "description": "The hotel is well-located, close to transport hubs and attractions, offering convenience to guests."
+        },
+        {
+          "name": "Room Quality",
+          "rating": 9.47,
+          "description": "Rooms are spacious and comfortable, exceeding typical expectations for hotel accommodations."
+        },
+        {
+          "name": "Amenities",
+          "rating": 9.5,
+          "description": "The amenities were well-received, especially the Onsen and free snacks provided by the hotel."
+        },
+        {
+          "name": "Value for Money",
+          "rating": 9.46,
+          "description": "The overall value is considered excellent due to the quality of facilities and service in relation to price."
+        },
+        {
+          "name": "Food and Beverage",
+          "rating": 8.01,
+          "description": "Food options received mixed reviews; while the breakfast was appreciated, some dishes weren't favorable."
+        },
+        {
+          "name": "Overall Experience",
+          "rating": 9.98,
+          "description": "Overall, guests had a very positive experience, highlighting the comfort and quality of the stay."
+        }
+      ]
+    },
+    "sentiment_updated_at": "2025-12-08T10:46:06Z",
+    "deletedAt": null,
+    "state": null,
+    "website": null,
+    "contact": {
+      "legalEntity": null,
+      "registrationNumber": null,
+      "licenceNumbers": null
+    },
+    "policyAttributes": {
+      "checkIn": {
+        "from": "15:00",
+        "until": "00:00"
+      },
+      "checkOut": {
+        "until": "11:00"
+      },
+      "minimumCheckInAge": null,
+      "saleCutoff": {
+        "time": null,
+        "daysBefore": null
+      },
+      "children": {
+        "allowed": true,
+        "infantsAllowed": null,
+        "cribAvailable": null,
+        "cribFee": null,
+        "cribAgeMax": null
+      },
+      "pets": {
+        "allowed": null,
+        "fee": null,
+        "feeAmount": null,
+        "feeCurrency": null,
+        "feeBasis": null,
+        "weightLimitLb": null,
+        "feeRefundable": null,
+        "terms": null
+      },
+      "deposit": {
+        "required": null,
+        "amount": null,
+        "currency": null,
+        "basis": null,
+        "collectedAt": null,
+        "refundedAt": null,
+        "method": null
+      },
+      "payment": {
+        "cardsAccepted": null,
+        "cashAccepted": null
+      },
+      "wifi": {
+        "inRoom": true,
+        "free": true,
+        "feeAmount": null,
+        "feePeriod": null,
+        "freeInPublicAreas": null
+      },
+      "parking": {
+        "selfParking": false,
+        "free": false,
+        "chargeMode": null,
+        "feeAmount": null,
+        "feePeriod": null,
+        "location": null,
+        "reservationRequired": null,
+        "valet": false,
+        "evCharger": false
+      },
+      "facilities": {
+        "nonSmokingProperty": true,
+        "elevator": true,
+        "fitnessCenter": true,
+        "fitnessOpen24h": null,
+        "pool": false,
+        "poolType": null,
+        "poolCurrentlyClosed": null,
+        "hotTub": false,
+        "spaServices": false,
+        "sauna": false,
+        "saunaCurrentlyClosed": null
+      },
+      "foodAndDrink": {
+        "bar": true,
+        "restaurant": true,
+        "restaurantNames": null,
+        "roomService": false,
+        "breakfastAvailable": false,
+        "breakfastIncluded": null,
+        "breakfastPrice": {
+          "amount": null,
+          "currency": null,
+          "period": null
+        },
+        "breakfastType": null
+      },
+      "renovation": {
+        "underway": null,
+        "notes": null
+      },
+      "resortFee": {
+        "amount": null,
+        "currency": null,
+        "period": null
+      },
+      "cancellationTerms": null,
+      "houseRules": null,
+      "facilityClosures": null,
+      "roomAmenitiesAllRooms": {
+        "television": true,
+        "televisionSize": null,
+        "airConditioner": true,
+        "hairDryer": true,
+        "iron": null,
+        "hangers": null,
+        "coffeeMaker": null,
+        "crib": null,
+        "laptopFriendlyWorkplace": null,
+        "kitchen": null,
+        "smokeDetector": null,
+        "carbonMonoxideDetector": null
+      }
+    },
+    "operatingStatus": {
+      "status": null,
+      "checkedAt": null
+    },
+    "connectivityType": "Pull"
+  }
+}

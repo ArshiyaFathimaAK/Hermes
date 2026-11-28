@@ -4,28 +4,44 @@ import type { Stay } from '@/domain/stay';
 import { createStyles, radius, sizes, spacing } from '@/theme';
 import { Icon } from '@/ui/icon';
 import { IconButton } from '@/ui/icon-button';
+import { Photo } from '@/ui/photo';
+import { Tappable } from '@/ui/tappable';
 import { Text } from '@/ui/text';
 import { formatMoney, pluralize } from '@/utils/format';
+
+import { photoSource } from './photo-source';
 
 interface StayRowProps {
   stay: Stay;
   nights: number;
   chosen: boolean;
   onToggle: () => void;
+  /** Opens the stay's own screen. */
+  onOpen: () => void;
 }
 
 /** Joins the parts that exist with " · ". Missing data is hidden, never filled in. */
 const joined = (...parts: (string | undefined)[]) => parts.filter(Boolean).join(' · ');
 
-export function StayRow({ stay, nights, chosen, onToggle }: StayRowProps) {
+export function StayRow({ stay, nights, chosen, onToggle, onOpen }: StayRowProps) {
   const styles = useStyles();
   const kindAndArea = joined(stay.kind, stay.area);
   const reviews = joined(stay.scoreWord, stay.reviewCount && `${stay.reviewCount} reviews`);
   return (
     <View style={styles.row}>
-      <View style={styles.photo}>
-        <Icon name="bed" size={28} color="actionText" />
-      </View>
+      <Tappable
+        testID={`open-stay-${stay.id}`}
+        accessibilityRole="button"
+        accessibilityLabel={`${stay.name}, details`}
+        onPress={onOpen}
+        style={styles.open}>
+      {stay.photo ? (
+        <Photo source={photoSource(stay.photo)} alt={stay.name} style={styles.photo} />
+      ) : (
+        <View style={styles.photo}>
+          <Icon name="bed" size={28} color="actionText" />
+        </View>
+      )}
       <View style={styles.body}>
         <Text variant="label" weight="bold">
           {stay.name}
@@ -60,6 +76,7 @@ export function StayRow({ stay, nights, chosen, onToggle }: StayRowProps) {
           </Text>
         )}
       </View>
+      </Tappable>
       <IconButton
         testID={`stay-${stay.id}`}
         icon={chosen ? 'check' : 'add'}
@@ -80,6 +97,7 @@ const useStyles = createStyles((colors) => ({
     borderBottomWidth: sizes.hairline,
     borderBottomColor: colors.borderSubtle,
   },
+  open: { flex: 1, flexDirection: 'row', gap: spacing.md },
   photo: {
     width: 88,
     height: 88,

@@ -35,3 +35,11 @@ it('never asks for no stays', async () => {
   await expect(liveStayService.getMany([])).resolves.toEqual([]);
   expect(get).not.toHaveBeenCalled();
 });
+
+it('asks for one stay by id, with dates for its price', async () => {
+  await liveStayService.detail('liteapi:lp6557b9a5', weekend);
+  expect(get).toHaveBeenCalledWith('/stays/liteapi%3Alp6557b9a5', {
+    checkIn: '2027-01-12',
+    checkOut: '2027-01-14',
+  });
+});

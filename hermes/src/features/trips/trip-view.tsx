@@ -100,15 +100,19 @@ export function TripView({ trip }: { trip: Trip }) {
               onAdd={() => router.push(routes.addPlace(trip.id))}
             />
             <View style={styles.banners}>
-              {places.map((place) => (
-                <StayBanner
-                  key={place.id}
-                  place={place}
-                  stay={stays.find((stay) => stay.id === trip.stayIds[place.id])}
-                  showPlace={places.length > 1}
-                  onPress={() => router.push(routes.place(place.id, 'stays'))}
-                />
-              ))}
+              {places.map((place) => {
+                const stayId = trip.stayIds[place.id];
+                return (
+                  <StayBanner
+                    key={place.id}
+                    place={place}
+                    stay={stays.find((stay) => stay.id === stayId)}
+                    showPlace={places.length > 1}
+                    onPress={() => router.push(routes.place(place.id, 'stays'))}
+                    onOpen={stayId ? () => router.push(routes.stay(stayId, place.id)) : undefined}
+                  />
+                );
+              })}
             </View>
             {days.length > 0 ? (
               <>

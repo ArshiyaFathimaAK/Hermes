@@ -21,7 +21,7 @@ import { FooterBar, Screen } from '@/ui/screen';
 import { Section } from '@/ui/section';
 import { Text } from '@/ui/text';
 
-import { FactTile } from './fact-tile';
+import { FactTile } from '@/ui/fact-tile';
 import { useActivity } from './use-activity';
 
 export function ActivityScreen({ activityId }: { activityId: string }) {

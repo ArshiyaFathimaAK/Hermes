@@ -68,6 +68,8 @@ def test_lists_hotels_near_the_place_with_what_liteapi_knows():
     assert (nohga.place_id, nohga.kind) == ("kyoto", "Hotel")
     assert (nohga.score, nohga.score_word, nohga.review_count) == (9.6, "Wonderful", "5,056")
     assert nohga.amenities == ["Wi-Fi"]
+    # The small photo, for the list.
+    assert nohga.photo == "https://static.cupid.travel/hotels/thumbnail/586158200.jpg"
     # Not known here, so left out rather than made up.
     assert nohga.near is None and nohga.area is None
     # No dates: no price.

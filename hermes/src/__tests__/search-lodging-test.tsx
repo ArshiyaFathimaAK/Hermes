@@ -47,6 +47,19 @@ it('hides what a stay does not have', async () => {
   expect(screen.queryByText(/Free cancellation/)).toBeNull();
 });
 
+it("shows each stay's photo in the list, and a plain tile when it has none", async () => {
+  const photo = 'https://static.cupid.travel/hotels/thumbnail/1.jpg';
+  jest.spyOn(mockStayService, 'list').mockResolvedValue([
+    { id: 'liteapi:a', name: 'Photo Hotel', nightly: 100, photo },
+    { id: 'liteapi:b', name: 'Plain Hotel', nightly: 90 },
+  ]);
+  await openStaysForTheWeekend();
+  await screen.findByText('Photo Hotel');
+  // A photo is labeled with the stay's name; the row itself is "<name>, details".
+  expect(screen.getByLabelText('Photo Hotel')).toBeTruthy();
+  expect(screen.queryByLabelText('Plain Hotel')).toBeNull();
+});
+
 it('says where stays and prices come from', async () => {
   await openStaysForTheWeekend();
   expect(await screen.findByText(/come from LiteAPI, for two adults/)).toBeTruthy();

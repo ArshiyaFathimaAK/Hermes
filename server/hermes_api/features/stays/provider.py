@@ -9,7 +9,7 @@ from functools import lru_cache
 from typing import Protocol
 
 from ...config import get_settings
-from .models import Stay, StayDates
+from .models import Stay, StayDates, StayDetail
 
 logger = logging.getLogger(__name__)
 
@@ -21,6 +21,10 @@ class StayProvider(Protocol):
 
     async def get_many(self, stay_ids: list[str], dates: StayDates | None = None) -> list[Stay]:
         """Unknown ids are left out, not an error. With dates, priced for those dates."""
+        ...
+
+    async def detail(self, stay_id: str, dates: StayDates | None = None) -> StayDetail:
+        """One stay for its own screen. Raises NotFound for an unknown id."""
         ...
 
 

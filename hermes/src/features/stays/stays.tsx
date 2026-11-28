@@ -99,6 +99,7 @@ export function Stays({ place }: { place: Place }) {
                   nights={nights}
                   chosen={stay.id === chosenId}
                   onToggle={() => toggle(stay.id)}
+                  onOpen={() => router.push(routes.stay(stay.id, place.id))}
                 />
               ))}
               <Text variant="caption" color="textMuted" style={styles.credit}>

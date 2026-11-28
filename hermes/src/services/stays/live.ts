@@ -1,5 +1,5 @@
 import type { DateRange } from '@/domain/dates';
-import type { Stay } from '@/domain/stay';
+import type { Stay, StayDetail } from '@/domain/stay';
 import { apiGet } from '@/services/api-client';
 
 import type { StayService } from './contract';
@@ -15,4 +15,6 @@ export const liveStayService: StayService = {
     stayIds.length === 0
       ? Promise.resolve([])
       : apiGet<Stay[]>('/stays', { ids: stayIds.join(','), ...datesQuery(dates) }),
+  detail: (stayId, dates) =>
+    apiGet<StayDetail>(`/stays/${encodeURIComponent(stayId)}`, datesQuery(dates)),
 };

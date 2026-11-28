@@ -44,6 +44,7 @@ export default function RootLayout() {
           <Stack screenOptions={{ headerShown: false }}>
             <Stack.Screen name="(tabs)" />
             <Stack.Screen name="activity/[activityId]" />
+            <Stack.Screen name="stay/[stayId]" />
             <Stack.Screen name="shared/[token]" />
             <Stack.Screen name="dates/[placeId]" options={{ presentation: 'modal' }} />
             <Stack.Screen name="pick-place" options={{ presentation: 'modal' }} />

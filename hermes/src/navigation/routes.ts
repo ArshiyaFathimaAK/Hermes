@@ -15,6 +15,11 @@ export const routes = {
     pathname: '/activity/[activityId]',
     params: { activityId },
   }),
+  /** A stay's own screen. `placeId` is the place it's for: it sets dates, weather and the trip. */
+  stay: (stayId: string, placeId: string): Href => ({
+    pathname: '/stay/[stayId]',
+    params: { stayId, placeId },
+  }),
   dates: (placeId: string): Href => ({ pathname: '/dates/[placeId]', params: { placeId } }),
   sharedTrip: (token: string): Href => ({ pathname: '/shared/[token]', params: { token } }),
   newTrip: '/pick-place' as Href,
