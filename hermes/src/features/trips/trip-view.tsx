@@ -26,6 +26,7 @@ import { ShareSheet } from './components/share-sheet';
 import { StayBanner } from './components/stay-banner';
 import { TripPlaces } from './components/trip-places';
 import { unscheduledItems } from './plan';
+import { useGenerateItinerary } from './use-generate-itinerary';
 import { useShareTrip } from './use-share-trip';
 import { useTripDetails } from './use-trip-details';
 
@@ -41,6 +42,7 @@ export function TripView({ trip }: { trip: Trip }) {
   const details = useTripDetails(trip);
   const weather = useDailyWeather(trip.placeIds[0], trip.dates);
   const share = useShareTrip(trip);
+  const planner = useGenerateItinerary(trip);
   const [pickedDay, setDay] = useState(() => initialDay(trip));
   const [editingId, setEditingId] = useState<string>();
 
@@ -122,6 +124,20 @@ export function TripView({ trip }: { trip: Trip }) {
                   onPressItem={(item) => setEditingId(item.activityId)}
                   onAdd={addThings}
                 />
+                <Button
+                  testID="plan-days"
+                  variant="soft"
+                  icon="calendar"
+                  label={planner.isPlanning ? 'Planning your days…' : 'Plan my days'}
+                  accessibilityLabel="Plan my days: put saved things on days and suggest more"
+                  disabled={planner.isPlanning}
+                  onPress={() => void planner.planDays()}
+                />
+                {(planner.error ?? planner.summary) && (
+                  <Text testID="plan-days-result" color={planner.error ? 'danger' : 'textMuted'}>
+                    {planner.error ?? planner.summary}
+                  </Text>
+                )}
               </>
             ) : (
               <Button
