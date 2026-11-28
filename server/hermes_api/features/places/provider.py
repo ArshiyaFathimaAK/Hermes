@@ -1,11 +1,17 @@
 """UC-04 Search for Destination.
 
-To go live: write a class with these methods in live.py, then change `get_place_provider`.
+Live search uses Google Places when GOOGLE_PLACES_API_KEY is set in .env, and the sample data
+otherwise, so everyone can run the server without the key.
 """
 
+import logging
+from functools import lru_cache
 from typing import Protocol
 
+from ...config import get_settings
 from .models import Place
+
+logger = logging.getLogger(__name__)
 
 
 class PlaceProvider(Protocol):
@@ -18,7 +24,18 @@ class PlaceProvider(Protocol):
         ...
 
 
+@lru_cache
 def get_place_provider() -> PlaceProvider:
+    """One provider for the whole server, so every request shares its cache and call limit."""
+    api_key = get_settings().google_places_api_key
+    if api_key:
+        from .live import GooglePlaceProvider
+
+        return GooglePlaceProvider(api_key)
+
     from .mock import MockPlaceProvider
 
+    logger.warning(
+        "GOOGLE_PLACES_API_KEY is not set in server/.env: place search uses sample data."
+    )
     return MockPlaceProvider()

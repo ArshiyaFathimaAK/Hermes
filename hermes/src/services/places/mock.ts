@@ -1,11 +1,12 @@
 import { samplePlaces } from '@/services/sample-data';
 
-import type { PlaceService } from './contract';
+import { MIN_SEARCH_LENGTH, type PlaceService } from './contract';
 
 export const mockPlaceService: PlaceService = {
   async search(query) {
     const q = query.trim().toLowerCase();
-    return q ? samplePlaces.filter((p) => p.name.toLowerCase().startsWith(q)).slice(0, 5) : [];
+    return q.length >= MIN_SEARCH_LENGTH
+      ? samplePlaces.filter((p) => p.name.toLowerCase().startsWith(q)).slice(0, 5) : [];
   },
   async get(placeId) {
     const place = samplePlaces.find((p) => p.id === placeId);
