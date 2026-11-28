@@ -21,6 +21,8 @@ export default function TabsLayout() {
   const insets = useSafeAreaInsets();
   return (
     <Tabs
+      // Back from another tab goes to Explore, the anchor above.
+      backBehavior="initialRoute"
       screenOptions={{
         headerShown: false,
         tabBarActiveTintColor: colors.actionText,

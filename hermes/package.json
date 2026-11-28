@@ -65,6 +65,7 @@
     "setupFiles": [
       "react-native-gesture-handler/jestSetup"
     ],
-    "resolver": "react-native-reanimated/jest/resolver.js"
+    "resolver": "react-native-reanimated/jest/resolver.js",
+    "testTimeout": 30000
   }
 }

@@ -1,21 +1,14 @@
 # Hermes mobile app
 
-Expo / React Native app. The UI is built; most logic runs on mock data until each use case is written.
+Expo / React Native app. **To run it, follow "How to run Hermes" in the [main README](../README.md).**
+
+In short, from this folder:
 
 ```bash
 npm install
-```
-
-```bash
 npx expo start
 ```
 
-Before a pull request, run lint, types and tests:
+Then press `w` for the web browser, or scan the QR code with Expo Go.
 
-```bash
-npm run check
-```
-
-**Read [AGENTS.md](AGENTS.md) first.** It says where each use case goes and how to avoid conflicts.
-
-The app opens as a guest. To try trips, open Account, then Sign in, then "Skip with a demo account".
+Developers: read [AGENTS.md](AGENTS.md) first, and run `npm run check` before a pull request.
